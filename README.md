@@ -26,7 +26,7 @@ git commit -m "[pesan commit]" -> masuk ke commit, dan memberi nama perubahannya
 Aturan pesan commit:
 - Jelas, sesuai dengan perubahan yang dilakukan. Contoh: `menambahkan button login di landing page` jangan hanya `menambahkan button` atau `mengubah button.kt` saja. Aturannya *perubahan + fitur + spesifik*
 - Ringkas, tidak terbelit-belit dan langsung to the point, sehingga orang yang melihat pesannya bisa langsung paham
-- (Opsional) Deskripsi, tapi ini sulit dilakukan dan ada trik tertentu jika menggunakan Bash, strukturnya `git commit -m "(judul commit)" -m "(deskripsi commit)"
+- (Opsional) Deskripsi, tapi ini sulit dilakukan dan ada trik tertentu jika menggunakan Bash, strukturnya `git commit -m "(judul commit)" -m "(deskripsi commit)"`  
 Ketika sudah yakin dengan perubahan yang dilakukan
 ```
 git push origin [working branch] -> mengirim perubahan ke repo sesuai working branch
