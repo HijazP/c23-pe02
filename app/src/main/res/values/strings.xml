@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">AmatiApp</string>
+    <string name="app_logo_desc">AMATI Logo</string>
+
+    <!--
+    Register Activity
+    -->
+    <string name="register_email_hint">Email address</string>
+    <string name="register_pass_hint">Password</string>
+    <string name="register_repass_hint">Re-enter password</string>
+    <string name="register_email_auto_fill_hint">email</string>
+    <string name="register_pass_auto_fill_hint">password</string>
+    <string name="register_button">Register</string>
 </resources>
