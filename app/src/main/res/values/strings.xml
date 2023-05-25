@@ -14,7 +14,8 @@
 
     <!--Login Activity-->
     <string name="login_button">Login</string>
-    <string name="or_sign_up">Belum memiliki akun? Daftar sekarang!</string>
+    <string name="desc_signup">Belum memiliki akun? </string>
+    <string name="or_sign_up">Daftar sekarang!</string>
     <string name="email_required">Masukkan email Anda</string>
     <string name="password_required">Masukkan kata sandi Anda</string>
     <string name="password_min">Kata sandi harus memiliki 6 karakter</string>
