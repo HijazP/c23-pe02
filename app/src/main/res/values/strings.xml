@@ -11,4 +11,15 @@
     <string name="register_email_auto_fill_hint">email</string>
     <string name="register_pass_auto_fill_hint">password</string>
     <string name="register_button">Register</string>
+
+    <!--Login Activity-->
+    <string name="login_button">Login</string>
+    <string name="or_sign_up">Belum memiliki akun? Daftar sekarang!</string>
+    <string name="email_required">Masukkan email Anda</string>
+    <string name="password_required">Masukkan kata sandi Anda</string>
+    <string name="password_min">Kata sandi harus memiliki 6 karakter</string>
+    <string name="login_success">Berhasil Masuk. Hallo, </string>
+    <string name="unauthorized">Email atau password mungkin salah</string>
+    <string name="invalid_email">Format email tidak sesuai</string>
+
 </resources>
