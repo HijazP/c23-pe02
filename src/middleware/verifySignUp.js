@@ -1,8 +1,7 @@
 const db = require('../models');
+const Desa = db.Desa;
 
-const Desa = db.desa;
-
-const checkDuplicateUsernameOrEmail = async (req, res) => {
+const checkDuplicateUsernameOrEmail = async (req, res, next) => {
   try {
     // Email
     const desa = await Desa.findOne({
@@ -16,6 +15,8 @@ const checkDuplicateUsernameOrEmail = async (req, res) => {
         message: 'Email sudah terdaftar!',
       });
     }
+
+    next();
   } catch (error) {
     return res.status(500).send({
       message: 'Tidak dapat memproses permintaan!',

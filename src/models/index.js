@@ -19,6 +19,4 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.desa = require('./desa.model')(sequelize, Sequelize);
-
 module.exports = db;

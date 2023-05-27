@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const db = require('../models');
 const config = require('../config/auth.config');
 
-const Desa = db.desa;
+const Desa = db.Desa;
 
 exports.signup = async (req, res) => {
   // Save Desa to Database
