@@ -22,6 +22,7 @@ class UserPreferencesDatastore(context: Context) {
             pref[USER_TOKEN] = token
         }
     }
+    // btw dari sini bisa lgsng diambil data usernya ngga sih? kek nya musti bikin fungsi baru buat ambil data
 
     suspend fun logout() {
         dataStore.edit { pref ->
@@ -34,6 +35,6 @@ class UserPreferencesDatastore(context: Context) {
 //  fun getUser(): Flow< >{
 //      return dataStore.data.map{ pref ->
 //      }
-//   }
+//   } mungkin pake ini buat ambil datanya
 
 }
