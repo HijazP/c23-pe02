@@ -13,6 +13,12 @@ import com.amati.amatiapp.databinding.ActivityLoginBinding
 import com.amati.amatiapp.network.RequestLogin
 import com.amati.amatiapp.viewmodel.LoginViewModel
 import androidx.activity.viewModels
+import android.widget.Button;
+import com.amati.amatiapp.network.response.Response
+import com.amati.amatiapp.network.retrofit.ApiService
+import com.amati.amatiapp.network.retrofit.Retro
+import retrofit2.Callback
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -44,8 +50,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginAct() {
         binding.btnLogin.setOnClickListener {
+            val request = RequestLogin()
             val email = binding.edLoginEmail.text.toString().trim()
             val password = binding.edLoginPassword.text.toString().trim()
+
+            val retro = Retro().getRetroClientInstance().create(ApiService::class.java)
+            retro.login(request)
 
             try {
                 when {

@@ -1,12 +1,25 @@
 package com.amati.amatiapp.network
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
 data class RequestLogin(
-    var email: String,
-    var password: String
+    @SerializedName("name")
+    @Expose
+    var email: String? = null,
+    @SerializedName("password")
+    @Expose
+    var password: String? = null
 )
 
 data class RequestReg(
-    var name: String,
-    var email: String,
-    var password: String
+    @SerializedName("name")
+    @Expose
+    var email: String? = null,
+    @SerializedName("password")
+    @Expose
+    var password: String? = null,
+    @SerializedName("password_confirm")
+    @Expose
+    var passwordConfirm: String? = null
 )
