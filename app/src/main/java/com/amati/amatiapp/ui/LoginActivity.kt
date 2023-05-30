@@ -19,16 +19,21 @@ import com.amati.amatiapp.network.retrofit.ApiService
 import com.amati.amatiapp.network.retrofit.Retro
 import retrofit2.Callback
 
+import androidx.lifecycle.ViewModelProvider
+import com.amati.amatiapp.viewmodel.ViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val loginViewModel: LoginViewModel by viewModels()
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val viewModelFactory = ViewModelFactory()
+        loginViewModel= ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
+
 
         setupView()
 
