@@ -1,7 +1,7 @@
-package com.amati.amatiapp.network
+package com.amati.amatiapp.response
 
 data class RequestLogin(
-    var email: String,
+    var name: String,
     var password: String
 )
 
