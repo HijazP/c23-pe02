@@ -1,26 +1,25 @@
 package com.amati.amatiapp.network.retrofit
 
-import com.amati.amatiapp.databinding.ActivityLoginBinding
-import com.amati.amatiapp.network.RequestLogin
-import com.amati.amatiapp.network.RequestReg
-import com.amati.amatiapp.network.response.Response
-import com.google.gson.Gson
+import com.amati.amatiapp.network.response.LoginResponse
+import com.amati.amatiapp.network.response.RegisterResponse
+import com.amati.amatiapp.response.RequestLogin
+import com.amati.amatiapp.response.RequestReg
 import retrofit2.Call
 import retrofit2.http.*
-import com.google.gson.GsonBuilder
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 interface ApiService {
-    @POST("api/v1/login")
+    @Headers("Content-Type: application/json")
+    @POST("login")
     fun login(
-        @Body userRequestLogin: RequestLogin
-    ): Call<Response>
+        @Body
+        requestLogin: RequestLogin
+    ): Call<LoginResponse>
 
-    @POST("api/v1/register")
+    @POST("register")
     fun register(
-        @Body userRequestReg: RequestReg
-    ): Call<Response>
+        @Body
+        userRequestReg: RequestReg
+    ): Call<RegisterResponse>
 }
 
 

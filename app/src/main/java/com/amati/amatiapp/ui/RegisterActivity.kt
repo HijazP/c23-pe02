@@ -20,8 +20,9 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val viewModelFactory = ViewModelFactory()
-        registerViewModel = ViewModelProvider(this, viewModelFactory).get(RegisterViewModel::class.java)
+        registerViewModel = ViewModelProvider(this, viewModelFactory)[RegisterViewModel::class.java]
 
         setupView()
 

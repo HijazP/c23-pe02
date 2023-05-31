@@ -1,4 +1,4 @@
-package com.amati.amatiapp.response
+package com.amati.amatiapp.network.response
 
 import com.google.gson.annotations.SerializedName
 

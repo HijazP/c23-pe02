@@ -20,7 +20,11 @@
     <string name="password_required">Masukkan kata sandi Anda</string>
     <string name="password_min">Kata sandi harus memiliki 6 karakter</string>
     <string name="login_success">Berhasil Masuk. Hallo, </string>
+    <string name="go_login">Silahkan Login Terlebih Dahulu</string>
+    <string name="login_failed">Gagal Masuk</string>
     <string name="unauthorized">Email atau password mungkin salah</string>
     <string name="invalid_email">Format email tidak sesuai</string>
+    <string name="data_not_found">Data tidak ditemukan</string>
+    <string name="server_error">Server Error</string>
 
 </resources>

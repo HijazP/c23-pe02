@@ -10,16 +10,10 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.amati.amatiapp.R
 import com.amati.amatiapp.databinding.ActivityLoginBinding
-import com.amati.amatiapp.network.RequestLogin
+import com.amati.amatiapp.response.RequestLogin
 import com.amati.amatiapp.viewmodel.LoginViewModel
-import androidx.activity.viewModels
-import android.widget.Button;
-import com.amati.amatiapp.network.response.Response
-import com.amati.amatiapp.network.retrofit.ApiService
-import com.amati.amatiapp.network.retrofit.Retro
-import retrofit2.Callback
-
 import androidx.lifecycle.ViewModelProvider
+import com.amati.amatiapp.network.response.LoginResponse
 import com.amati.amatiapp.viewmodel.ViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
@@ -31,13 +25,62 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val viewModelFactory = ViewModelFactory()
-        loginViewModel= ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
 
+        val viewModelFactory = ViewModelFactory()
+        loginViewModel= ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
 
         setupView()
 
         loginAct()
+
+        loginViewModel.dataUser.observe(this) {
+            if (it != null) {
+                try {
+                    inputSession(it, it.data.token)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        loginViewModel.getToken().observe(this){ token ->
+            if (token != null) {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                Toast.makeText(this, getString(R.string.go_login), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
+    private fun inputSession(response: LoginResponse, token: String) {
+        when(response.code){
+            400 -> {
+                Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                binding.apply {
+                    edLoginEmail.setText("")
+                    edLoginPassword.setText("")
+                }
+            }
+            401 -> {
+                Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()
+            }
+            404 -> {
+                Toast.makeText(this, getString(R.string.data_not_found), Toast.LENGTH_SHORT).show()
+            }
+            500 ->{
+                Toast.makeText(this, getString(R.string.server_error), Toast.LENGTH_SHORT).show()
+            }
+            200 -> {
+                loginViewModel.setSession(response.data.user.name, response.data.user.id ,token)
+                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setupView() {
@@ -55,12 +98,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginAct() {
         binding.btnLogin.setOnClickListener {
-            val request = RequestLogin()
             val email = binding.edLoginEmail.text.toString().trim()
             val password = binding.edLoginPassword.text.toString().trim()
-
-            val retro = Retro().getRetroClientInstance().create(ApiService::class.java)
-            retro.login(request)
 
             try {
                 when {
