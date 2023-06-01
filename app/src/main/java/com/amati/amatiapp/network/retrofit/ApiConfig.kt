@@ -19,7 +19,7 @@ class ApiConfig {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://be.api-amati.com/api/v1/")
+                .baseUrl("https://be.api-amati.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

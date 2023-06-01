@@ -56,45 +56,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         session.getToken().observe(this){ token ->
-            if (token != null) {
-                Toast.makeText(this, token.toString(), Toast.LENGTH_SHORT).show()
-//                val intent = Intent(this, MainActivity::class.java)
-//                startActivity(intent)
-//                finish()
+            if (token != "") {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, getString(R.string.go_login), Toast.LENGTH_SHORT).show()
             }
 
-        }
-    }
-
-    private fun inputSession(code : Int, token: String, session: Session) {
-        when(code){
-            400 -> {
-                Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
-                binding.apply {
-                    edLoginEmail.setText("")
-                    edLoginPassword.setText("")
-                }
-            }
-            401 -> {
-                Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()
-            }
-            404 -> {
-                Toast.makeText(this, getString(R.string.data_not_found), Toast.LENGTH_SHORT).show()
-            }
-            500 ->{
-                Toast.makeText(this, getString(R.string.server_error), Toast.LENGTH_SHORT).show()
-            }
-            200 -> {
-                val response = loginViewModel.dataUser.value
-                if (response?.data  != null){
-                    session.setSession(response.data.user.name, response.data.user.id ,token)
-                    Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                } else{
-                    Toast.makeText(this, "I dont have any idea", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
     }
 
@@ -131,14 +100,14 @@ class LoginActivity : AppCompatActivity() {
                         binding.edLoginPassword.error = getString(R.string.password_min)
                     }
                     else -> {
-                        if (email.isNotEmpty()){
+                        val requestLogin = RequestLogin(email, password)
+                        loginViewModel.login(requestLogin)
 //                        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                            val requestLogin = RequestLogin(email, password)
-                            loginViewModel.login(requestLogin)
-//                            Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()
-                        }
+//                            val requestLogin = RequestLogin(email, password)
+//                            loginViewModel.login(requestLogin)
+//                        } else {
+//                            Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()
+//                        }
                     }
                 }
             } catch (e: Exception) {
@@ -149,6 +118,36 @@ class LoginActivity : AppCompatActivity() {
         binding.edRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun inputSession(code : Int, token: String, session: Session) {
+        when(code){
+            400 -> {
+                Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                binding.apply {
+                    edLoginEmail.setText("")
+                    edLoginPassword.setText("")
+                }
+            }
+            401 -> {
+                Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()
+            }
+            404 -> {
+                Toast.makeText(this, getString(R.string.data_not_found), Toast.LENGTH_SHORT).show()
+            }
+            500 ->{
+                Toast.makeText(this, getString(R.string.server_error), Toast.LENGTH_SHORT).show()
+            }
+            200 -> {
+                val response = loginViewModel.dataUser.value
+                if (response?.data  != null){
+                    session.setSession(response.data.user.name, response.data.user.id ,token)
+                    Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+                } else{
+                    Toast.makeText(this, "I dont have any idea", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }
