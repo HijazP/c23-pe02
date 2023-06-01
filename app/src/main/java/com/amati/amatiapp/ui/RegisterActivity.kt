@@ -7,10 +7,9 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.amati.amatiapp.R
 import com.amati.amatiapp.databinding.ActivityRegisterBinding
 import com.amati.amatiapp.viewmodel.RegisterViewModel
-import com.amati.amatiapp.viewmodel.ViewModelFactory
+//import com.amati.amatiapp.viewmodel.ViewModelFactory
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -21,8 +20,8 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModelFactory = ViewModelFactory()
-        registerViewModel = ViewModelProvider(this, viewModelFactory)[RegisterViewModel::class.java]
+//        val viewModelFactory = ViewModelFactory()
+        registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
 
         setupView()
 

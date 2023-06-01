@@ -1,5 +1,6 @@
 package com.amati.amatiapp.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -8,13 +9,19 @@ import android.util.Patterns
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.amati.amatiapp.R
 import com.amati.amatiapp.databinding.ActivityLoginBinding
 import com.amati.amatiapp.response.RequestLogin
 import com.amati.amatiapp.viewmodel.LoginViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.amati.amatiapp.network.response.LoginResponse
-import com.amati.amatiapp.viewmodel.ViewModelFactory
+import com.amati.amatiapp.database.UserPreferencesDatastore
+import com.amati.amatiapp.viewmodel.Session
+import com.amati.amatiapp.viewmodel.SessionModelFactory
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,31 +33,34 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModelFactory = ViewModelFactory()
-        loginViewModel= ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
-
         setupView()
-
         loginAct()
 
-        loginViewModel.dataUser.observe(this) {
-            if (it != null) {
+        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+
+        val pref = UserPreferencesDatastore.getInstance(dataStore)
+        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+
+        loginViewModel.code.observe(this) {
+            val user = loginViewModel.dataUser.value
+            if (user != null) {
                 try {
-                    inputSession(it, it.data.token)
+                    inputSession(it, user?.data?.token ?: "", session)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
             }
         }
 
-        loginViewModel.getToken().observe(this){ token ->
+        session.getToken().observe(this){ token ->
             if (token != null) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                Toast.makeText(this, token.toString(), Toast.LENGTH_SHORT).show()
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent)
+//                finish()
             } else {
                 Toast.makeText(this, getString(R.string.go_login), Toast.LENGTH_SHORT).show()
             }
@@ -58,8 +68,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun inputSession(response: LoginResponse, token: String) {
-        when(response.code){
+    private fun inputSession(code : Int, token: String, session: Session) {
+        when(code){
             400 -> {
                 Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                 binding.apply {
@@ -77,8 +87,13 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.server_error), Toast.LENGTH_SHORT).show()
             }
             200 -> {
-                loginViewModel.setSession(response.data.user.name, response.data.user.id ,token)
-                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+                val response = loginViewModel.dataUser.value
+                if (response?.data  != null){
+                    session.setSession(response.data.user.name, response.data.user.id ,token)
+                    Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+                } else{
+                    Toast.makeText(this, "I dont have any idea", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -106,9 +121,9 @@ class LoginActivity : AppCompatActivity() {
                     email.isEmpty() -> {
                         binding.edLoginEmail.error = getString(R.string.email_required)
                     }
-                    !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                        binding.edLoginEmail.error = getString(R.string.invalid_email)
-                    }
+//                    !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+//                        binding.edLoginEmail.error = getString(R.string.invalid_email)
+//                    }
                     password.isEmpty() -> {
                         binding.edLoginEmail.error = getString(R.string.password_required)
                     }
@@ -116,9 +131,10 @@ class LoginActivity : AppCompatActivity() {
                         binding.edLoginPassword.error = getString(R.string.password_min)
                     }
                     else -> {
-                        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                        if (email.isNotEmpty()){
+//                        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                             val requestLogin = RequestLogin(email, password)
-                            loginViewModel.login(this, requestLogin)
+                            loginViewModel.login(requestLogin)
 //                            Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()

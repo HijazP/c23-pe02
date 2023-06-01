@@ -1,6 +1,8 @@
 package com.amati.amatiapp.database
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -8,9 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class UserPreferencesDatastore(context: Context) {
-    private val Context.dataStore by preferencesDataStore("user_pref")
-    private val dataStore = context.dataStore
+class UserPreferencesDatastore private constructor(private val dataStore: DataStore<Preferences>) {
 
     suspend fun storeUser(name: String, id: Int, token: String) {
         dataStore.edit { pref ->
@@ -21,14 +21,14 @@ class UserPreferencesDatastore(context: Context) {
     }
 
     fun getToken(): Flow<String> {
-        return dataStore.data.map { preferences ->
-            preferences[USER_TOKEN] ?: ""
+        return dataStore.data.map { pref ->
+            pref[USER_TOKEN] ?: ""
         }
     }
 
     fun getName(): Flow<String> {
-        return dataStore.data.map { preferences ->
-            preferences[USER_NAME] ?: ""
+        return dataStore.data.map { pref ->
+            pref[USER_NAME] ?: ""
         }
     }
 
@@ -41,6 +41,17 @@ class UserPreferencesDatastore(context: Context) {
     }
 
     companion object {
+        @Volatile
+        private var INSTANCE: UserPreferencesDatastore? = null
+
+        fun getInstance(dataStore: DataStore<Preferences>): UserPreferencesDatastore {
+            return INSTANCE ?: synchronized(this) {
+                val instance = UserPreferencesDatastore(dataStore)
+                INSTANCE = instance
+                instance
+            }
+        }
+
         private val USER_NAME = stringPreferencesKey("user_name")
         private val USER_ID = intPreferencesKey("user_id")
         private val USER_TOKEN = stringPreferencesKey("user_token")
