@@ -26,6 +26,7 @@
         android:layout_marginBottom="25dp"
         android:foregroundGravity="bottom"
         app:fabSize="mini"
+        android:backgroundTint="@color/button_color"
         app:layout_anchorGravity="bottom|end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
