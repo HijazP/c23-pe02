@@ -27,5 +27,6 @@
     <string name="data_not_found">Data tidak ditemukan</string>
     <string name="server_error">Server Error</string>
     <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec dictum augue, sit amet elementum eros. Phasellus varius turpis id.</string>
+    <string name="profil">Profile</string>
 
 </resources>
