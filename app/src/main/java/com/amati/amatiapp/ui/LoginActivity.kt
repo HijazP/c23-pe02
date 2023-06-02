@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Patterns
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -51,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
             }
         }
 
