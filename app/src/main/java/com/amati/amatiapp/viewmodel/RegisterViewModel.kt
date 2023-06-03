@@ -8,9 +8,10 @@ import com.amati.amatiapp.network.response.RegisterResponse
 import com.amati.amatiapp.network.retrofit.ApiConfig
 import com.amati.amatiapp.response.RequestLogin
 import com.amati.amatiapp.response.RequestReg
-import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Call
+
 
 class RegisterViewModel: ViewModel() {
     private val _dataUser = MutableLiveData<RegisterResponse>()

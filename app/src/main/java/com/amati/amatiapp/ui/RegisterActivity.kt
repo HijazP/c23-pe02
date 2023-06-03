@@ -92,6 +92,10 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.btnRegister.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupView() {

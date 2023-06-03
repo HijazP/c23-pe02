@@ -12,6 +12,9 @@
     <string name="register_pass_auto_fill_hint">password</string>
     <string name="register_button">Register</string>
     <string name="register_success">Pendaftaran Berhasil</string>
+    <string name="register_login_desc">Sudah memiliki akun?</string>
+    <string name="register_login_button">Masuk</string>
+
 
     <!--Login Activity-->
     <string name="login_button">Login</string>
@@ -38,16 +41,16 @@
     <string name="alert_logout">Apakah Anda yakin ingin keluar?</string>
     <string name="yes">Ya</string>
     <string name="cancel">Batal</string>
-
-
-    <!--Profile-->
-    <string name="logout">Keluar</string>
-    <string name="alert_logout">Apakah Anda yakin ingin keluar?</string>
-    <string name="yes">Ya</string>
-    <string name="cancel">Batal</string>
     <string name="editProfile_button">Edit Profile</string>
     <string name="nama_desa">Nama Desa</string>
     <string name="lokasi_desa">Lokasi Desa</string>
     <string name="deskripsi_desa">Deskripsi Umum</string>
+
+    <!--Detail Activity-->
+    <string name="detail_title">Judul Problem</string>
+    <string name="detail_location">Lokasi Problem</string>
+    <string name="detail_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in mollis massa. Ut in lacus lacinia, egestas urna a, tincidunt ipsum. Integer pulvinar velit sit amet libero sodales commodo nec eu massa.</string>
+    <string name="detail_req">Requirements</string>
+    <string name="detail_module">Modul X</string>
 
 </resources>
