@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Desa {
+  id  Int @id @default(autoincrement())
+  email String @unique
+  password String
+  namaDesa String
+  telepon String
+  lokasiDesa String
+  latitude Float
+  longitude Float
+  Problem Problem[]
+}
+
+model Problem {
+  id  Int @id @default(autoincrement())
+  namaProblem String
+  deskripsi String
+  idDesa Int
+  Desa Desa @relation(fields: [idDesa], references: [id])
+  ModulProblem ModulProblem[]
+}
+
+model Modul {
+  id  Int @id @default(autoincrement())
+  namaModul String
+  idKursus Int
+  Kursus Kursus @relation(fields: [idKursus], references: [id])
+  ModulProblem ModulProblem[]
+}
+
+model ModulProblem {
+  id Int @id @default(autoincrement())
+  idModul Int
+  idProblem Int
+  Modul Modul @relation(fields: [idModul], references: [id])
+  Problem Problem @relation(fields: [idProblem], references: [id])
+}
+
+model Kursus {
+  id  Int @id @default(autoincrement())
+  namaKursus String
+  Modul Modul[]
+}
