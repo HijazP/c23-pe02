@@ -39,4 +39,15 @@
     <string name="yes">Ya</string>
     <string name="cancel">Batal</string>
 
+
+    <!--Profile-->
+    <string name="logout">Keluar</string>
+    <string name="alert_logout">Apakah Anda yakin ingin keluar?</string>
+    <string name="yes">Ya</string>
+    <string name="cancel">Batal</string>
+    <string name="editProfile_button">Edit Profile</string>
+    <string name="nama_desa">Nama Desa</string>
+    <string name="lokasi_desa">Lokasi Desa</string>
+    <string name="deskripsi_desa">Deskripsi Umum</string>
+
 </resources>
