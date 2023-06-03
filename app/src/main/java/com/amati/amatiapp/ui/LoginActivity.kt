@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
             val user = loginViewModel.dataUser.value
             if (user != null) {
                 try {
-                    inputSession(it, user?.data?.token ?: "", session)
+                    inputSession(it, user.data.token, session)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
@@ -61,7 +61,6 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, getString(R.string.go_login), Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 
@@ -80,6 +79,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginAct() {
         binding.btnLogin.setOnClickListener {
+            binding.apply {
+                edLoginEmail.clearFocus()
+                edLoginPassword.clearFocus()
+            }
+
             val email = binding.edLoginEmail.text.toString().trim()
             val password = binding.edLoginPassword.text.toString().trim()
 
@@ -122,19 +126,19 @@ class LoginActivity : AppCompatActivity() {
     private fun inputSession(code : Int, token: String, session: Session) {
         when(code){
             400 -> {
+                focus()
                 Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
-                binding.apply {
-                    edLoginEmail.setText("")
-                    edLoginPassword.setText("")
-                }
             }
             401 -> {
+                focus()
                 Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()
             }
             404 -> {
+                focus()
                 Toast.makeText(this, getString(R.string.data_not_found), Toast.LENGTH_SHORT).show()
             }
             500 ->{
+                focus()
                 Toast.makeText(this, getString(R.string.server_error), Toast.LENGTH_SHORT).show()
             }
             200 -> {
@@ -146,6 +150,13 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "I dont have any idea", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun focus(){
+        binding.apply {
+            edLoginEmail.setText("")
+            edLoginPassword.setText("")
         }
     }
 }
