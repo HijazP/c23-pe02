@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amati.amatiapp.data.DataDummy
+import com.amati.amatiapp.data.Dummy
 import com.amati.amatiapp.databinding.ItemRowBinding
 import com.amati.amatiapp.ui.DetailActivity
 
-class ProblemAdapter (private val listProblem: List<DataDummy>): RecyclerView.Adapter<ProblemAdapter.ViewHolder>() {
+class ProblemAdapter (private val listProblem: List<Dummy>): RecyclerView.Adapter<ProblemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,17 +24,17 @@ class ProblemAdapter (private val listProblem: List<DataDummy>): RecyclerView.Ad
     }
 
     class ViewHolder(private var binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: DataDummy) {
+        fun bind(data: Dummy) {
             with(binding) {
-                tvName.text = data.name
-                tvProblem.text = data.description
+                tvName.text = data.problem
+                tvProblem.text = data.isi
             }
 
-            binding.root.setOnClickListener {
-                val intentToDetail = Intent(itemView.context, DetailActivity::class.java)
-                intentToDetail.putExtra(DetailActivity.EXTRA_ITEM, data.id)
-                itemView.context.startActivity(intentToDetail)
-            }
+//            binding.root.setOnClickListener {
+//                val intentToDetail = Intent(itemView.context, DetailActivity::class.java)
+//                intentToDetail.putExtra(DetailActivity.EXTRA_ITEM, data.id)
+//                itemView.context.startActivity(intentToDetail)
+//            }
         }
     }
 }

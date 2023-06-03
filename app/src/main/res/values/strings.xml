@@ -28,5 +28,12 @@
     <string name="server_error">Server Error</string>
     <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec dictum augue, sit amet elementum eros. Phasellus varius turpis id.</string>
     <string name="profil">Profile</string>
+    <string name="logout_button">Logout</string>
+
+    <!--Profile-->
+    <string name="logout">Keluar</string>
+    <string name="alert_logout">Apakah Anda yakin ingin keluar?</string>
+    <string name="yes">Ya</string>
+    <string name="cancel">Batal</string>
 
 </resources>
