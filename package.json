@@ -1,0 +1,33 @@
+{
+  "name": "pic_desa-api",
+  "version": "1.0.0",
+  "description": "API untuk PIC Desa",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "ts-node-dev --respawn ./src/index.ts",
+    "seed": "ts-node ./prisma/seed.ts",
+    "migrate": "npx prisma migrate dev --preview-feature --skip-generate --name init",
+    "generate": "npx prisma generate",
+    "test": "jest",
+    "compile": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@hapi/hapi": "^21.3.2",
+    "@hapi/joi": "^17.1.1",
+    "@prisma/client": "^4.15.0",
+    "@types/hapi": "^18.0.8",
+    "bcrypt": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/hapi__joi": "^17.1.9",
+    "prisma": "^4.15.0",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.3"
+  }
+}
