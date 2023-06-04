@@ -44,7 +44,8 @@
     <string name="editProfile_button">Edit Profile</string>
     <string name="nama_desa">Nama Desa</string>
     <string name="lokasi_desa">Lokasi Desa</string>
-    <string name="deskripsi_desa">Deskripsi Umum</string>
+    <string name="masukkan_lokasi_desa">Masukkan lokasi desa...</string>
+    <string name="masukkan_nama_desa">Masukkan nama desa...</string>
 
     <!--Detail Activity-->
     <string name="detail_title">Judul Problem</string>
@@ -52,5 +53,6 @@
     <string name="detail_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in mollis massa. Ut in lacus lacinia, egestas urna a, tincidunt ipsum. Integer pulvinar velit sit amet libero sodales commodo nec eu massa.</string>
     <string name="detail_req">Requirements</string>
     <string name="detail_module">Modul X</string>
+
 
 </resources>

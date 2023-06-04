@@ -29,7 +29,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:padding="10dp"
-        android:hint="@string/nama_desa"
+        android:hint="@string/masukkan_nama_desa"
         android:inputType="text"
         android:background="@drawable/input_background"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
@@ -60,42 +60,10 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:padding="10dp"
-        android:hint="@string/lokasi_desa"
+        android:hint="@string/masukkan_lokasi_desa"
         android:inputType="text"
         android:background="@drawable/input_background"
         app:layout_constraintTop_toBottomOf="@id/tv_lokasi"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_deskripsi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:padding="5dp"
-        app:layout_constraintTop_toBottomOf="@id/editLokasi"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/deskripsi_desa"
-        android:textStyle="bold"
-        android:textSize="20sp"/>
-
-    <EditText
-        android:id="@+id/editDeskripsi"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:padding="10dp"
-        android:hint="@string/deskripsi_desa"
-        android:drawablePadding="0dp"
-        android:inputType="text"
-        android:background="@drawable/input_background"
-        app:layout_constraintTop_toBottomOf="@id/tv_deskripsi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
@@ -112,7 +80,7 @@
         android:padding="10dp"
         android:text="@string/editProfile_button"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintTop_toBottomOf="@id/editDeskripsi"
+        app:layout_constraintTop_toBottomOf="@id/editLokasi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
