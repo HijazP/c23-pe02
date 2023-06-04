@@ -12,6 +12,10 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        val idProblem = intent.getStringExtra(EXTRA_ITEM)
+
+
     }
 
     companion object {

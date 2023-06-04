@@ -30,11 +30,11 @@ class ProblemAdapter (private val listProblem: List<Dummy>): RecyclerView.Adapte
                 tvProblem.text = data.isi
             }
 
-//            binding.root.setOnClickListener {
-//                val intentToDetail = Intent(itemView.context, DetailActivity::class.java)
-//                intentToDetail.putExtra(DetailActivity.EXTRA_ITEM, data.id)
-//                itemView.context.startActivity(intentToDetail)
-//            }
+            binding.root.setOnClickListener {
+                val intentToDetail = Intent(itemView.context, DetailActivity::class.java)
+                intentToDetail.putExtra(DetailActivity.EXTRA_ITEM, data.id)
+                itemView.context.startActivity(intentToDetail)
+            }
         }
     }
 }
