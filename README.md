@@ -9,14 +9,13 @@
 - pandas                       2.0.2
 - pip                          23.1.2
 - scikit-learn                 1.2.2
-- tensorboard-data-server      0.7.0
 - tensorflow                   2.12.0
 - uvicorn                      0.22.0
 
 ### How to open the docs and open the API
 
 1. Make a venv by using `python -m venv [NameofYourVenv]`
-2. Activate the venv by using `.\[NameofYourVenv]\Scipts\activate`
+2. Activate the venv by using `.\[NameofYourVenv]\Scripts\activate`
 3. Import all necessary dependencies and modules list above
 4. Run by typing `uvicorn app:app --reload`
 5. Done
