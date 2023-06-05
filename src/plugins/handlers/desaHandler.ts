@@ -162,9 +162,9 @@ async function getAllProblems(request: Hapi.Request, h: Hapi.ResponseToolkit) {
         }
         else {
             return h.response( {
-                statusCode: 204,
+                statusCode: 200,
                 message: 'Belum menambahkan masalah, tidak ada masalah yang bisa ditampilkan'
-            }).code(204)
+            }).code(200)
         }
 
     } catch (err) {
@@ -209,9 +209,9 @@ async function getProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit) {
         }
         else {
             return h.response( {
-                statusCode: 204,
+                statusCode: 200,
                 message: 'Belum menambahkan masalah, tidak ada masalah yang bisa ditampilkan'
-            }).code(204)
+            }).code(200)
         }
 
     } catch (err) {
@@ -262,9 +262,9 @@ async function updateProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit)
         }
         else {
             return h.response( {
-                statusCode: 204,
+                statusCode: 200,
                 message: 'Belum menambahkan masalah, tidak ada masalah yang bisa diubah'
-            }).code(204)
+            }).code(200)
         }
 
     } catch (err) {
@@ -309,9 +309,9 @@ async function deleteProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit)
         }
         else {
             return h.response( {
-                statusCode: 204,
+                statusCode: 200,
                 message: 'Belum menambahkan masalah, tidak ada masalah yang bisa dihapus'
-            }).code(204)
+            }).code(200)
         }
 
     } catch (err) {
