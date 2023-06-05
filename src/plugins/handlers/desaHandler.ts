@@ -1,0 +1,334 @@
+import Hapi from "@hapi/hapi";
+import bcrypt from "bcrypt";
+import Jwt from "@hapi/jwt";
+import desa from "../desa";
+
+interface UserInput {
+    email: string
+    password: string
+    namaDesa: string
+    telepon: string
+    lokasiDesa: string
+    longitude: number
+    latitude: number
+}
+
+async function register(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const { prisma } = request.server.app
+    const payload = request.payload as UserInput
+
+    try {
+        const createdDesa = await prisma.desa.create({
+            data: {
+                email: payload.email,
+                password: bcrypt.hashSync(payload.password, 10),
+                namaDesa: payload.namaDesa,
+                telepon: payload.telepon,
+                lokasiDesa: payload.lokasiDesa,
+                longitude: payload.longitude,
+                latitude: payload.latitude,
+            },
+            select: {
+                id: true,
+                email: true,
+                namaDesa: true,
+                telepon: true,
+                lokasiDesa: true,
+                longitude: true,
+                latitude: true,
+            },
+        })
+        return h.response({
+            statusCode: 201,
+            message: 'Desa berhasil ditambahkan',
+            createdDesa
+        }).code(201)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+async function login(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const { email, password } = request.payload as any
+    const { prisma } = request.server.app
+
+    try {
+        const desa = await prisma.desa.findUnique({
+            where: {
+                email,
+            },
+        })
+
+        if (!desa) {
+            return h.response({
+                statusCode: 401,
+                message: 'Email atau password salah'
+            }).code(401)
+        }
+
+        const decoded = bcrypt.compareSync(password, desa.password)
+
+        if (!decoded) {
+            return h.response({
+                statusCode: 401,
+                message: 'Email atau password salah'
+            }).code(401)
+        }
+
+        const token = Jwt.token.generate({ desaId: desa.id }, { key: process.env.JWT_SECRET as string, algorithm: 'HS256'})
+
+        return h.response({
+            statusCode: 200,
+            data: {id: desa.id, email: desa.email, nama: desa.namaDesa},
+            message: `Berhasil masuk ke ${desa.namaDesa}`,
+            token
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+async function addProblem(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let desaId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            desaId = decode.decoded.payload.desaId
+        }
+    }
+    const { namaMasalah, deskripsi } = request.payload as any
+    const { prisma } = request.server.app
+
+    try {
+        const masalah = await prisma.masalah.create({
+            data : {
+                namaMasalah: namaMasalah,
+                deskripsi: deskripsi,
+                Desa: {
+                    connect: {id: desaId}
+                },
+            },
+        })
+
+        return h.response({
+            statusCode: 200,
+            masalah,
+            message: 'Berhasil menambahkan masalah desa'
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+async function getAllProblems(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let desaId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            desaId = decode.decoded.payload.desaId
+        }
+    }
+    const { prisma } = request.server.app
+
+    try {
+        const masalah = await prisma.masalah.findMany(
+            {
+                where: {
+                    idDesa: desaId
+                }
+            }
+        )
+
+        if (masalah.length > 1) {
+            return h.response({
+                statusCode: 200,
+                masalah,
+                message: 'Semua masalah berhasil ditampilkan'
+            }).code(200)
+        }
+        else {
+            return h.response( {
+                statusCode: 204,
+                message: 'Belum menambahkan masalah, tidak ada masalah yang bisa ditampilkan'
+            }).code(204)
+        }
+
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+async function getProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let desaId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            desaId = decode.decoded.payload.desaId
+        }
+    }
+    const { prisma } = request.server.app
+    const { id } = request.params as { id: string }
+
+    try {
+        const masalah = await prisma.masalah.findMany(
+            {
+                where: {
+                    AND: [
+                        {id: parseInt(id, 10)},
+                        {idDesa: desaId}
+                    ]
+                },
+            }
+        )
+
+        if (masalah.length) {
+            return h.response({
+                statusCode: 200,
+                masalah,
+                message: 'Berhasil menampilkan masalah berdasarkan id'
+            }).code(200)
+        }
+        else {
+            return h.response( {
+                statusCode: 204,
+                message: 'Belum menambahkan masalah, tidak ada masalah yang bisa ditampilkan'
+            }).code(204)
+        }
+
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+async function updateProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let desaId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            desaId = decode.decoded.payload.desaId
+        }
+    }
+    const { prisma } = request.server.app
+    const { id } = request.params as { id: string }
+    const { namaMasalah, deskripsi } = request.payload as any
+
+    try {
+        const masalah = await prisma.masalah.updateMany(
+            {
+                where: {
+                    AND: [
+                        {id: parseInt(id, 10)},
+                        {idDesa: desaId}
+                    ]
+                },
+                data: {
+                    namaMasalah: namaMasalah,
+                    deskripsi: deskripsi
+                }
+            }
+        )
+
+        if (masalah.count > 0) {
+            return h.response({
+                statusCode: 200,
+                masalah,
+                data: { namaMasalah, deskripsi},
+                message: 'Berhasil mengubah masalah berdasarkan id'
+            }).code(200)
+        }
+        else {
+            return h.response( {
+                statusCode: 204,
+                message: 'Belum menambahkan masalah, tidak ada masalah yang bisa diubah'
+            }).code(204)
+        }
+
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+async function deleteProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let desaId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            desaId = decode.decoded.payload.desaId
+        }
+    }
+    const { prisma } = request.server.app
+    const { id } = request.params as { id: string }
+
+    try {
+        const masalah = await prisma.masalah.deleteMany(
+            {
+                where: {
+                    AND: [
+                        {id: parseInt(id, 10)},
+                        {idDesa: desaId}
+                    ]
+                },
+            }
+        )
+
+        if (masalah.count > 0) {
+            return h.response({
+                statusCode: 200,
+                masalah,
+                message: 'Berhasil menghapus masalah berdasarkan id'
+            }).code(200)
+        }
+        else {
+            return h.response( {
+                statusCode: 204,
+                message: 'Belum menambahkan masalah, tidak ada masalah yang bisa dihapus'
+            }).code(204)
+        }
+
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+export default {
+    register,
+    login,
+    addProblem,
+    getAllProblems,
+    getProblemById,
+    updateProblemById,
+    deleteProblemById
+}

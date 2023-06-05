@@ -6,8 +6,8 @@ const prisma = new PrismaClient()
 async function main() {
     await prisma.desa.deleteMany({})
     await prisma.modul.deleteMany({})
-    await prisma.problem.deleteMany({})
-    await prisma.modulProblem.deleteMany({})
+    await prisma.masalah.deleteMany({})
+    await prisma.modulMasalah.deleteMany({})
     await prisma.kursus.deleteMany({})
 
     const pagerageung = await prisma.desa.create({
@@ -28,9 +28,9 @@ async function main() {
         }
     })
 
-    const problem1 = await prisma.problem.create({
+    const problem1 = await prisma.masalah.create({
         data: {
-            namaProblem: 'Jalan Rusak',
+            namaMasalah: 'Jalan Rusak',
             deskripsi: 'Jalan rusak parah',
             Desa: {
                 connect: { id: pagerageung.id },
@@ -47,12 +47,12 @@ async function main() {
         }
     })
 
-    const modulproblem1 = await prisma.modulProblem.create({
+    const modulproblem1 = await prisma.modulMasalah.create({
         data: {
             Modul: {
                 connect: { id: modul1.id },
             },
-            Problem: {
+            Masalah: {
                 connect: { id: problem1.id },
             },
         },

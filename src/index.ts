@@ -1,7 +1,9 @@
 import Hapi from '@hapi/hapi'
 import prisma from './plugins/prisma'
-import desa from './plugins/desa'
+import Jwt from '@hapi/jwt'
 import status from './plugins/status'
+import desa from './plugins/desa'
+
 
 const server: Hapi.Server = Hapi.server({
     port: process.env.PORT || 3000,
@@ -9,7 +11,32 @@ const server: Hapi.Server = Hapi.server({
 })
 
 export async function start(): Promise<Hapi.Server> {
-    await server.register([prisma, status, desa])
+    await server.register([
+        prisma,
+        status,
+        desa,
+    ])
+    await server.register(Jwt)
+    server.auth.strategy('bigstem-strategy', 'jwt', {
+        keys: process.env.JWT_SECRET,
+        verify: {
+            aud: false,
+            iss: false,
+            sub: false,
+            nbf: true,
+            exp: true,
+            maxAgeSec: 14400, // 4 hours
+            timeSkewSec: 15,
+        },
+        validate: (decoded: any, request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+            return {
+                isValid: true,
+                credentials: decoded
+            }
+        }
+    })
+    server.auth.default('bigstem-strategy')
+
     await server.start()
     return server
 }
@@ -22,10 +49,7 @@ process.on('unhandledRejection', async (err) => {
 
 start()
     .then((server) => {
-        console.log(`
-🚀 Server ready at: ${server.info.uri}
-⭐️ See sample requests: http://pris.ly/e/ts/rest-hapi#3-using-the-rest-api
-`)
+        console.log(`🚀 Server ready at: ${server.info.uri}`)
     })
     .catch((err) => {
         console.log(err)

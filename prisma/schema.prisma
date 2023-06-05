@@ -16,16 +16,17 @@ model Desa {
   lokasiDesa String
   latitude Float
   longitude Float
-  Problem Problem[]
+  masalah Masalah[]
 }
 
-model Problem {
+model Masalah {
   id  Int @id @default(autoincrement())
-  namaProblem String
+  namaMasalah String
   deskripsi String
   idDesa Int
   Desa Desa @relation(fields: [idDesa], references: [id])
-  ModulProblem ModulProblem[]
+  modulProblem ModulMasalah[]
+  ambilMasalah AmbilMasalah[]
 }
 
 model Modul {
@@ -33,19 +34,35 @@ model Modul {
   namaModul String
   idKursus Int
   Kursus Kursus @relation(fields: [idKursus], references: [id])
-  ModulProblem ModulProblem[]
+  modulMasalah ModulMasalah[]
 }
 
-model ModulProblem {
+model ModulMasalah {
   id Int @id @default(autoincrement())
   idModul Int
-  idProblem Int
+  idMasalah Int
   Modul Modul @relation(fields: [idModul], references: [id])
-  Problem Problem @relation(fields: [idProblem], references: [id])
+  Masalah Masalah @relation(fields: [idMasalah], references: [id])
 }
 
 model Kursus {
   id  Int @id @default(autoincrement())
   namaKursus String
-  Modul Modul[]
+  modul Modul[]
+}
+
+model Pengguna {
+  id  Int @id @default(autoincrement())
+  namaLengkap String
+  email String @unique
+  password String
+  ambilMasalah AmbilMasalah[]
+}
+
+model AmbilMasalah {
+  id  Int @id @default(autoincrement())
+  idMasalah Int
+  idPengguna Int
+  Masalah Masalah @relation(fields: [idMasalah], references: [id])
+  Pengguna Pengguna @relation(fields: [idPengguna], references: [id])
 }
