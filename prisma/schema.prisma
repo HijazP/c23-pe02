@@ -25,7 +25,6 @@ model Masalah {
   deskripsi String
   idDesa Int
   Desa Desa @relation(fields: [idDesa], references: [id])
-  modulMasalah ModulMasalah[]
   ambilMasalah AmbilMasalah[]
 }
 
@@ -34,37 +33,14 @@ model Modul {
   namaModul String
   idKursus Int
   Kursus Kursus @relation(fields: [idKursus], references: [id])
-  modulMasalah ModulMasalah[]
-}
-
-model ModulMasalah {
-  id Int @id @default(autoincrement())
-  idModul Int
-  idMasalah Int
-  Modul Modul @relation(fields: [idModul], references: [id])
-  Masalah Masalah @relation(fields: [idMasalah], references: [id])
 }
 
 model Kursus {
   id  Int @id @default(autoincrement())
   namaKursus String
   deskripsi String
+  dampak String
   modul Modul[]
-  kursusDampak KursusDampak[]
-}
-
-model Dampak {
-  id Int @id @default(autoincrement())
-  namaDampak String
-  kursusDampak KursusDampak[]
-}
-
-model KursusDampak {
-  id Int @id @default(autoincrement())
-  idKursus Int
-  idDampak Int
-  Kursus Kursus @relation(fields: [idKursus], references: [id])
-  Dampak Dampak @relation(fields: [idDampak], references: [id])
 }
 
 model Pengguna {

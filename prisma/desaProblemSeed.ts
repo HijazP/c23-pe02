@@ -4,6 +4,9 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient()
 
 async function main() {
+    await prisma.masalah.deleteMany({})
+    await prisma.desa.deleteMany({})
+
     const desa = await prisma.desa.createMany({
         data: [
             {
@@ -46,7 +49,7 @@ async function main() {
         ]
     })
 
-    const masalahTemplate: {namaMasalah: string, deskripsi: string}[] = []
+    const masalahTemplate: { namaMasalah: string, deskripsi: string }[] = []
 
     //Desa Pinogu - Gorontalo
     masalahTemplate.push({ namaMasalah: 'Akses jalan yang buruk', deskripsi: '' });
@@ -67,7 +70,7 @@ async function main() {
     masalahTemplate.push({ namaMasalah: 'Pengembangan kawasan organik', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Pengolahan produk dari sapi', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Penyalaan listrik yang belum 24 jam', deskripsi: '' });
-    
+
     //Desa Dataran Hijau - Gorontalo
     masalahTemplate.push({ namaMasalah: 'Akses yang sulit', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Infrastruktur', deskripsi: '' });
@@ -93,35 +96,50 @@ async function main() {
     masalahTemplate.push({ namaMasalah: 'Tidak ada tempat wisata', deskripsi: '' });
 
     //Desa Lewalu - Alor
-    masalahTemplate.push({ namaMasalah: 'Akses yang sulit', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Infrastruktur', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Kendala listrik', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Kendala pengelolaan kebun kopi', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Kendala pengolahan lahan kebun', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Kesulitan alat pengolahan', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Kurangnya bukti sejarah', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Kurangnya pemahaman pengolahan', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Kendala jaringan', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Mindset warga lokal yang kurang berkembang', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Minimnya ilmu tentang pengolahan', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Minimnya minat masyarakat dengan kopi Pinogu', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Minimnya mindset tentang bertani', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Minimnya mindset warga tentang pemasaran', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Minimnya pelestarian budaya', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Minimnya Publikasi tentang Haulalahe', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Minimnya publikasi tentang Pinogu', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Sulitnya memasarkan produk pertanian', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Tidak ada pelestarian budaya', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Tidak ada penerus usaha', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Tidak ada pengolahan limbah', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Tidak ada tempat wisata', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Sulit mencari souvenir atau oleh-oleh', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Sampah', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Akses jalan kurang baik', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Penerangan jalan kurang baik', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Ramah tamah', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Sulit mendapatkan transportasi', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Belum ada pengelolaan cinderamata/produk ikan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Sarana dan prasarana pariwisata yang kurang mendukung', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Perburuan Thresher Shark', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Peralihan profesi pemburu Thresher Shark', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Sampah di pantai (tanggul)', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Sedikit masalah perpolitikan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Strategi marketing untuk menjual produk warga lokal', deskripsi: '' });
 
     //Desa Aimoli - Alor
     masalahTemplate.push({ namaMasalah: 'Fasilitas penunjang wisata yang masih minim', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Wisata kuliner yang terbatas', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Akses informasi wisata yang masih terbatas', deskripsi: '' });
 
-    const problem: number = 58
+    const desa1 = await prisma.desa.findUnique({
+        where: {
+            email: 'pinogu@gorontalo.id'
+        }
+    })
+
+    const desa2 = await prisma.desa.findUnique({
+        where: {
+            email: 'dataranhijau@gorontalo.id'
+        }
+    })
+
+    const desa3 = await prisma.desa.findUnique({
+        where: {
+            email: 'lewalu@alor.id'
+        }
+    })
+
+    const desa4 = await prisma.desa.findUnique({
+        where: {
+            email: 'aimoli@alor.id'
+        }
+    })
+
+    const problem: number = 56
     for (let i = 0; i < problem; i++) {
         if (i < 18) {
             const masalah = await prisma.masalah.create({
@@ -129,7 +147,7 @@ async function main() {
                     namaMasalah: masalahTemplate[i].namaMasalah,
                     deskripsi: masalahTemplate[i].deskripsi,
                     Desa: {
-                        connect: { id: 1 }
+                        connect: { id: desa1? desa1.id : 0 }
                     }
                 }
             })
@@ -140,18 +158,18 @@ async function main() {
                     namaMasalah: masalahTemplate[i].namaMasalah,
                     deskripsi: masalahTemplate[i].deskripsi,
                     Desa: {
-                        connect: { id: 2 }
+                        connect: { id: desa2? desa2.id : 0 }
                     }
                 }
             })
         }
-        else if (i < 55) {
+        else if (i < 53) {
             const masalah = await prisma.masalah.create({
                 data: {
                     namaMasalah: masalahTemplate[i].namaMasalah,
                     deskripsi: masalahTemplate[i].deskripsi,
                     Desa: {
-                        connect: { id: 3 }
+                        connect: { id: desa3? desa3.id : 0 }
                     }
                 }
             })
@@ -162,7 +180,7 @@ async function main() {
                     namaMasalah: masalahTemplate[i].namaMasalah,
                     deskripsi: masalahTemplate[i].deskripsi,
                     Desa: {
-                        connect: { id: 4 }
+                        connect: { id: desa4? desa4.id : 0 }
                     }
                 }
             })
