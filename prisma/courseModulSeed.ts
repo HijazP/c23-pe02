@@ -9,9 +9,9 @@ async function main() {
             {namaDampak: 'mengubah paradigma mengenai sustainability'},
             {namaDampak: 'memahami prinsip ekologi'},
             {namaDampak: 'memahami elemen dasar green mindset'},
-            
+
         ]
-    }
+    })
 
     const kursus = await prisma.kursus.createMany({
         data: [
@@ -21,6 +21,15 @@ async function main() {
             }
         ]
     })
+
+    async function main() {
+        const modul = await prisma.modul.createMany({
+            data: [
+                {namaModul: 'Peurubahan menuju sustainable mindset'},
+                {}
+            ]
+        })
+    }
 }
 
 main()
