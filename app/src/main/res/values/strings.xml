@@ -55,6 +55,7 @@
     <string name="detail_module">Modul X</string>
     <string name="masukkan_nomor_telepon">Masukkan nomor telepon...</string>
     <string name="nomor_telepon">Nomor Telepon</string>
+    <string name="edit_success">Edit Berhasil</string>
 
 
 </resources>
