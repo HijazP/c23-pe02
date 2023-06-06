@@ -8,11 +8,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.amati.amatiapp.R
 import com.amati.amatiapp.database.UserPreferencesDatastore
 import com.amati.amatiapp.databinding.ActivityProfilBinding
+import com.amati.amatiapp.viewmodel.DetailViewModel
+import com.amati.amatiapp.viewmodel.ProfilViewModel
 import com.amati.amatiapp.viewmodel.Session
 import com.amati.amatiapp.viewmodel.SessionModelFactory
 
 class ProfilActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfilBinding
+    private lateinit var viewModel:ProfilViewModel
+
+    companion object {
+        const val EXTRA_USERNAME = "extra_username"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

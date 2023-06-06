@@ -53,6 +53,8 @@
     <string name="detail_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in mollis massa. Ut in lacus lacinia, egestas urna a, tincidunt ipsum. Integer pulvinar velit sit amet libero sodales commodo nec eu massa.</string>
     <string name="detail_req">Requirements</string>
     <string name="detail_module">Modul X</string>
+    <string name="masukkan_nomor_telepon">Masukkan nomor telepon...</string>
+    <string name="nomor_telepon">Nomor Telepon</string>
 
 
 </resources>
