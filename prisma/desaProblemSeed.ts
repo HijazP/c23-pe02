@@ -48,10 +48,78 @@ async function main() {
 
     const masalahTemplate: {namaMasalah: string, deskripsi: string}[] = []
 
+    //Desa Pinogu - Gorontalo
     masalahTemplate.push({ namaMasalah: 'Akses jalan yang buruk', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Bahasa bonda yang mulai jarang digunakan di kalangan anak muda dan anak-anak', deskripsi: '' });
-    masalahTemplate.push({ namaMasalah: 'Budaya yang mulai jarang dilakukan', deskripsi: 'Tumpukan sampah' });
-    masalahTemplate.push({ namaMasalah: '', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Budaya yang mulai jarang dilakukan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Budidaya dan pengolahan kopi', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Bukti sejarah yang belum ditemukan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Jaringan internet yang kurang lancar', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kawasan organik yang perlu dikembangkan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kearifan lokal dan budaya Pinogu perlu dilestarikan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kebutuhan air bersih', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kebutuhan pangan yang belum lengkap', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Listrik yang kurang menyeluruh', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Pembangunan infrastruksur di kawasan Pinogu', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Pemberdayaan sumber daya manusia', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Pengelolaan sistem dan hasil pertanian serta peternakan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Pengembangan dan pengelolaan potensi pariwisata', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Pengembangan kawasan organik', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Pengolahan produk dari sapi', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Penyalaan listrik yang belum 24 jam', deskripsi: '' });
+    
+    //Desa Dataran Hijau - Gorontalo
+    masalahTemplate.push({ namaMasalah: 'Akses yang sulit', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Infrastruktur', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kendala listrik', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kendala pengelolaan kebun kopi', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kendala pengolahan lahan kebun', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kesulitan alat pengolahan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kurangnya bukti sejarah', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kurangnya pemahaman pengolahan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kendala jaringan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Mindset warga lokal yang kurang berkembang', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya ilmu tentang pengolahan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya minat masyarakat dengan kopi Pinogu', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya mindset tentang bertani', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya mindset warga tentang pemasaran', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya pelestarian budaya', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya Publikasi tentang Haulalahe', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya publikasi tentang Pinogu', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Sulitnya memasarkan produk pertanian', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Tidak ada pelestarian budaya', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Tidak ada penerus usaha', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Tidak ada pengolahan limbah', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Tidak ada tempat wisata', deskripsi: '' });
+
+    //Desa Lewalu - Alor
+    masalahTemplate.push({ namaMasalah: 'Akses yang sulit', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Infrastruktur', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kendala listrik', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kendala pengelolaan kebun kopi', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kendala pengolahan lahan kebun', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kesulitan alat pengolahan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kurangnya bukti sejarah', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kurangnya pemahaman pengolahan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Kendala jaringan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Mindset warga lokal yang kurang berkembang', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya ilmu tentang pengolahan', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya minat masyarakat dengan kopi Pinogu', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya mindset tentang bertani', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya mindset warga tentang pemasaran', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya pelestarian budaya', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya Publikasi tentang Haulalahe', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Minimnya publikasi tentang Pinogu', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Sulitnya memasarkan produk pertanian', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Tidak ada pelestarian budaya', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Tidak ada penerus usaha', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Tidak ada pengolahan limbah', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Tidak ada tempat wisata', deskripsi: '' });
+
+    //Desa Aimoli - Alor
+    masalahTemplate.push({ namaMasalah: 'Fasilitas penunjang wisata yang masih minim', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Wisata kuliner yang terbatas', deskripsi: '' });
+    masalahTemplate.push({ namaMasalah: 'Akses informasi wisata yang masih terbatas', deskripsi: '' });
 
     const problem: number = 58
     for (let i = 0; i < problem; i++) {
