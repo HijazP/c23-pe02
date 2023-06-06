@@ -153,9 +153,10 @@ async function getAllProblems(request: Hapi.Request, h: Hapi.ResponseToolkit) {
             }
         )
 
-        if (masalah.length > 1) {
+        if (masalah.length > 0) {
             return h.response({
                 statusCode: 200,
+                totalMasalah: masalah.length,
                 masalah,
                 message: 'Semua masalah berhasil ditampilkan'
             }).code(200)
@@ -255,8 +256,7 @@ async function updateProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit)
         if (masalah.count > 0) {
             return h.response({
                 statusCode: 200,
-                masalah,
-                data: { namaMasalah, deskripsi},
+                data: { id, namaMasalah, deskripsi },
                 message: 'Berhasil mengubah masalah berdasarkan id'
             }).code(200)
         }
@@ -303,7 +303,7 @@ async function deleteProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit)
         if (masalah.count > 0) {
             return h.response({
                 statusCode: 200,
-                masalah,
+                data: { 'id masalah': id },
                 message: 'Berhasil menghapus masalah berdasarkan id'
             }).code(200)
         }
