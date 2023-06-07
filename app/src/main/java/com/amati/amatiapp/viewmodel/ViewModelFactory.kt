@@ -14,14 +14,3 @@ class SessionModelFactory(private val pref: UserPreferencesDatastore) : ViewMode
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
 }
-
-//@Suppress("UNCHECKED_CAST")
-//class ViewModelFactory() : ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        return when {
-//            modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel() as T
-//            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> RegisterViewModel() as T
-//            else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-//        }
-//    }
-//}

@@ -14,10 +14,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.amati.amatiapp.R
 import com.amati.amatiapp.databinding.ActivityLoginBinding
-import com.amati.amatiapp.response.RequestLogin
 import com.amati.amatiapp.viewmodel.LoginViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.amati.amatiapp.database.UserPreferencesDatastore
+import com.amati.amatiapp.network.response.RequestLogin
 import com.amati.amatiapp.viewmodel.Session
 import com.amati.amatiapp.viewmodel.SessionModelFactory
 
@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
             val user = loginViewModel.dataUser.value
             if (user != null) {
                 try {
-                    inputSession(it, user?.data?.token ?: "", session)
+                    inputSession(it, user.token, session)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
@@ -90,9 +90,9 @@ class LoginActivity : AppCompatActivity() {
                     email.isEmpty() -> {
                         binding.edLoginEmail.error = getString(R.string.email_required)
                     }
-//                    !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-//                        binding.edLoginEmail.error = getString(R.string.invalid_email)
-//                    }
+                    !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                        binding.edLoginEmail.error = getString(R.string.invalid_email)
+                    }
                     password.isEmpty() -> {
                         binding.edLoginEmail.error = getString(R.string.password_required)
                     }
@@ -100,14 +100,12 @@ class LoginActivity : AppCompatActivity() {
                         binding.edLoginPassword.error = getString(R.string.password_min)
                     }
                     else -> {
-                        val requestLogin = RequestLogin(email, password)
-                        loginViewModel.login(requestLogin)
-//                        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-//                            val requestLogin = RequestLogin(email, password)
-//                            loginViewModel.login(requestLogin)
-//                        } else {
-//                            Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()
-//                        }
+                        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                            val requestLogin = RequestLogin(email, password)
+                            loginViewModel.login(requestLogin)
+                        } else {
+                            Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             } catch (e: Exception) {
@@ -142,7 +140,7 @@ class LoginActivity : AppCompatActivity() {
             200 -> {
                 val response = loginViewModel.dataUser.value
                 if (response?.data  != null){
-                    session.setSession(response.data.user.name, response.data.user.id ,token)
+                    session.setSession(response.data.nama, response.data.id ,token)
                     Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                 } else{
                     Toast.makeText(this, "I dont have any idea", Toast.LENGTH_SHORT).show()

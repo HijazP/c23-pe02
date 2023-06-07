@@ -2,13 +2,13 @@ package com.amati.amatiapp.viewmodel
 
 import androidx.lifecycle.*
 import com.amati.amatiapp.network.response.LoginResponse
+import com.amati.amatiapp.network.response.RequestLogin
 import com.amati.amatiapp.network.retrofit.ApiConfig
-import com.amati.amatiapp.response.RequestLogin
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginViewModel(): ViewModel(){
+class LoginViewModel: ViewModel(){
     private val _dataUser = MutableLiveData<LoginResponse>()
     val dataUser: LiveData<LoginResponse> = _dataUser
 
@@ -28,7 +28,7 @@ class LoginViewModel(): ViewModel(){
                 if (response.isSuccessful) {
                     if (responseBody != null) {
                         _dataUser.value = responseBody!!
-                        _code.value = responseBody.code
+                        _code.value = responseBody.statusCode
                     }
                 } else{
                     _code.value = response.code()
