@@ -5,25 +5,24 @@ from fastapi import FastAPI
 import sklearn 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from tensorflow.keras.models import load_model
 
 app = FastAPI()
 
 course_names = {
-    1: "Fundamental Course (1)",
-    2: "Fundamental Course (2)",
-    3: "Fundamental Course (3)",
-    4: "Indonesia Sustainability Coral Reef University Network (ISCORE)",
-    5: "Ecotourism",
-    6: "Moringa Academy",
-    7: "Indonesia Sustainable Social Forestry Education Program (IS-FREE)",
-    8: "Waste Management",
-    9: "Integrated Farming",
-    10: "Solar Academy",
-    11: "Program Startup"
+    0: "Fundamental Course (1)",
+    1: "Fundamental Course (2)",
+    2: "Fundamental Course (3)",
+    3: "Indonesia Sustainability Coral Reef University Network (ISCORE)",
+    4: "Ecotourism",
+    5: "Moringa Academy",
+    6: "Indonesia Sustainable Social Forestry Education Program (IS-FREE)",
+    7: "Waste Management",
+    8: "Integrated Farming",
+    9: "Solar Academy",
+    10: "Program Startup"
 }
    
-course_ids = {
+course_id = {
     0: 1,
     1: 2,
     2: 3,
@@ -37,14 +36,12 @@ course_ids = {
     10: 11
 }
 
-
 # Load the necessary data
 with open('./load_model/cos_sim_course.pkl', 'rb') as f:
     cos_sim_course = pickle.load(f)
 
 with open('./load_model/indices.pkl', 'rb') as f:
     indices = pickle.load(f)
-
 
 def recommendations(name: str, cos_sim=cos_sim_course) -> List[str]:
     recommended_course = []
@@ -60,20 +57,23 @@ def recommendations(name: str, cos_sim=cos_sim_course) -> List[str]:
 
     return recommended_course
 
+@app.get("/recommendations/{name}")
+def get_recommendations(name: str):
+    recommended_courses = recommendations(name)
+    recommended_course_names = [course_names[i] for i in recommended_courses]
+    recommended_course_id = [course_id[i] for i in recommended_courses]
+    #berdasarkan nama course
+    return {"Kursus Saat Ini": name,"Rekomendasi": recommended_course_names}
+
+
 #Berdasarkan ID
 #@app.get("/recommendations/{course_id}")
 #def get_recommendations(course_id: int):
 #    course_name = course_names.get(course_id)
 #    recommended_courses = recommendations(course_name)
-#    recommended_course_ids = [course_ids[course_index] for course_index in recommended_courses]
-#    return {"Kursus Saat Ini": course_name, "Rekomendasi": recommended_course_ids}
+#    recommended_course_id = [course_id[i] for i in recommended_courses]
+#    return {"Kursus Saat Ini": course_name, "Rekomendasi": recommended_course_id}
 
-#Berdasarkan Nama
-@app.get("/recommendations/{name}")
-def get_recommendations(name: str):
-    recommended_courses = recommendations(name)
-    recommended_course_names = [course_names.get(course_id) for course_id in recommended_courses]
-    return {"rekomendasi": recommended_course_names}
 
 ###############################
 
