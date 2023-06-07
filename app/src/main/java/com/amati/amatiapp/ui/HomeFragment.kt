@@ -1,24 +1,31 @@
 package com.amati.amatiapp.ui
 
-import android.annotation.SuppressLint
-import android.os.Build
+import android.content.Context
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amati.amatiapp.R
 import com.amati.amatiapp.adapter.ModulAdapter
 import com.amati.amatiapp.adapter.ProgressAdapter
 import com.amati.amatiapp.data.DataDummy
+import com.amati.amatiapp.database.UserPreferencesDatastore
 import com.amati.amatiapp.databinding.FragmentHomeBinding
+import com.amati.amatiapp.viewmodel.Session
+import com.amati.amatiapp.viewmodel.SessionModelFactory
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+    private var nama : String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +36,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val dataStore: DataStore<Preferences> = requireContext().dataStore
+
+        val pref = UserPreferencesDatastore.getInstance(dataStore)
+        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+
+        session.getName().observe(viewLifecycleOwner){
+            if (it != "") {
+                nama = it
+            }
+        }
 
         setStatusBarColorToMatchTopBar()
 
@@ -58,7 +75,6 @@ class HomeFragment : Fragment() {
 //            val adapter = ProgressAdapter(DataDummy.dummyList)
 //            binding.rvProgress.adapter = adapter
 //        } else {
-//
 //        }
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvProgress.layoutManager = layoutManager
@@ -69,19 +85,21 @@ class HomeFragment : Fragment() {
         binding.rvProgress.adapter = adapter
 
     }
-
-    @SuppressLint("ObsoleteSdkInt")
     private fun setStatusBarColorToMatchTopBar() {
         val topBarColor = ContextCompat.getColor(requireContext(), R.color.topbar_color)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = (activity as? AppCompatActivity)?.window
-            window?.apply {
-                addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                statusBarColor = topBarColor
-            }
+        val window = (activity as? AppCompatActivity)?.window
+        window?.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = topBarColor
         }
-        (activity as AppCompatActivity).supportActionBar?.hide()
 
+        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = buildString {
+            append(getString(R.string.hi_home))
+            append(nama)
+        }
+//        val appCompatActivity = activity as? AppCompatActivity
+//        appCompatActivity?.setSupportActionBar(binding.toolbar)
     }
 }

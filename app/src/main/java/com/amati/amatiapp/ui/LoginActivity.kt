@@ -9,6 +9,7 @@ import android.util.Patterns
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -26,7 +27,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +36,6 @@ class LoginActivity : AppCompatActivity() {
 
         setupView()
         loginAct()
-
-        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
         val pref = UserPreferencesDatastore.getInstance(dataStore)
         val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
@@ -63,7 +62,6 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, getString(R.string.go_login), Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 

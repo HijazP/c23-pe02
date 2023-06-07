@@ -16,6 +16,10 @@ class Session(private val pref : UserPreferencesDatastore) : ViewModel(){
         }
     }
 
+    fun getName(): LiveData<String> {
+        return pref.getName().asLiveData()
+    }
+
     fun logout() {
         viewModelScope.launch {
             pref.logout()

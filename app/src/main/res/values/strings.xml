@@ -33,5 +33,6 @@
     <string name="title_home">Home</string>
     <string name="title_desaku">Desaku</string>
     <string name="title_profil">Profil</string>
+    <string name="hi_home">\"Hi, \"</string>
 
 </resources>

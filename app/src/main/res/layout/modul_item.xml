@@ -35,7 +35,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="23sp"
             android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
@@ -46,12 +46,11 @@
         <TextView
             android:id="@+id/tv_desc"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="15sp"
-            android:textStyle="bold"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_name"
             tools:text="progress" />

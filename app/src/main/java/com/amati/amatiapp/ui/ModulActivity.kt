@@ -14,6 +14,7 @@ class ModulActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val idmodul = intent.getStringExtra(EXTRA_ITEM)
+
     }
 
     companion object {
