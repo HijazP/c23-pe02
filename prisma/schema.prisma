@@ -16,6 +16,7 @@ model Desa {
   lokasiDesa String
   latitude Float
   longitude Float
+  foto String
   masalah Masalah[]
 }
 
@@ -40,7 +41,9 @@ model Kursus {
   namaKursus String
   deskripsi String
   dampak String
+  foto String
   modul Modul[]
+  ambilKursus AmbilKursus[]
 }
 
 model Pengguna {
@@ -48,13 +51,27 @@ model Pengguna {
   namaLengkap String
   email String @unique
   password String
+  foto String
   ambilMasalah AmbilMasalah[]
+  ambilKursus AmbilKursus[]
 }
 
 model AmbilMasalah {
   id  Int @id @default(autoincrement())
   idMasalah Int
   idPengguna Int
+  statusSelesai Boolean
   Masalah Masalah @relation(fields: [idMasalah], references: [id])
+  Pengguna Pengguna @relation(fields: [idPengguna], references: [id])
+}
+
+model AmbilKursus {
+  id  Int @id @default(autoincrement())
+  idKursus Int
+  idPengguna Int
+  jumlahModul Int
+  modulSekarang Int
+  statusSelesai Boolean
+  Kursus Kursus @relation(fields: [idKursus], references: [id])
   Pengguna Pengguna @relation(fields: [idPengguna], references: [id])
 }

@@ -13,12 +13,96 @@ interface UserInput {
     latitude: number
 }
 
-async function register(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+async function registerDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
     const payload = request.payload as UserInput
 
     try {
-        const createdDesa = await prisma.desa.create({
+        const desa = await prisma.desa.create({
+            data: {
+                email: payload.email,
+                password: bcrypt.hashSync(payload.password, 10),
+                namaDesa: payload.namaDesa,
+                telepon: payload.telepon,
+                lokasiDesa: '',
+                longitude: 0,
+                latitude: 0,
+            },
+            select: {
+                id: true,
+                email: true,
+                namaDesa: true,
+                telepon: true,
+            },
+        })
+        return h.response({
+            statusCode: 201,
+            message: 'Desa berhasil ditambahkan',
+            desa
+        }).code(201)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+async function loginDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const { email, password } = request.payload as any
+    const { prisma } = request.server.app
+
+    try {
+        const desa = await prisma.desa.findUnique({
+            where: {
+                email,
+            },
+        })
+
+        const decoded = bcrypt.compareSync(password, desa? desa.password : '')
+
+        if (!decoded || !desa) {
+            return h.response({
+                statusCode: 401,
+                message: 'Email atau password salah'
+            }).code(401)
+        }
+
+        const token = Jwt.token.generate({ desaId: desa.id }, { key: process.env.JWT_SECRET as string, algorithm: 'HS256'})
+
+        return h.response({
+            statusCode: 200,
+            data: {id: desa.id, email: desa.email, nama: desa.namaDesa},
+            message: `Berhasil masuk ke ${desa.namaDesa}`,
+            token
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+async function updateDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let desaId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            desaId = decode.decoded.payload.desaId
+        }
+    }
+    const { prisma } = request.server.app
+    const payload = request.payload as UserInput
+
+    try {
+        const desa = await prisma.desa.update({
+            where: {
+                id: desaId
+            },
             data: {
                 email: payload.email,
                 password: bcrypt.hashSync(payload.password, 10),
@@ -39,53 +123,9 @@ async function register(request: Hapi.Request, h: Hapi.ResponseToolkit) {
             },
         })
         return h.response({
-            statusCode: 201,
-            message: 'Desa berhasil ditambahkan',
-            createdDesa
-        }).code(201)
-    } catch (err) {
-        console.log(err)
-        return h.response({
-            statusCode: 500,
-            message: 'Ada masalah di server'
-        }).code(500)
-    }
-}
-
-async function login(request: Hapi.Request, h: Hapi.ResponseToolkit) {
-    const { email, password } = request.payload as any
-    const { prisma } = request.server.app
-
-    try {
-        const desa = await prisma.desa.findUnique({
-            where: {
-                email,
-            },
-        })
-
-        if (!desa) {
-            return h.response({
-                statusCode: 401,
-                message: 'Email atau password salah'
-            }).code(401)
-        }
-
-        const decoded = bcrypt.compareSync(password, desa.password)
-
-        if (!decoded) {
-            return h.response({
-                statusCode: 401,
-                message: 'Email atau password salah'
-            }).code(401)
-        }
-
-        const token = Jwt.token.generate({ desaId: desa.id }, { key: process.env.JWT_SECRET as string, algorithm: 'HS256'})
-
-        return h.response({
             statusCode: 200,
-            data: {id: desa.id, email: desa.email, nama: desa.namaDesa},
-            message: `Berhasil masuk ke ${desa.namaDesa}`,
-            token
+            message: 'Desa berhasil diupdate',
+            desa
         }).code(200)
     } catch (err) {
         console.log(err)
@@ -324,8 +364,9 @@ async function deleteProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit)
 }
 
 export default {
-    register,
-    login,
+    registerDesa,
+    loginDesa,
+    updateDesa,
     addProblem,
     getAllProblems,
     getProblemById,

@@ -10,7 +10,7 @@ const desaPlugin = {
                 // Daftar desa
                 method: 'POST',
                 path: '/desa/register',
-                handler: desaHandler.register,
+                handler: desaHandler.registerDesa,
                 options: {
                     auth: false,
                 }
@@ -19,10 +19,16 @@ const desaPlugin = {
                 // Masuk desa
                 method: 'POST',
                 path: '/desa/login',
-                handler: desaHandler.login,
+                handler: desaHandler.loginDesa,
                 options: {
                     auth: false,
                 }
+            },
+            {
+                // Update desa berdasarkan id
+                method: 'PUT',
+                path: '/desa/update',
+                handler: desaHandler.updateDesa,
             },
             {
                 // Menambahkan masalah desa
