@@ -11,73 +11,96 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
+        android:contentDescription="@string/app_logo_desc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/amati_logo"
-        android:contentDescription="@string/app_logo_desc" />
+        app:srcCompat="@drawable/amati_logo" />
 
     <EditText
         android:id="@+id/ed_register_email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
-        android:padding="10dp"
+        android:autofillHints="@string/register_email_auto_fill_hint"
+        android:background="@drawable/input_background"
         android:hint="@string/register_email_hint"
         android:inputType="textEmailAddress"
-        android:background="@drawable/input_background"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_register_icon"
-        android:autofillHints="@string/register_email_auto_fill_hint" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_register_icon" />
 
     <EditText
         android:id="@+id/ed_register_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="15dp"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="50dp"
-        android:padding="10dp"
+        android:autofillHints="@string/register_pass_auto_fill_hint"
+        android:background="@drawable/input_background"
         android:hint="@string/register_pass_hint"
         android:inputType="textPassword"
-        android:background="@drawable/input_background"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_email"
-        android:autofillHints="@string/register_pass_auto_fill_hint" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_email" />
 
     <EditText
         android:id="@+id/ed_register_repassword"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="15dp"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="50dp"
-        android:padding="10dp"
+        android:autofillHints="@string/register_pass_auto_fill_hint"
+        android:background="@drawable/input_background"
         android:hint="@string/register_repass_hint"
         android:inputType="textPassword"
-        android:background="@drawable/input_background"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_password"
-        android:autofillHints="@string/register_pass_auto_fill_hint"/>
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_password" />
 
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="50dp"
+        android:background="@drawable/button_background"
         android:padding="10dp"
         android:text="@string/register_button"
-        android:background="@drawable/button_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_register_repassword" />
+
+    <TextView
+        android:id="@+id/tv_register_login_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="80dp"
+        android:text="@string/register_login_desc"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register" />
+
+    <TextView
+        android:id="@+id/btn_register_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/register_login_button"
+        android:textColor="@color/teal_700"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_register_login_desc"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,14 @@
     <string name="register_email_auto_fill_hint">email</string>
     <string name="register_pass_auto_fill_hint">password</string>
     <string name="register_button">Register</string>
+    <string name="register_success">Pendaftaran Berhasil</string>
+    <string name="register_login_desc">Sudah memiliki akun?</string>
+    <string name="register_login_button">Masuk</string>
+    <string name="register_email_required">Masukkan email anda</string>
+    <string name="register_invalid_email">Format email tidak sesuai</string>
+    <string name="register_invalid_pass">Password harus mengandung minimal 6 karakter</string>
+    <string name="register_invalid_repass">Masukkan kembali password dengan benar</string>
+
 
     <!--Login Activity-->
     <string name="login_button">Login</string>
@@ -22,7 +30,7 @@
     <string name="login_success">Berhasil Masuk. Hallo, </string>
     <string name="go_login">Silahkan Login Terlebih Dahulu</string>
     <string name="login_failed">Gagal Masuk</string>
-    <string name="unauthorized">Email atau password mungkin salah</string>
+    <string name="unauthorized">Email atau password salah</string>
     <string name="invalid_email">Format email tidak sesuai</string>
     <string name="data_not_found">Data tidak ditemukan</string>
     <string name="server_error">Server Error</string>
