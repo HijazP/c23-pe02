@@ -88,32 +88,32 @@ async function main() {
   modulTemplate.push({ id: 64, namaModul: "Identifikasi pemenuhan target SDGs melalui system pertanian terpadu" });
 
   // kursus 10
-  modulTemplate.push({ id: 67, namaModul: "Dasar - dasar solar PV" });
-  modulTemplate.push({ id: 68, namaModul: "Pemahaman dasar rangkaian listrik" });
-  modulTemplate.push({ id: 69, namaModul: "Perkenalan perangkat solar PV (Baterai, Investor, dan solar charge controller)" });
-  modulTemplate.push({ id: 70, namaModul: "Kommisioning dan sistem monitoring pada solar PV" });
-  modulTemplate.push({ id: 71, namaModul: "Maintenance & Inspection" });
-  modulTemplate.push({ id: 72, namaModul: "Tinjauan solar PV dari analisis finansial" });
+  modulTemplate.push({ id: 65, namaModul: "Dasar - dasar solar PV" });
+  modulTemplate.push({ id: 66, namaModul: "Pemahaman dasar rangkaian listrik" });
+  modulTemplate.push({ id: 67, namaModul: "Perkenalan perangkat solar PV (Baterai, Investor, dan solar charge controller)" });
+  modulTemplate.push({ id: 68, namaModul: "Kommisioning dan sistem monitoring pada solar PV" });
+  modulTemplate.push({ id: 69, namaModul: "Maintenance & Inspection" });
+  modulTemplate.push({ id: 70, namaModul: "Tinjauan solar PV dari analisis finansial" });
 
   // kursus 11
-  modulTemplate.push({ id: 73, namaModul: "Sustainable Startup (Mengenal Sustainable Start Up" });
-  modulTemplate.push({ id: 74, namaModul: "SDGs 12 - Responsible" });
-  modulTemplate.push({ id: 75, namaModul: "Consuption & Production" });
-  modulTemplate.push({ id: 76, namaModul: "Sustainable Business Idea & the process of growth" });
-  modulTemplate.push({ id: 77, namaModul: "Sustainable Impact & sustainable business Mission" });
-  modulTemplate.push({ id: 78, namaModul: "Building Profit Model" });
-  modulTemplate.push({ id: 79, namaModul: "Business Scale up & Innovation" });
-  modulTemplate.push({ id: 80, namaModul: "Meassuring Sustainable Impact" });
-  modulTemplate.push({ id: 81, namaModul: "Sustainable Business Model)" });
-  modulTemplate.push({ id: 82, namaModul: "Innovation Management (Growth Mindset" });
-  modulTemplate.push({ id: 83, namaModul: "Design Thinking" });
-  modulTemplate.push({ id: 84, namaModul: "Lean Canvas" });
-  modulTemplate.push({ id: 85, namaModul: "Customer - Problem Fit" });
-  modulTemplate.push({ id: 86, namaModul: "Problem - Sollution Fit" });
-  modulTemplate.push({ id: 87, namaModul: "Prototype & MVP" });
-  modulTemplate.push({ id: 88, namaModul: "English for Business" });
-  modulTemplate.push({ id: 89, namaModul: "Product Management" });
-  modulTemplate.push({ id: 90, namaModul: "Digital Marketing)" });
+  modulTemplate.push({ id: 71, namaModul: "Sustainable Startup (Mengenal Sustainable Start Up" });
+  modulTemplate.push({ id: 72, namaModul: "SDGs 12 - Responsible" });
+  modulTemplate.push({ id: 73, namaModul: "Consuption & Production" });
+  modulTemplate.push({ id: 74, namaModul: "Sustainable Business Idea & the process of growth" });
+  modulTemplate.push({ id: 75, namaModul: "Sustainable Impact & sustainable business Mission" });
+  modulTemplate.push({ id: 76, namaModul: "Building Profit Model" });
+  modulTemplate.push({ id: 77, namaModul: "Business Scale up & Innovation" });
+  modulTemplate.push({ id: 78, namaModul: "Meassuring Sustainable Impact" });
+  modulTemplate.push({ id: 79, namaModul: "Sustainable Business Model)" });
+  modulTemplate.push({ id: 80, namaModul: "Innovation Management (Growth Mindset" });
+  modulTemplate.push({ id: 81, namaModul: "Design Thinking" });
+  modulTemplate.push({ id: 82, namaModul: "Lean Canvas" });
+  modulTemplate.push({ id: 83, namaModul: "Customer - Problem Fit" });
+  modulTemplate.push({ id: 84, namaModul: "Problem - Sollution Fit" });
+  modulTemplate.push({ id: 85, namaModul: "Prototype & MVP" });
+  modulTemplate.push({ id: 86, namaModul: "English for Business" });
+  modulTemplate.push({ id: 87, namaModul: "Product Management" });
+  modulTemplate.push({ id: 88, namaModul: "Digital Marketing)" });
 }
 
 main()
