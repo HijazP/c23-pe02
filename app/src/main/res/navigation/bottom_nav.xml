@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name ="com.amati.amatiapp.ui.HomeFragment"
+        android:name ="com.amati.amatiappuser.ui.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/desakuFragment"
-        android:name ="com.amati.amatiapp.ui.DesakuFragment"
+        android:name ="com.amati.amatiappuser.ui.DesakuFragment"
         android:label="Desaku"
         tools:layout="@layout/fragment_desaku" />
     <fragment
         android:id="@+id/profilFragment"
-        android:name ="com.amati.amatiapp.ui.ProfilFragment"
+        android:name ="com.amati.amatiappuser.ui.ProfilFragment"
         android:label="Profil"
         tools:layout="@layout/fragment_profil" />
 

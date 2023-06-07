@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.amati.amatiapp'
+    namespace 'com.amati.amatiappuser'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.amati.amatiapp"
+        applicationId "com.amati.amatiappuser"
         minSdk 24
         targetSdk 33
         versionCode 1
