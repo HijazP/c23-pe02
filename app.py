@@ -9,51 +9,71 @@ from tensorflow.keras.models import load_model
 
 app = FastAPI()
 
-with open('./load_model/cos_sim.pkl', 'rb') as file:
-    cos_sim = pickle.load(file)
+course_names = {
+    1: "Fundamental Course (1)",
+    2: "Fundamental Course (2)",
+    3: "Fundamental Course (3)",
+    4: "Indonesia Sustainability Coral Reef University Network (ISCORE)",
+    5: "Ecotourism",
+    6: "Moringa Academy",
+    7: "Indonesia Sustainable Social Forestry Education Program (IS-FREE)",
+    8: "Waste Management",
+    9: "Integrated Farming",
+    10: "Solar Academy",
+    11: "Program Startup"
+}
+   
+course_ids = {
+    0: 1,
+    1: 2,
+    2: 3,
+    3: 4,
+    4: 5,
+    5: 6,
+    6: 7,
+    7: 8,
+    8: 9,
+    9: 10,
+    10: 11
+}
 
-with open('./load_model/cosine_similarity.pkl', 'rb') as file:
-    cosine_similarity = pickle.load(file)
 
-with open('./load_model/course.pkl', 'rb') as file:
-    course = pickle.load(file)
+# Load the necessary data
+with open('./load_model/cos_sim_course.pkl', 'rb') as f:
+    cos_sim_course = pickle.load(f)
 
-with open('./load_model/tfidf_matrix.pkl', 'rb') as file:
-    tfidf_matrix = pickle.load(file)
+with open('./load_model/indices.pkl', 'rb') as f:
+    indices = pickle.load(f)
 
-# Generate recommendations
-def recommendations(name, model, dataset, cos_sim):
+
+def recommendations(name: str, cos_sim=cos_sim_course) -> List[str]:
     recommended_course = []
+    idx = indices[indices == name].index[0]
+    score_series = pd.Series(cos_sim[idx]).sort_values(ascending=False)
+    top_10_indexes = list(score_series.iloc[1:11].index)
 
-    # Get the index of the input course title
-    idx = dataset.index.get_loc(name)
-
-    # Reshape the cosine similarity matrix for the input data
-    input_data = cos_sim.reshape(len(dataset), -1)
-
-    # Predict the TF-IDF matrix for the input course
-    predicted_tfidf = model.predict(input_data[idx].reshape(1, -1)).reshape(-1,)
-
-    # Calculate the cosine similarity between the predicted and actual TF-IDF matrices
-    score_series = pd.Series(cosine_similarity(predicted_tfidf.reshape(1, -1), tfidf_matrix).flatten())
-
-    # Get the top 10 indexes with the highest cosine similarity scores
-    top_10_indexes = list(score_series.sort_values(ascending=False).iloc[1:11].index)
 
     for i in top_10_indexes:
-        recommended_course.append(dataset.index[i])
+        course_index = list(indices.index)[i]
+        course_name = course_names.get(course_index)
+        recommended_course.append(list(indices.index)[i])
 
     return recommended_course
 
-# Memuat model dari file .h5
-model = load_model('./load_model/model.h5')
+#Berdasarkan ID
+#@app.get("/recommendations/{course_id}")
+#def get_recommendations(course_id: int):
+#    course_name = course_names.get(course_id)
+#    recommended_courses = recommendations(course_name)
+#    recommended_course_ids = [course_ids[course_index] for course_index in recommended_courses]
+#    return {"Kursus Saat Ini": course_name, "Rekomendasi": recommended_course_ids}
 
+#Berdasarkan Nama
 @app.get("/recommendations/{name}")
 def get_recommendations(name: str):
-    title = name
-    recommended_course = recommendations(title, model, course, cos_sim)
-    return {"rekomendasi":recommended_course}
-
+    recommended_courses = recommendations(name)
+    recommended_course_names = [course_names.get(course_id) for course_id in recommended_courses]
+    return {"rekomendasi": recommended_course_names}
 
 ###############################
 
