@@ -13,4 +13,9 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:searchIcon">@drawable/searchview_icon</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+    </style>
 </resources>

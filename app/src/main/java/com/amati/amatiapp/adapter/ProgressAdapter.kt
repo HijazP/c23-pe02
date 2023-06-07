@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.amati.amatiapp.R
 import com.amati.amatiapp.data.Dummy
 import com.amati.amatiapp.databinding.RvprogressItemBinding
+import com.amati.amatiapp.ui.ModulActivity
 
 class ProgressAdapter(private val listProgress: List<Dummy>): RecyclerView.Adapter<ProgressAdapter.ViewHolder>() {
 
@@ -35,9 +36,9 @@ class ProgressAdapter(private val listProgress: List<Dummy>): RecyclerView.Adapt
             }
 
             binding.root.setOnClickListener {
-//                val intentToDetail = Intent(itemView.context, DetailActivity::class.java)
-//                intentToDetail.putExtra(DetailActivity.EXTRA_STORY, data.id)
-//                itemView.context.startActivity(intentToDetail)
+                val intentToDetail = Intent(itemView.context, ModulActivity::class.java)
+                intentToDetail.putExtra(ModulActivity.EXTRA_ITEM, data.id)
+                itemView.context.startActivity(intentToDetail)
             }
         }
     }

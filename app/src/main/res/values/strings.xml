@@ -26,6 +26,8 @@
     <string name="invalid_email">Format email tidak sesuai</string>
     <string name="data_not_found">Data tidak ditemukan</string>
     <string name="server_error">Server Error</string>
+    <string name="detail_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in mollis massa. Ut in lacus lacinia, egestas urna a, tincidunt ipsum. Integer pulvinar velit sit amet libero sodales commodo nec eu massa.</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_home">Home</string>

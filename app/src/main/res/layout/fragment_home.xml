@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,11 +8,31 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="8dp">
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/topbar">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/topbar"
+                    android:minHeight="?attr/actionBarSize" />
+            </com.google.android.material.appbar.AppBarLayout>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:id="@+id/atas"
             android:paddingTop="8dp"
+            android:layout_below="@+id/topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -21,7 +41,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:text="Lanjutkan Belajar"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -30,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/rvprogress_item"/>
+                tools:listitem="@layout/rvprogress_item" />
         </LinearLayout>
 
         <LinearLayout
@@ -45,25 +67,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:queryHint="Cari Materi"
                 android:background="@drawable/custom_search"
-                />
+                android:iconifiedByDefault="false"
+                android:queryHint="Cari Materi"
+                app:iconifiedByDefault="false"
+                style="@style/SearchViewStyle" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="4dp"
                 android:paddingStart="8dp"
-                android:textSize="20dp"
+                android:paddingEnd="8dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:text="Rekomendasi" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_desaku"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
-                tools:listitem="@layout/modul_item"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/modul_item" />
         </LinearLayout>
     </RelativeLayout>
-</FrameLayout>
+</ScrollView>
