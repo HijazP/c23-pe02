@@ -4,12 +4,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.amati.amatiapp.databinding.ModulItemBinding
+import com.amati.amatiapp.R
+import com.amati.amatiapp.data.Dummy
+import com.amati.amatiapp.databinding.RvprogressItemBinding
 
-class ProgressAdapter(private val listProgress: List<ListProgress>): RecyclerView.Adapter<ProgressAdapter.ViewHolder>() {
+class ProgressAdapter(private val listProgress: List<Dummy>): RecyclerView.Adapter<ProgressAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ModulItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = RvprogressItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -20,16 +22,16 @@ class ProgressAdapter(private val listProgress: List<ListProgress>): RecyclerVie
         holder.bind(data)
     }
 
-    class ViewHolder(private var binding: ModulItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: ListProgress) {
+    class ViewHolder(private var binding: RvprogressItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: Dummy) {
             with(binding) {
 //                Glide.with(itemView.context)
 //                    .load(data.photoUrl)
 //                    .apply(RequestOptions().centerCrop())
 //                    .into(imgAvatar)
-//                tvName.text = data.name
-//                tvName2.text = data.name
-//                tvDesc.text = data.description
+                bgProgress.setImageResource(R.drawable.progress_item_besar)
+                tvName.text = data.kursus
+                tvDesc.text = data.desc
             }
 
             binding.root.setOnClickListener {

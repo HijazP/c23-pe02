@@ -15,6 +15,7 @@
     android:focusable="true">
 
     <ImageView
+        android:id="@+id/bg_modul"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/modul"
