@@ -38,7 +38,7 @@ const userPlugin = {
             },
             {
                 // Mengambil kursus
-                method: 'POST',
+                method: 'GET',
                 path: '/user/course/{id}',
                 handler: userHandler.ambilKursus,
             },
@@ -47,6 +47,12 @@ const userPlugin = {
                 method: 'PUT',
                 path: '/user/course',
                 handler: userHandler.updateAmbilKursus,
+            },
+            {
+                // Mengambil detail kursus
+                method: 'GET',
+                path: '/user/course/{id}/detail',
+                handler: userHandler.getKursus,
             },
             {
                 // Rekomendasi kursus

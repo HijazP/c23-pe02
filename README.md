@@ -113,7 +113,58 @@
     "message": "Ada masalah di server"
 }
 ```
+---
+### Mendapatkan data desa
+#### Method: GET
+```https://be.api-amati.com/desa```
+#### perlu token
+#### Response:
+1. Berhasil
+```
+{
+    "statusCode": 200,
+    "message": "Berhasil mendapatkan data desa",
+    "desa": {
+        "id": 12,
+        "email": "pinogu@gorontalo.id",
+        "namaDesa": "Pinogu",
+        "telepon": "081234567890",
+        "lokasiDesa": "Desa Pinogu, Kecamatan Pinogu, Kabupaten Bone Bolango, Gorontalo",
+        "longitude": 123.4301401947905,
+        "latitude": 0.5039652206276404,
+        "foto": "pinogu_gorontalo.jpg"
+    }
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
 
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
 ---
 ### Ubah profil desa
 #### Masih error, nanti dilanjut kalau ga males
@@ -134,7 +185,7 @@
 1. Berhasil
 ```
 {
-    "statusCode": 200,
+    "statusCode": 201,
     "masalah": {
         "id": 1,
         "namaMasalah": "Jalan rusak",
@@ -560,12 +611,65 @@
 
 ---
 ### Ubah profil user
-#### Masih error, nanti dilanjut kalau ga males
+#### Method: PUT
+```https://be.api-amati.com/user/update```
+#### Data yang dikirim:
+#### JSON (perlu token)
+```
+{
+    "namaLengkap": "saya tidak sad",
+    "email": "kamu@ganteng.anjay",
+    "password": "kamugantengdeh",
+    "foto": "foto_kamu.jpg"
+}
+```
+1. Berhasil
+```
+{
+    "statusCode": 200,
+    "message": "User berhasil diupdate",
+    "user": {
+        "id": 1,
+        "namaLengkap": "saya tidak sad",
+        "email": "kamu@ganteng.anjay",
+        "foto": "foto_kamu.jpg"
+    }
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
 
 ---
 ### User Mengambil Kursus
-#### Method: POST (harusnya GET, males ganti)
-```https://be.api-amati.com/user/{id}```
+#### Method: GET
+```https://be.api-amati.com/user/course/{id}```
 #### Parameter {id} = Kursus id, sudah ada 11 kursus di db
 #### Perlu token
 #### Response:
@@ -586,6 +690,12 @@
 ```
 2. Gagal
 ```
+// id kursus sama dengan yang pernah diambil
+{
+    "statusCode": 400,
+    "message": "Kursus sudah diambil"
+}
+
 // Salah format
 {
     "statusCode": 400,
@@ -619,7 +729,7 @@
 #### Method: PUT
 ```https://be.api-amati.com/user/course?id={id}&status={status}```
 #### Data yang dikirim:
-#### Query
+#### Query (perlu token)
 ```
     id = id kursus
     status = next || completed
@@ -694,18 +804,57 @@
     "message": "Ada masalah di server"
 }
 ```
-
 ---
-### Rekomendasi kursus
-#### Method: PUT
-```https://be.api-amati.com/user/course?id={id}&status={status}```
+### Menampilkan detail kursus
+#### Method: GET
+```https://be.api-amati.com/user/course/{id}/detail```
 #### Data yang dikirim:
-#### Query
+#### Query (perlu token)
 ```
     id = id kursus
-    status = next || completed
-    next ketika lanjut ke modul selanjutnya (modulSekarang + 1)
-    completed ketika menyelesaikan modul
+```
+---
+### Rekomendasi kursus
+#### Method: GET
+```https://be.api-amati.com/recommendations/{nama kursus}```
+#### {nama kursus} = sesuai dengan database, tidak perlu token
+#### Response:
+1. Berhasil
+```
+{
+    "Kursus Saat Ini": "Fundamental Course (1)",
+    "Rekomendasi": [
+        "Fundamental Course (2)",
+        "Waste Management",
+        "Fundamental Course (3)",
+        "Program Startup",
+        "Solar Academy",
+        "Indonesia Sustainability Coral Reef University Network (ISCORE)",
+        "Moringa Academy",
+        "Indonesia Sustainable Social Forestry Education Program (IS-FREE)",
+        "Integrated Farming",
+        "Ecotourism"
+    ]
+}
+```
+2. Gagal
+```
+Internal Server Error
+```
+---
+### Detail rekomendasi desa
+#### Method: POST
+```https://be.api-amati.com/user/course/recommendation/list```
+#### Data yang dikirim:
+#### JSON (perlu token)
+```
+{
+    "kursus1": "Fundamental Course (2)",
+    "Kursus2": "Waste Management",
+    "Kursus3": "Program Startup",
+    "Kursus4": "Solar Academy",
+    "Kursus5": "Indonesia Sustainability Coral Reef University Network (ISCORE)"
+}
 ```
 #### Response:
 1. Berhasil
@@ -755,6 +904,13 @@
     "message": "Invalid request payload JSON format"
 }
 
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
 // Salah path atau method
 {
     "statusCode": 404,
@@ -768,6 +924,4 @@
     "message": "Ada masalah di server"
 }
 ```
-
 ---
-

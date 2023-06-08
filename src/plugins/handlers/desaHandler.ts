@@ -214,10 +214,10 @@ async function addProblem(request: Hapi.Request, h: Hapi.ResponseToolkit) {
         })
 
         return h.response({
-            statusCode: 200,
+            statusCode: 201,
             masalah,
             message: 'Berhasil menambahkan masalah desa'
-        }).code(200)
+        }).code(201)
     } catch (err) {
         console.log(err)
         return h.response({

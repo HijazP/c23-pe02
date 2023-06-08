@@ -220,10 +220,10 @@ async function ambilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
             }
         })
         return h.response({
-            statusCode: 200,
+            statusCode: 201,
             message: 'Kursus berhasil diambil',
             ambilKursus
-        }).code(200)
+        }).code(201)
     } catch (err) {
         console.log(err)
         return h.response({
@@ -291,36 +291,71 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
     }
 }
 
+async function getKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const { prisma } = request.server.app
+    const { id } = request.params as { id: string }
+
+    try {
+        const kursus = await prisma.kursus.findUnique({
+            where: {
+                id: parseInt(id)
+            },
+        })
+        return h.response({
+            statusCode: 200,
+            message: 'Kursus berhasil ditampilkan',
+            kursus
+        }).code(200)
+    } catch (err) {
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
 async function rekomendasiKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
     const { kursus1, kursus2, kursus3, kursus4, kursus5 } = request.payload as any
 
     try {
-        const kursus = await prisma.kursus.findMany({
+        const kursuspertama = await prisma.kursus.findFirst({
             where: {
-                OR: [
-                    {
-                        namaKursus: kursus1
-                    },
-                    {
-                        namaKursus: kursus2
-                    },
-                    {
-                        namaKursus: kursus3
-                    },
-                    {
-                        namaKursus: kursus4
-                    },
-                    {
-                        namaKursus: kursus5
-                    }
-                ]
+                namaKursus: kursus1
+            }
+        })
+
+        const kursuskedua = await prisma.kursus.findFirst({
+            where: {
+                namaKursus: kursus2
+            }
+        })
+
+        const kursusketiga = await prisma.kursus.findFirst({
+            where: {
+                namaKursus: kursus3
+            }
+        })
+
+        const kursuskeempat = await prisma.kursus.findFirst({
+            where: {
+                namaKursus: kursus4
+            }
+        })
+
+        const kursuskelima = await prisma.kursus.findFirst({
+            where: {
+                namaKursus: kursus5
             }
         })
         return h.response({
             statusCode: 200,
             message: 'Kursus berhasil diambil',
-            kursus
+            kursuspertama,
+            kursuskedua,
+            kursusketiga,
+            kursuskeempat,
+            kursuskelima
         }).code(200)
     } catch (err) {
         console.log(err)
@@ -447,6 +482,7 @@ export default {
     updateUser,
     ambilKursus,
     updateAmbilKursus,
+    getKursus,
     rekomendasiKursus,
     rekomendasiDesa,
     ambilMasalah,
