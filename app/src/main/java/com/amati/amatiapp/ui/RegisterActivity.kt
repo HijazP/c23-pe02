@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.util.Patterns
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -29,33 +31,57 @@ class RegisterActivity : AppCompatActivity() {
         setupView()
         registerAct()
 
-        val pref = UserPreferencesDatastore.getInstance(dataStore)
-        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+        registerViewModel.code.observe(this) {
+            if (registerViewModel.code.value == 201) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.register_success),
+                    Toast.LENGTH_SHORT
+                ).show()
 
-        session.getToken().observe(this){ token ->
-            if (token != "") {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                Handler().postDelayed({
+                    val moveIntent =
+                        Intent(this, LoginActivity::class.java)
+                    startActivity(moveIntent)
+                    finish()
+                }, 1000)
             }
         }
 
+
+        binding.btnRegisterLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun registerAct() {
         binding.btnRegister.setOnClickListener {
             binding.apply {
                 edRegisterEmail.clearFocus()
+                edRegisterVillageName.clearFocus()
+                edRegisterPhoneNumber.clearFocus()
                 edRegisterRepassword.clearFocus()
                 edRegisterPassword.clearFocus()
 
                 val email = edRegisterEmail.text.toString()
+                val namaDesa = edRegisterVillageName.text.toString()
+                val noTelp = edRegisterPhoneNumber.text.toString()
                 val password = edRegisterPassword.text.toString()
                 val repassword = edRegisterRepassword.text.toString()
 
                 when {
                     email.isEmpty() -> {
                         edRegisterEmail.error = getString(R.string.email_required)
+                    }
+                    !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                        edRegisterEmail.error = getString(R.string.invalid_email)
+                    }
+                    namaDesa.isEmpty() -> {
+                        edRegisterVillageName.error = getString(R.string.register_village_name_required)
+                    }
+                    noTelp.isEmpty() -> {
+                        edRegisterPhoneNumber.error = getString(R.string.register_village_phone_number_required)
                     }
                     password.isEmpty() -> {
                         edRegisterPassword.error = getString(R.string.password_required)
@@ -65,23 +91,10 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     else -> {
                         if (password == repassword){
-                            val requestReg = RequestReg(email, password, repassword, "")
+                            val requestReg = RequestReg(email, password, namaDesa, noTelp)
                             registerViewModel.register(requestReg)
-
-                            registerViewModel.dataUser.observe(this@RegisterActivity) {
-                                Toast.makeText(
-                                    this@RegisterActivity,
-                                    getString(R.string.register_success),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                if (registerViewModel.code.value == 201) {
-                                    val moveIntent =
-                                        Intent(this@RegisterActivity, LoginActivity::class.java)
-                                    startActivity(moveIntent)
-                                    finish()
-                                }
-                            }
-                        }else{
+                        }
+                        else {
                             Toast.makeText(
                                 this@RegisterActivity,
                                 getString(R.string.password_not_match),
@@ -91,10 +104,6 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-        binding.btnRegister.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
         }
     }
 

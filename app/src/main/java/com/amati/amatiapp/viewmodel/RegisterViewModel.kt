@@ -1,5 +1,6 @@
 package com.amati.amatiapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,11 +40,11 @@ class RegisterViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-//                _isLoading.value = false
-//                isError = true
-                _code.value = 500
-//                Toast.makeText(context, "onFailure: ${_message.value}", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
+    }
+    companion object {
+        private const val TAG = "RegisterViewModel"
     }
 }

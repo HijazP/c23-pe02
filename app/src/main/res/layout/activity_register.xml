@@ -10,7 +10,7 @@
         android:id="@+id/iv_register_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:contentDescription="@string/app_logo_desc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,20 +35,54 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_register_icon" />
 
     <EditText
+        android:id="@+id/ed_register_village_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="15dp"
+        android:autofillHints="@string/register_village_name_auto_fill_hint"
+        android:background="@drawable/input_background"
+        android:hint="@string/register_village_name_hint"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_email" />
+
+    <EditText
+        android:id="@+id/ed_register_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="15dp"
+        android:autofillHints="@string/register_phone_number_auto_fill_hint"
+        android:background="@drawable/input_background"
+        android:hint="@string/register_phone_number_hint"
+        android:inputType="phone"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_village_name" />
+
+    <EditText
         android:id="@+id/ed_register_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="50dp"
+        android:layout_marginTop="15dp"
         android:autofillHints="@string/register_pass_auto_fill_hint"
         android:background="@drawable/input_background"
         android:hint="@string/register_pass_hint"
         android:inputType="textPassword"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_email" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_phone_number" />
 
     <EditText
         android:id="@+id/ed_register_repassword"

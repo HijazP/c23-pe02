@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModels()
 
     private lateinit var token: String
+    private lateinit var session: Session
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,15 +35,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val pref = UserPreferencesDatastore.getInstance(dataStore)
-        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+        session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
 
-        session.getToken().observe(this) {
-            if (it != null) {
+        session.getToken().observe(this) { it ->
+            if (it == null || it == "") {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            else {
                 token = it
                 mainViewModel.getProblem(token)
-            } else {
-                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                finishAffinity()
+
+//            if (it != null) {
+//                token = it
+//                mainViewModel.getProblem(token)
+//            } else {
+//                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+//                finishAffinity()
             }
         }
 
@@ -112,6 +122,10 @@ class MainActivity : AppCompatActivity() {
             R.id.profile -> {
                 val intentToAbout = Intent(this@MainActivity, ProfilActivity::class.java)
                 startActivity(intentToAbout)
+            }
+            R.id.logout -> {
+                session.logout()
+                Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)

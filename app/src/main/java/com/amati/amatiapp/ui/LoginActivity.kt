@@ -103,15 +103,8 @@ class LoginActivity : AppCompatActivity() {
                         binding.edLoginPassword.error = getString(R.string.password_min)
                     }
                     else -> {
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-//                        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-//                            val requestLogin = RequestLogin(email, password)
-//                            loginViewModel.login(requestLogin)
-//                        } else {
-//                            Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()
-//                        }
+                        val requestLogin = RequestLogin(email, password)
+                        loginViewModel.login(requestLogin)
                     }
                 }
             } catch (e: Exception) {

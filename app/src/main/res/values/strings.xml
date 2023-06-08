@@ -2,19 +2,25 @@
     <string name="app_name">AmatiApp</string>
     <string name="app_logo_desc">AMATI Logo</string>
 
+
     <!--
     Register Activity
     -->
-    <string name="register_email_hint">Email address</string>
-    <string name="register_pass_hint">Password</string>
-    <string name="register_repass_hint">Re-enter password</string>
+    <string name="register_email_hint">Alamat Email</string>
+    <string name="register_pass_hint">Kata Sandi</string>
+    <string name="register_repass_hint">Konfirmasi Kata Sandi</string>
+    <string name="register_village_name_hint">Nama Desa</string>
+    <string name="register_phone_number_hint">Nomor Telepon</string>
     <string name="register_email_auto_fill_hint">email</string>
     <string name="register_pass_auto_fill_hint">password</string>
+    <string name="register_village_name_auto_fill_hint">village name</string>
+    <string name="register_phone_number_auto_fill_hint">phone number</string>
     <string name="register_button">Register</string>
     <string name="register_success">Pendaftaran Berhasil</string>
     <string name="register_login_desc">Sudah memiliki akun?</string>
     <string name="register_login_button">Masuk</string>
-
+    <string name="register_village_name_required">Masukkan Nama Desa Anda</string>
+    <string name="register_village_phone_number_required">Masukkan Nomor Telepon Anda</string>
 
     <!--Login Activity-->
     <string name="login_button">Login</string>
