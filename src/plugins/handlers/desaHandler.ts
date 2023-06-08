@@ -36,10 +36,10 @@ async function registerDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
                 password: bcrypt.hashSync(password, 10),
                 namaDesa: namaDesa,
                 telepon: telepon,
-                lokasiDesa: '',
-                longitude: 0,
-                latitude: 0,
-                foto: ''
+                lokasiDesa: 'default',
+                longitude: 1,
+                latitude: 1,
+                foto: 'default',
             },
             select: {
                 id: true,
