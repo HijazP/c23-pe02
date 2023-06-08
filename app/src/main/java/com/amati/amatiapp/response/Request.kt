@@ -21,6 +21,6 @@ data class RequestProfil(
 )
 
 data class RequestProblem(
-    var masalah: String,
+    var namaMasalah: String,
     var deskripsi: String
 )

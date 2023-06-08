@@ -35,8 +35,8 @@ interface ApiService {
 
     @POST("desa/problem")
     fun add(
-        @Body
-        requestProblem: RequestProblem
+        @Header("Authorization") bearer: String,
+        @Body requestProblem: RequestProblem
     ): Call<ProblemResponse>
 }
 

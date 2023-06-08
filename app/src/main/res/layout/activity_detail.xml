@@ -21,15 +21,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_detail_location"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:text="@string/detail_location"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_title" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_detail_location"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="30dp"-->
+<!--            android:text="@string/detail_location"-->
+<!--            android:textSize="20sp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tv_detail_title" />-->
 
         <TextView
             android:id="@+id/tv_detail_desc"
@@ -40,7 +40,7 @@
             android:layout_marginEnd="30dp"
             android:text="@string/detail_desc"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_location" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_title" />
 
         <TextView
             android:id="@+id/tv_detail_requirements"
