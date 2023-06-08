@@ -37,32 +37,32 @@ class LoginActivity : AppCompatActivity() {
         setupView()
         loginAct()
 
-        val pref = UserPreferencesDatastore.getInstance(dataStore)
-        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+//        val pref = UserPreferencesDatastore.getInstance(dataStore)
+//        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+//
+//        loginViewModel.code.observe(this) {
+//            val user = loginViewModel.dataUser.value
+//            if (user != null) {
+//                try {
+//                    inputSession(it, user.token, session)
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+//                }
+//            } else {
+//                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+//            }
+//        }
 
-        loginViewModel.code.observe(this) {
-            val user = loginViewModel.dataUser.value
-            if (user != null) {
-                try {
-                    inputSession(it, user.token, session)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        session.getToken().observe(this){ token ->
-            if (token != "") {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                Toast.makeText(this, getString(R.string.go_login), Toast.LENGTH_SHORT).show()
-            }
-        }
+//        session.getToken().observe(this){ token ->
+//            if (token != "") {
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent)
+//                finish()
+//            } else {
+//                Toast.makeText(this, getString(R.string.go_login), Toast.LENGTH_SHORT).show()
+//            }
+//        }
     }
 
     private fun setupView() {
@@ -99,8 +99,12 @@ class LoginActivity : AppCompatActivity() {
                     }
                     else -> {
                         if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                            val requestLogin = RequestLogin(email, password)
-                            loginViewModel.login(requestLogin)
+//                            val requestLogin = RequestLogin(email, password)
+//                            loginViewModel.login(requestLogin)
+
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         } else {
                             Toast.makeText(this, getString(R.string.unauthorized), Toast.LENGTH_SHORT).show()
                         }
@@ -141,7 +145,7 @@ class LoginActivity : AppCompatActivity() {
                     session.setSession(response.data.nama, response.data.id ,token)
                     Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                 } else{
-                    Toast.makeText(this, "I dont have any idea", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.bingung), Toast.LENGTH_SHORT).show()
                 }
             }
         }

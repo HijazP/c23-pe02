@@ -41,6 +41,8 @@
     <string name="title_home">Home</string>
     <string name="title_desaku">Desaku</string>
     <string name="title_profil">Profil</string>
-    <string name="hi_home">\"Hi, \"</string>
+    <string name="hi_home">Hi, </string>
+    <string name="bingung">I dont have any idea</string>
+    <string name="judul_modul">Judul Modul</string>
 
 </resources>

@@ -33,19 +33,20 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val dataStore: DataStore<Preferences> = requireContext().dataStore
 
-        val pref = UserPreferencesDatastore.getInstance(dataStore)
-        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+        nama = "User"
 
-        session.getName().observe(viewLifecycleOwner){
-            if (it != "") {
-                nama = it
-            }
-        }
+//        val pref = UserPreferencesDatastore.getInstance(dataStore)
+//        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+//
+//        session.getName().observe(viewLifecycleOwner){
+//            if (it != "") {
+//                nama = it
+//            }
+//        }
 
         setStatusBarColorToMatchTopBar()
 
@@ -85,6 +86,7 @@ class HomeFragment : Fragment() {
         binding.rvProgress.adapter = adapter
 
     }
+
     private fun setStatusBarColorToMatchTopBar() {
         val topBarColor = ContextCompat.getColor(requireContext(), R.color.topbar_color)
 
@@ -94,12 +96,17 @@ class HomeFragment : Fragment() {
             statusBarColor = topBarColor
         }
 
-        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = buildString {
-            append(getString(R.string.hi_home))
-            append(nama)
-        }
-//        val appCompatActivity = activity as? AppCompatActivity
-//        appCompatActivity?.setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity?)?.setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity?)?.supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        binding.nama.text = nama
+
+//
+////        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
+//        (activity as AppCompatActivity?)!!.supportActionBar?.title = null
+////            buildString {
+//            append(getString(R.string.hi_home))
+//            append(nama)
+//        }
     }
 }
