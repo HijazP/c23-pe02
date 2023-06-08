@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -92,9 +93,9 @@ class LoginActivity : AppCompatActivity() {
                     email.isEmpty() -> {
                         binding.edLoginEmail.error = getString(R.string.email_required)
                     }
-//                    !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-//                        binding.edLoginEmail.error = getString(R.string.invalid_email)
-//                    }
+                    !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                        binding.edLoginEmail.error = getString(R.string.invalid_email)
+                    }
                     password.isEmpty() -> {
                         binding.edLoginEmail.error = getString(R.string.password_required)
                     }
@@ -102,8 +103,9 @@ class LoginActivity : AppCompatActivity() {
                         binding.edLoginPassword.error = getString(R.string.password_min)
                     }
                     else -> {
-                        val requestLogin = RequestLogin(email, password)
-                        loginViewModel.login(requestLogin)
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
 //                        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 //                            val requestLogin = RequestLogin(email, password)
 //                            loginViewModel.login(requestLogin)

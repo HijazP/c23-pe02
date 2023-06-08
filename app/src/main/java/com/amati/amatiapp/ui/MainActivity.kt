@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amati.amatiapp.R
 import com.amati.amatiapp.adapter.ProblemAdapter
+import com.amati.amatiapp.data.DataDummy
+import com.amati.amatiapp.data.Dummy
 import com.amati.amatiapp.database.UserPreferencesDatastore
 import com.amati.amatiapp.databinding.ActivityMainBinding
 import com.amati.amatiapp.network.response.MasalahItem
@@ -74,12 +76,14 @@ class MainActivity : AppCompatActivity() {
                 showText(false)
             }
 
-            if (data != null) {
-                setProblemData(data)
-            }
+//            if (data != null) {
+//                setProblemData(data)
+//            }
         }
 
         showText(true)
+
+        setProblemData(DataDummy.dummyList)
 
         addProblem()
     }
@@ -92,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setProblemData(listProblem: List<MasalahItem>) {
+    private fun setProblemData(listProblem: List<Dummy>) {
         val adapter = ProblemAdapter(listProblem)
         binding.rvProblem.adapter = adapter
     }
