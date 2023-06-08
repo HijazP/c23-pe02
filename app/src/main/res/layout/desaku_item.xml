@@ -20,10 +20,11 @@
         android:padding="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_desa"
-            android:layout_width="115dp"
-            android:layout_height="91dp"
-            android:src="@android:color/darker_gray"
+            android:id="@+id/img_Desa"
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:src="@drawable/coba"
+            android:padding="5dp"
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="10dp"
             tools:ignore="MissingClass,MissingConstraints" />
@@ -40,7 +41,7 @@
             android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toEndOf="@+id/img_desa"
+            card_view:layout_constraintStart_toEndOf="@+id/img_Desa"
             card_view:layout_constraintTop_toTopOf="parent"
             tools:text="Nama desa" />
 
@@ -55,9 +56,9 @@
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.45"
-            card_view:layout_constraintStart_toEndOf="@+id/img_desa"
+            card_view:layout_constraintStart_toEndOf="@+id/img_Desa"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_name"
-            tools:text="desaku" />
+            tools:text="desaku kurang lebih begini" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
