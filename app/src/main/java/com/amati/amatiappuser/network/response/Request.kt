@@ -11,9 +11,6 @@ data class RequestReg(
 )
 
 data class RequestProfil(
-    var namaDesa: String,
-    var telepon: String,
-    var lokasi: String,
-    var latitude: Float = Float.MIN_VALUE,
-    var longitude: Float = Float.MIN_VALUE
+    var nama: String,
+    var telepon: String
 )
