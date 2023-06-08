@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvProblem.addItemDecoration(itemDecoration)
 
         setProblemData()
+        addProblem()
     }
 
     private fun setProblemData() {
@@ -70,5 +71,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun addProblem(){
+        binding.fabAdd.setOnClickListener{
+            val intent = Intent (this@MainActivity, AddProblemActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
