@@ -38,17 +38,18 @@
     "message": "Invalid request payload JSON format"
 }
 
-// Desa sudah pernah terdaftarkan (by email)
-{
-    "statusCode": 401,
-    "message": "Desa sudah terdaftar dengan email yang sama"
-}
 
 // Salah path atau method
 {
     "statusCode": 404,
     "error": "Not Found",
     "message": "Not Found"
+}
+
+// Desa sudah pernah terdaftar
+{
+    "statusCode": 409,
+    "message": "Desa sudah terdaftar dengan email yang sama"
 }
 
 // Server error (bisa jadi data kurang lengkap)
@@ -112,6 +113,10 @@
     "message": "Ada masalah di server"
 }
 ```
+
+---
+### Ubah profil desa
+#### Masih error, nanti dilanjut kalau ga males
 
 ---
 ### Tambah Masalah Desa
@@ -400,10 +405,9 @@
 #### JSON
 ```
 {
+    "namaLengkap": "saya dong",
     "email": "kamu@ganteng.anjay",
-    "password": "kamugantengdeh",
-    "namaDesa": "Cihideung",
-    "telepon": "081234567890"
+    "password": "kamugantengdeh"
 }
 ```
 #### Response:
@@ -412,10 +416,10 @@
 {
     "statusCode": 201,
     "message": "Pengguna berhasil ditambahkan",
-    "desa": {
+    "user": {
         "id": 1,
-        "namaLengkap": "",
-        "email": "sadar@diri"
+        "namaLengkap": "saya dong",
+        "email": "kamu@ganteng.anjay"
     }
 }
 ```
@@ -428,10 +432,66 @@
     "message": "Invalid request payload JSON format"
 }
 
-// Desa sudah pernah terdaftarkan (by email)
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Email sudah terdaftar
+{
+    "statusCode": 409,
+    "message": "Email sudah terdaftar"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+
+---
+
+### Login User
+#### Method: POST
+```https://be.api-amati.com/user/login```
+#### Data yang dikirim:
+#### JSON
+```
+{
+    "email": "kamu@ganteng.anjay",
+    "password": "kamugantengdeh"
+}
+```
+#### Response:
+1. Berhasil
+```
+{
+    "statusCode": 200,
+    "data": {
+        "id": 1,
+        "email": "kamu@ganteng.anjay",
+        "nama lengkap": "saya sad dong"
+    },
+    "message": "Berhasil masuk ke saya sad dong",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4NjI0ODAwNn0.llLm5rzuGfY8LuSXNNBOoI_cBtDRim6G8XDanh6PplY"
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Email atau password salah
 {
     "statusCode": 401,
-    "message": "Desa sudah terdaftar dengan email yang sama"
+    "message": "Email atau password salah"
 }
 
 // Salah path atau method
@@ -449,3 +509,215 @@
 ```
 
 ---
+### Ubah profil user
+#### Masih error, nanti dilanjut kalau ga males
+
+---
+### User Mengambil Kursus
+#### Method: POST (harusnya GET, males ganti)
+```https://be.api-amati.com/user/{id}```
+#### Parameter {id} = Kursus id, sudah ada 11 kursus di db
+#### Perlu token
+#### Response:
+1. Berhasil
+```
+{
+    "statusCode": 200,
+    "message": "Kursus berhasil diambil",
+    "ambilKursus": {
+        "id": 1,
+        "idKursus": 1,
+        "idPengguna": 1,
+        "jumlahModul": 7,
+        "modulSekarang": 0,
+        "statusSelesai": false
+    }
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+
+---
+### Update Progress Kursus
+#### Method: PUT
+```https://be.api-amati.com/user/course?id={id}&status={status}```
+#### Data yang dikirim:
+#### Query
+```
+    id = id kursus
+    status = next || completed
+    next ketika lanjut ke modul selanjutnya (modulSekarang + 1)
+    completed ketika menyelesaikan modul
+```
+#### Response:
+1. Berhasil
+```
+// next, modulSekarang sebelumnya 1
+// statusSelesai = false
+{
+    "statusCode": 200,
+    "message": "Kursus berhasil diupdate",
+    "ambilKursus": {
+        "id": 1,
+        "idKursus": 1,
+        "idPengguna": 1,
+        "jumlahModul": 7,
+        "modulSekarang": 2,
+        "statusSelesai": false
+    }
+}
+
+// completed, modulSekarang = jumlahModul
+// statusSelesai = true
+{
+    "statusCode": 200,
+    "message": "Kursus berhasil diselesaikan",
+    "ambilKursus": {
+        "id": 1,
+        "idKursus": 1,
+        "idPengguna": 1,
+        "jumlahModul": 7,
+        "modulSekarang": 7,
+        "statusSelesai": true
+    }
+}
+
+// Salah query
+{
+    "statusCode": 200,
+    "message": "Tidak ada kursus yang diupdate"
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+
+---
+### Rekomendasi kursus
+#### Method: PUT
+```https://be.api-amati.com/user/course?id={id}&status={status}```
+#### Data yang dikirim:
+#### Query
+```
+    id = id kursus
+    status = next || completed
+    next ketika lanjut ke modul selanjutnya (modulSekarang + 1)
+    completed ketika menyelesaikan modul
+```
+#### Response:
+1. Berhasil
+```
+// next, modulSekarang sebelumnya 1
+// statusSelesai = false
+{
+    "statusCode": 200,
+    "message": "Kursus berhasil diupdate",
+    "ambilKursus": {
+        "id": 1,
+        "idKursus": 1,
+        "idPengguna": 1,
+        "jumlahModul": 7,
+        "modulSekarang": 2,
+        "statusSelesai": false
+    }
+}
+
+// completed, modulSekarang = jumlahModul
+// statusSelesai = true
+{
+    "statusCode": 200,
+    "message": "Kursus berhasil diselesaikan",
+    "ambilKursus": {
+        "id": 1,
+        "idKursus": 1,
+        "idPengguna": 1,
+        "jumlahModul": 7,
+        "modulSekarang": 7,
+        "statusSelesai": true
+    }
+}
+
+// Salah query
+{
+    "statusCode": 200,
+    "message": "Tidak ada kursus yang diupdate"
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+
+---
+

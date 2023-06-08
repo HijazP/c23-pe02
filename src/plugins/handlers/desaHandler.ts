@@ -121,6 +121,7 @@ async function updateDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
                 lokasiDesa: payload.lokasiDesa,
                 longitude: payload.longitude,
                 latitude: payload.latitude,
+                foto: payload.foto,
             },
             select: {
                 id: true,
@@ -130,6 +131,7 @@ async function updateDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
                 lokasiDesa: true,
                 longitude: true,
                 latitude: true,
+                foto: true,
             },
         })
         return h.response({
