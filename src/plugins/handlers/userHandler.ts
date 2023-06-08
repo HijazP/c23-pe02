@@ -4,12 +4,12 @@ import Jwt from '@hapi/jwt'
 
 async function registerUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
-    const { email, password } = request.payload as any
+    const { nama, email, password } = request.payload as any
 
     try {
         const desa = await prisma.pengguna.create({
             data: {
-                namaLengkap: '',
+                namaLengkap: nama,
                 email: email,
                 password: bcrypt.hashSync(password, 10),
                 foto: '',
@@ -163,59 +163,63 @@ async function ambilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     }
 }
 
-// async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
-//     const { prisma } = request.server.app
-//     const { id, status } = request.query as { id: string, status: string }
-//
-//     try {
-//         const kursus = await prisma.ambilkursus.findUnique({
-//             where: {
-//                 id: parseInt(id)
-//             }
-//         })
-//
-//         if (kursus !== null) {
-//             if (status === 'completed') {
-//                 const ambilKursus = await prisma.ambilkursus.update({
-//                     where: {
-//                         id: parseInt(id)
-//                     },
-//                     data: {
-//                         modulSekarang: kursus.jumlahModul,
-//                         statusSelesai: true
-//                     }
-//                 })
-//                 return h.response({
-//                     statusCode: 200,
-//                     message: 'Kursus berhasil diselesaikan',
-//                     ambilKursus
-//                 }).code(200)
-//             }
-//             else if (status === 'next') {
-//                 const ambilKursus = await prisma.ambilkursus.update({
-//                     where: {
-//                         id: parseInt(id)
-//                     },
-//                     data: {
-//                         modulSekarang: kursus.modulSekarang + 1
-//                     }
-//                 })
-//                 return h.response({
-//                     statusCode: 200,
-//                     message: 'Kursus berhasil diupdate',
-//                     ambilKursus
-//                 }).code(200)
-//             }
-//
-//         }
-//     } catch (err) {
-//         console.log(err)
-//         return h.response({
-//             statusCode: 500,
-//             message: 'Ada masalah di server'
-//         }).code(500)
-//     }
-// }
+async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const { prisma } = request.server.app
+    const { id, status } = request.query as { id: string, status: string }
+
+    try {
+        const kursus = await prisma.ambilkursus.findUnique({
+            where: {
+                id: parseInt(id)
+            }
+        })
+
+        if (kursus !== null) {
+            if (status === 'completed') {
+                const ambilKursus = await prisma.ambilkursus.update({
+                    where: {
+                        id: parseInt(id)
+                    },
+                    data: {
+                        modulSekarang: kursus.jumlahModul,
+                        statusSelesai: true
+                    }
+                })
+                return h.response({
+                    statusCode: 200,
+                    message: 'Kursus berhasil diselesaikan',
+                    ambilKursus
+                }).code(200)
+            }
+            else if (status === 'next') {
+                const ambilKursus = await prisma.ambilkursus.update({
+                    where: {
+                        id: parseInt(id)
+                    },
+                    data: {
+                        modulSekarang: kursus.modulSekarang + 1
+                    }
+                })
+                return h.response({
+                    statusCode: 200,
+                    message: 'Kursus berhasil diupdate',
+                    ambilKursus
+                }).code(200)
+            }
+        }
+        return h.response({
+            statusCode: 200,
+            message: 'Tidak ada kursus yang diupdate',
+            ambilKursus
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
 
 async function rekomendasiKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
@@ -371,7 +375,7 @@ export default {
     loginUser,
     updateUser,
     ambilKursus,
-    // updateAmbilKursus,
+    updateAmbilKursus,
     rekomendasiKursus,
     rekomendasiDesa,
     ambilMasalah,

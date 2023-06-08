@@ -93,6 +93,12 @@
     "message": "Invalid request payload JSON format"
 }
 
+// Email atau password salah
+{
+    "statusCode": 401,
+    "message": "Email atau password salah"
+}
+
 // Salah path atau method
 {
     "statusCode": 404,
@@ -381,3 +387,66 @@
     "message": "Ada masalah di server"
 }
 ```
+
+---  
+
+## USER
+
+---
+### Daftar User
+#### Method: POST
+```https://be.api-amati.com/user/register```
+#### Data yang dikirim:
+#### JSON
+```
+{
+    "email": "kamu@ganteng.anjay",
+    "password": "kamugantengdeh",
+    "namaDesa": "Cihideung",
+    "telepon": "081234567890"
+}
+```
+#### Response:
+1. Berhasil
+```
+{
+    "statusCode": 201,
+    "message": "Desa berhasil ditambahkan",
+    "desa": {
+        "id": 1,
+        "email": "kamu@ganteng.anjay",
+        "namaDesa": "Cihideung",
+        "telepon": "081234567890",
+    }
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Desa sudah pernah terdaftarkan (by email)
+{
+    "statusCode": 401,
+    "message": "Desa sudah terdaftar dengan email yang sama"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+
+---

@@ -1,7 +1,6 @@
 import Hapi from '@hapi/hapi'
 import prisma from './plugins/prisma'
 import Jwt from '@hapi/jwt'
-import Inert from '@hapi/inert'
 import status from './plugins/status'
 import desa from './plugins/desa'
 import user from './plugins/user'
@@ -19,7 +18,6 @@ export async function start(): Promise<Hapi.Server> {
         desa,
         user
     ])
-    await server.register(Inert)
     await server.register(Jwt)
     server.auth.strategy('bigstem-strategy', 'jwt', {
         keys: process.env.JWT_SECRET,
