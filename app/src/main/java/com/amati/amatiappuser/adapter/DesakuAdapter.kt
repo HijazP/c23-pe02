@@ -28,7 +28,7 @@ class DesakuAdapter (private val listDesaku: List<Dummy>): RecyclerView.Adapter<
         fun bind(data: Dummy){
             with(binding){
 //                Glide.with(itemView.context).load(data.photoUrl).apply(RequestOptions().centerCrop()).into(imgAvatar)
-                imgDesa.setImageResource(R.drawable.coba)
+                bgModul.setImageResource(R.drawable.coba)
                 tvName.text = data.kursus
                 tvDesc.text = data.desc
             }

@@ -8,6 +8,7 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_bar"
+        style="@style/SearchViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
@@ -15,8 +16,7 @@
         android:layout_marginEnd="30dp"
         android:background="@drawable/custom_search"
         app:iconifiedByDefault="false"
-        app:queryHint="Cari Desaku"
-        style="@style/SearchViewStyle"/>
+        app:queryHint="Cari Desaku" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDesaku"

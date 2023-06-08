@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
 
 //        val pref = UserPreferencesDatastore.getInstance(dataStore)
 //        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
-//
+//a
 //        session.getName().observe(viewLifecycleOwner){
 //            if (it != "") {
 //                nama = it
