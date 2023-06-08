@@ -59,4 +59,9 @@
     <string name="detail_location">Lokasi Problem</string>
     <string name="detail_req">Requirements</string>
     <string name="detail_module">Modul X</string>
+    <string name="edit_success">Edit Berhasil</string>
+    <string name="logout">Keluar</string>
+    <string name="alert_logout">Apakah Anda yakin ingin keluar?</string>
+    <string name="yes">Ya</string>
+    <string name="cancel">Batal</string>
 </resources>

@@ -1,9 +1,6 @@
 package com.amati.amatiappuser.network.retrofit
 
-import com.amati.amatiappuser.network.response.LoginResponse
-import com.amati.amatiappuser.network.response.RegisterResponse
-import com.amati.amatiappuser.network.response.RequestLogin
-import com.amati.amatiappuser.network.response.RequestReg
+import com.amati.amatiappuser.network.response.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -20,6 +17,12 @@ interface ApiService {
         @Body
         userRequestReg: RequestReg
     ): Call<RegisterResponse>
+
+    @POST("desa/register")
+    fun profil(
+        @Body
+        requestProfil: RequestProfil
+    ): Call<ProfilResponse>
 }
 
 
