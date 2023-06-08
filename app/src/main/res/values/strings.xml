@@ -57,5 +57,10 @@
     <string name="nomor_telepon">Nomor Telepon</string>
     <string name="edit_success">Edit Berhasil</string>
 
-
+    <!--Add Problem-->
+    <string name="title">Judul Masalah</string>
+    <string name="desc_general">Deskripsi Umum</string>
+    <string name="button_problem">Ajukan Problem</string>
+    <string name="tittle_req">Masukkan Judul Masalah</string>
+    <string name="desc_req">Masukkan Deskripsi Masalah</string>
 </resources>
