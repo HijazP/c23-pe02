@@ -319,35 +319,12 @@ async function rekomendasiKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
     const { kursus1, kursus2, kursus3, kursus4, kursus5 } = request.payload as any
 
     try {
-        const kursuspertama = await prisma.kursus.findUnique({
-            where: {
-                namaKursus: kursus1 as string
-            }
-        })
+        const kursuspertama = await prisma.$queryRaw`SELECT * FROM kursus WHERE namaKursus = ${kursus1}`
+        const kursuskedua = await prisma.$queryRaw`SELECT * FROM kursus WHERE namaKursus = ${kursus2}`
+        const kursusketiga = await prisma.$queryRaw`SELECT * FROM kursus WHERE namaKursus = ${kursus3}`
+        const kursuskeempat = await prisma.$queryRaw`SELECT * FROM kursus WHERE namaKursus = ${kursus4}`
+        const kursuskelima = await prisma.$queryRaw`SELECT * FROM kursus WHERE namaKursus = ${kursus5}`
 
-        const kursuskedua = await prisma.kursus.findUnique({
-            where: {
-                namaKursus: kursus2 as string
-            }
-        })
-
-        const kursusketiga = await prisma.kursus.findUnique({
-            where: {
-                namaKursus: kursus3 as string
-            }
-        })
-
-        const kursuskeempat = await prisma.kursus.findUnique({
-            where: {
-                namaKursus: kursus4 as string
-            }
-        })
-
-        const kursuskelima = await prisma.kursus.findUnique({
-            where: {
-                namaKursus: kursus5 as string
-            }
-        })
         return h.response({
             statusCode: 200,
             message: 'Kursus berhasil diambil',
