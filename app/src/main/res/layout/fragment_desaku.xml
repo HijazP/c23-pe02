@@ -3,12 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.DesakuFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/custom_search"
+        app:iconifiedByDefault="false"
+        app:queryHint="Cari Desaku"
+        style="@style/SearchViewStyle"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDesaku"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@id/search_bar"
+        tools:listitem="layout/desaku_item"/>
+
 
 </FrameLayout>

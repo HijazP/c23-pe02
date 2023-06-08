@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.amati.amatiappuser.R
+import com.amati.amatiappuser.databinding.FragmentProfilBinding
+import com.amati.amatiappuser.viewmodel.DesakuViewModel
+import com.amati.amatiappuser.viewmodel.ProfilViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -14,8 +18,8 @@ private const val ARG_PARAM2 = "param2"
 
 class DesakuFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentProfilBinding
+    private val DesakuViewModel: DesakuViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,6 @@ class DesakuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_desaku, container, false)
     }
 
