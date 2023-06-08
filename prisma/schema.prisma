@@ -13,10 +13,10 @@ model Desa {
   password String
   namaDesa String
   telepon String
-  lokasiDesa String
-  latitude Float
-  longitude Float
-  foto String
+  lokasiDesa String?
+  latitude Float?
+  longitude Float?
+  foto String?
   masalah Masalah[]
 }
 

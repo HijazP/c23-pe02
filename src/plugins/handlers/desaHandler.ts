@@ -16,10 +16,10 @@ interface UserInput {
 async function registerDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
     const { email, password, namaDesa, telepon } = request.payload as any
-    const lokasiDesa: string = ''
-    const longitude: number = 0
-    const latitude: number = 0
-    const foto: string = ''
+    const lokasiDesa: any = ''
+    const longitude: any = 0
+    const latitude: any = 0
+    const foto: any = ''
 
     try {
         const checkDesa = await prisma.desa.findUnique({
