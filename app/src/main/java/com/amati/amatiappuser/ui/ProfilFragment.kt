@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.amati.amatiappuser.R
 import com.amati.amatiappuser.database.UserPreferencesDatastore
@@ -51,14 +52,14 @@ class ProfilFragment : Fragment() {
 
                 val requestProfil = RequestProfil(nama, telepon, lokasi)
                 profilViewModel.edit(requestProfil)
-
-                profilViewModel.dataUser.observe(this@ProfilFragment) {
+                
+                profilViewModel.dataUser.observe(viewLifecycleOwner, Observer {
                     Toast.makeText(
-                        this@ProfilFragment,
+                        requireActivity(),
                         getString(R.string.edit_success),
                         Toast.LENGTH_SHORT
-                    ).show()
-                }
+                        ).show()
+                })
             }
         }
     }
