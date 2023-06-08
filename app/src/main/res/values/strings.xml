@@ -66,4 +66,5 @@
     <string name="desc_req">Masukkan Deskripsi Masalah</string>
     <string name="masalah">Tidak ada masalah yang dapat ditampilkan.\nAnda dapat menambahkan masalah dengan menekan tombol tambah pada pojok kanan bawah layar.</string>
     <string name="tampil_problem">Data berhasil ditampilkan</string>
+    <string name="Problem_ga_ada">Belum menambahkan masalah, tidak ada masalah yang bisa ditampilkan</string>
 </resources>

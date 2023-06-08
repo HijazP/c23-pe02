@@ -17,6 +17,9 @@ class MainViewModel: ViewModel() {
     private val _code = MutableLiveData<Int>()
     val code: LiveData<Int> = _code
 
+    private val _message = MutableLiveData<String>()
+    val msg: LiveData<String> = _message
+
     fun getProblem(token: String) {
 //        _isLoading.value = true
         val client = ApiConfig.getApiService().getProblem(token)
@@ -29,6 +32,7 @@ class MainViewModel: ViewModel() {
                 val responseBody = response.body()
                 if (response.isSuccessful) {
                     if (responseBody != null) {
+                        _message.value = responseBody.totalMasalah.toString()
                         _dataProblem.value = responseBody.masalah
                         _code.value = responseBody.statusCode
                     }

@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             if (it != null) {
                 token = it
                 mainViewModel.getProblem(token)
-            } else  {
+            } else {
                 Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                 finishAffinity()
             }
@@ -50,14 +50,14 @@ class MainActivity : AppCompatActivity() {
         binding.rvProblem.addItemDecoration(itemDecoration)
 
         mainViewModel.code.observe(this) {
-            when(it){
+            when (it) {
                 401 -> {
                     Toast.makeText(this, getString(R.string.unauthorized2), Toast.LENGTH_SHORT).show()
                 }
                 404 -> {
                     Toast.makeText(this, getString(R.string.data_not_found), Toast.LENGTH_SHORT).show()
                 }
-                500 ->{
+                500 -> {
                     Toast.makeText(this, getString(R.string.server_error), Toast.LENGTH_SHORT).show()
                 }
                 200 -> {
@@ -66,17 +66,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        mainViewModel.dataProblem.observe(this) {
-            val data = mainViewModel.dataProblem.value
-            if (data != null) {
-                binding.tvMasalah.visibility = View.INVISIBLE
-                setProblemData(data)
+        mainViewModel.dataProblem.observe(this) { data ->
+            val msg = mainViewModel.msg.value
+            if (msg == "0" || msg == null || msg == "") {
+                showText(true)
             } else {
-                binding.tvMasalah.visibility = View.VISIBLE
+                showText(false)
+            }
+
+            if (data != null) {
+                setProblemData(data)
             }
         }
 
+        showText(true)
+
         addProblem()
+    }
+
+    private fun showText(isAppear: Boolean) {
+        if (isAppear) {
+            binding.tvMasalah.visibility = View.VISIBLE
+        } else {
+            binding.tvMasalah.visibility = View.GONE
+        }
     }
 
     private fun setProblemData(listProblem: List<MasalahItem>) {
