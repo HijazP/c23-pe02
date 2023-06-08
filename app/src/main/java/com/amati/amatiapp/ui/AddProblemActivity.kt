@@ -11,7 +11,7 @@ import com.amati.amatiapp.viewmodel.addProblemViewModel
 
 class AddProblemActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddProblemBinding
-//    private val addProblemViewModel: addProblemViewModel by viewModels()
+    private val addProblemViewModel: addProblemViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,5 +1,7 @@
 package com.amati.amatiapp.viewmodel
 
-class addProblemViewModel {
+import androidx.lifecycle.ViewModel
+
+class addProblemViewModel: ViewModel() {
 
 }
