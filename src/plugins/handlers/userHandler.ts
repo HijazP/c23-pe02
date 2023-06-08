@@ -343,31 +343,70 @@ async function rekomendasiKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
     }
 }
 
+async function getModul(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const { prisma } = request.server.app
+    const { idKursus, idModul  } = request.params as { idKursus: string, idModul: string }
+
+    try {
+        if (idModul === undefined) {
+            const allModul = await prisma.modul.findMany({
+                where: {
+                    idKursus: parseInt(idKursus)
+                }
+            })
+            return h.response({
+                statusCode: 200,
+                message: 'Semua modul berhasil ditampilkan',
+                allModul
+            }).code(200)
+        }
+
+        const modul = await prisma.modul.findUnique({
+            where: {
+                id: parseInt(idModul)
+            }
+        })
+        return h.response({
+            statusCode: 200,
+            message: 'Modul berhasil ditampilkan',
+            modul
+        }).code(200)
+    } catch (err) {
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
 async function rekomendasiDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
     const { desa } = request.params
 
     try {
-        let masalahdesa: any[] = []
         const recDesa = await prisma.desa.findMany({
             where: {
                 namaDesa: desa
             }
         })
 
-        if (recDesa.length !== undefined) {
-            masalahdesa = await prisma.masalah.findMany({
+        if (recDesa.length !== 0) {
+            const masalahdesa = await prisma.masalah.findMany({
                 where: {
                     idDesa: recDesa[0]?.id as number
                 }
             })
+            return h.response({
+                statusCode: 200,
+                message: 'Rekomendasi desa dan masalah berhasil ditampilkan',
+                recDesa,
+                masalahdesa
+            }).code(200)
         }
 
         return h.response({
             statusCode: 200,
-            message: 'Rekomendasi desa dan masalah berhasil ditampilkan',
-            recDesa,
-            masalahdesa
+            message: 'Desa belum memiliki masalah',
         }).code(200)
     } catch (err) {
         console.log(err)
@@ -461,6 +500,7 @@ export default {
     updateAmbilKursus,
     getKursus,
     rekomendasiKursus,
+    getModul,
     rekomendasiDesa,
     ambilMasalah,
     selesaiMasalah,

@@ -813,84 +813,14 @@
 ```
     id = id kursus
 ```
----
-### Rekomendasi kursus
-#### Method: GET
-```https://be.api-amati.com/recommendations/{nama kursus}```
-#### {nama kursus} = sesuai dengan database, tidak perlu token
 #### Response:
 1. Berhasil
 ```
-{
-    "Kursus Saat Ini": "Fundamental Course (1)",
-    "Rekomendasi": [
-        "Fundamental Course (2)",
-        "Waste Management",
-        "Fundamental Course (3)",
-        "Program Startup",
-        "Solar Academy",
-        "Indonesia Sustainability Coral Reef University Network (ISCORE)",
-        "Moringa Academy",
-        "Indonesia Sustainable Social Forestry Education Program (IS-FREE)",
-        "Integrated Farming",
-        "Ecotourism"
-    ]
-}
-```
-2. Gagal
-```
-Internal Server Error
-```
----
-### Detail rekomendasi desa
-#### Method: POST
-```https://be.api-amati.com/user/course/recommendation/list```
-#### Data yang dikirim:
-#### JSON (perlu token)
-```
-{
-    "kursus1": "Fundamental Course (2)",
-    "Kursus2": "Waste Management",
-    "Kursus3": "Program Startup",
-    "Kursus4": "Solar Academy",
-    "Kursus5": "Indonesia Sustainability Coral Reef University Network (ISCORE)"
-}
-```
-#### Response:
-1. Berhasil
-```
+// id = 1
 {
     "statusCode": 200,
-    "message": "Kursus berhasil diambil",
-    "kursuspertama": {
-        "id": 2,
-        "namaKursus": "Fundamental Course (2)",
-        "deskripsi": "Innovation method as problem solving",
-        "dampak": "Memahami konsep Growth Mindset. Memahami konsep Design Thinking. Memahami Konsep Lean Startup. Memahami Digital Startup",
-        "foto": ""
-    },
-    "kursuskedua": {
-        "id": 1,
-        "namaKursus": "Fundamental Course (1)",
-        "deskripsi": "Fundamental Attitude toward sustainability",
-        "dampak": "mengubah paradigma mengenai sustainability. Memahami Prinsip Ekologi. Memahami Elemen dasar Green Mindset. Memahami Konsep Carbon Footprint. Membuat Rancang Bangun Ecology. Memahami Sustainable Community. Memahami Poin-poin SGGs",
-        "foto": ""
-    },
-    "kursusketiga": {
-        "id": 1,
-        "namaKursus": "Fundamental Course (1)",
-        "deskripsi": "Fundamental Attitude toward sustainability",
-        "dampak": "mengubah paradigma mengenai sustainability. Memahami Prinsip Ekologi. Memahami Elemen dasar Green Mindset. Memahami Konsep Carbon Footprint. Membuat Rancang Bangun Ecology. Memahami Sustainable Community. Memahami Poin-poin SGGs",
-        "foto": ""
-    },
-    "kursuskeempat": {
-        "id": 1,
-        "namaKursus": "Fundamental Course (1)",
-        "deskripsi": "Fundamental Attitude toward sustainability",
-        "dampak": "mengubah paradigma mengenai sustainability. Memahami Prinsip Ekologi. Memahami Elemen dasar Green Mindset. Memahami Konsep Carbon Footprint. Membuat Rancang Bangun Ecology. Memahami Sustainable Community. Memahami Poin-poin SGGs",
-        "foto": ""
-    },
-    "kursuskelima": {
+    "message": "Kursus berhasil ditampilkan",
+    "kursus": {
         "id": 1,
         "namaKursus": "Fundamental Course (1)",
         "deskripsi": "Fundamental Attitude toward sustainability",
@@ -929,3 +859,352 @@ Internal Server Error
 }
 ```
 ---
+### Rekomendasi kursus
+#### Method: GET
+```https://be.api-amati.com/recommendations/{nama kursus}```
+#### {nama kursus} = sesuai dengan database, tidak perlu token
+#### Response:
+1. Berhasil
+```
+{
+    "Kursus Saat Ini": "Fundamental Course (1)",
+    "Rekomendasi": [
+        "Fundamental Course (2)",
+        "Waste Management",
+        "Fundamental Course (3)",
+        "Program Startup",
+        "Solar Academy",
+        "Indonesia Sustainability Coral Reef University Network (ISCORE)",
+        "Moringa Academy",
+        "Indonesia Sustainable Social Forestry Education Program (IS-FREE)",
+        "Integrated Farming",
+        "Ecotourism"
+    ]
+}
+```
+2. Gagal
+```
+Internal Server Error
+```
+---
+### Detail rekomendasi desa
+#### Method: POST
+```https://be.api-amati.com/user/course/recommendation/list```
+#### Data yang dikirim:
+#### JSON (perlu token)
+```
+// k kecil semua
+{
+    "kursus1": "Fundamental Course (2)",
+    "kursus2": "Waste Management",
+    "kursus3": "Program Startup",
+    "kursus4": "Solar Academy",
+    "kursus5": "Indonesia Sustainability Coral Reef University Network (ISCORE)"
+}
+```
+#### Response:
+1. Berhasil
+```
+{
+    "statusCode": 200,
+    "message": "Kursus berhasil diambil",
+    "kursuspertama": [
+        {
+            "id": 2,
+            "namaKursus": "Fundamental Course (2)",
+            "deskripsi": "Innovation method as problem solving",
+            "dampak": "Memahami konsep Growth Mindset. Memahami konsep Design Thinking. Memahami Konsep Lean Startup. Memahami Digital Startup",
+            "foto": ""
+        }
+    ],
+    "kursuskedua": [
+        {
+            "id": 8,
+            "namaKursus": "Waste Management",
+            "deskripsi": "Bukan hanya kota yang darurat sampah, Desa Desa di Indonesia pun memiliki issue yang sama. Manajemen sampah saat ini menjadi industri yang sangat besar di Indonesia. Hampir semua perusahaan membutuhkannya. Program ini mengajak peserta membuat Inovasi proses manajemen sampah di Desa. Dari mulai Edukasi, daur ulang, peluang bisnis.",
+            "dampak": "pelindungan habitat. mengurangi polusi sampah di tanah, air dan udara. Aksi nyata pemuda lokal. Sampah terpilah. Mengurangi timbunan sampah di TPU setempat. Recycle sampah ke pabrk pengolahan. Meningkatkan kemandirian warga Desa dengan merubah sampah menjadi sesuatu yang bernilai Mencegah musibah karna sampah",
+            "foto": ""
+        }
+    ],
+    "kursusketiga": [
+        {
+            "id": 11,
+            "namaKursus": "Program Startup",
+            "deskripsi": "Pemerintah Indonesia saat ini memiliki target untuk meningkatkan rasio wirausaha menjadi 3,95% di tahun 2024. Jenis wirausaha yang diharapkan tidak hanya mengutamakan keuntungan semata, namun juga mengurangi dampak negatif terhadap Sosial dan Lingkungan sekitar. Saat ini sustainable business telah menjadi paradigma yg dipakai dalam membangun sebuah Bisnis. Paradigma baru yang lebih menguntungkan secara ekonomi sekaligus ramah sosial dan lingkungan. Indonesia mengharapkan munculnya wirausaha baru yang muncul dari issue SDGs terutama di Desa. Seperti kita ketahui, desa memiliki Mega Biodiversity yang sangat luar biasa untuk dikembangkan model bisnisnya.",
+            "dampak": "Munculnya usaha baru berbasis isu & potensi Desa.",
+            "foto": ""
+        }
+    ],
+    "kursuskeempat": [
+        {
+            "id": 10,
+            "namaKursus": "Solar Academy",
+            "deskripsi": "Pemerintah Indonesia saat ini memiliki target untuk meningkatkan rasio wirausaha menjadi 3,95% di tahun 2024. Jenis wirausaha yang diharapkan tidak hanya mengutamakan keuntungan semata, namun juga mengurangi dampak negatif terhadap Sosial dan Lingkungan sekitar. Saat ini sustainable business telah menjadi paradigma yg dipakai dalam membangun sebuah Bisnis. Paradigma baru yang lebih menguntungkan secara ekonomi sekaligus ramah sosial dan lingkungan. Indonesia mengharapkan munculnya wirausaha baru yang muncul dari issue SDGs terutama di Desa. Seperti kita ketahui, desa memiliki Mega Biodiversity yang sangat luar biasa untuk dikembangkan model bisnisnya.",
+            "dampak": "Memberikan pengetahuan dan informasi terkini kepada mahasiswa dalam memahami terkait energi terbarukan, khususnya sistem PLTS (Pembangkit Listrik Tenaga Surya).  Munculnya Inovasi energi terbarukan untuk masyarakat Indonesia. Munculnya wirausaha baru di bidang energi terbarukan",
+            "foto": ""
+        }
+    ],
+    "kursuskelima": [
+        {
+            "id": 4,
+            "namaKursus": "Indonesia Sustainability Coral Reef University Network (ISCORE)",
+            "deskripsi": "Terumbu karang menutupi kurang dari 1% wilayah lautan, tetapi mereka secara langsung mendukung jutaan orang dengan menyediakan makanan, pekerjaan, dan sumber daya lainnya. Bahkan lebih banyak orang yang mendapat manfaat dari terumbu karang secara tidak langsung; ekosistem ini membantu memberi makan 1 miliar orang di Asia saja. Populasi manusia hampir 7 miliar orang, dan kemungkinan akan tumbuh menjadi 9 miliar pada tahun 2040. Kita membutuhkan terumbu karang (dan ekosistem lainnya) untuk memasok lebih banyak sumber daya untuk mendukung jumlah kita yang terus bertambah, tetapi mereka semakin terancam dengan kehancuran.",
+            "dampak": "pelindungan habibat. mengurangi polusi. mengurangi dampak erosi. Promosi pariwisata. Meningkatkan komunitas lokal. Pemeliharaan agen perubahan berkelanjutan dan perlindungan terumbu karang",
+            "foto": ""
+        }
+    ]
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+---
+### Prediksi desa berdasarkan kursus
+#### Method: GET
+```https://be.api-amati.com/predict/{kursus}```
+#### Data yang dikirim:
+#### Query (tidak perlu token)
+```
+    kursus = nama kursus
+    https://be.api-amati.com/predict/Ecotourism
+```
+#### Response:
+1. Berhasil
+```
+[
+    "Nearest similarity pair for [['Ecotourism']]: [desa aimoli, alor], Similarity: 0.2610730142189104"
+]
+```
+2. Gagal
+```
+Internal Server Error
+```
+---
+### Menampilkan semua masalah desa berdasarkan rekomendasi desa
+#### Method: GET
+```https://be.api-amati.com/user/recommendation/{desa}```
+#### Data yang dikirim:
+#### Query (perlu token)
+```
+    desa = desa dari rekomendasi /predict
+    https://be.api-amati.com/user/recommendation/aimoli
+```
+#### Response:
+1. Berhasil
+```
+{
+    "statusCode": 200,
+    "message": "Rekomendasi desa dan masalah berhasil ditampilkan",
+    "recDesa": [
+        {
+            "id": 4,
+            "email": "aimoli@alor.id",
+            "password": "$2b$10$b6rkXi6qiQxnYeA3dCdpAeBp815INdxn88XoLJwWzL85rwsOr9Uh6",
+            "namaDesa": "Aimoli",
+            "telepon": "081234567890",
+            "lokasiDesa": "Desa Aimoli, Kecamatan Alor Barat Laut, Kabupaten Alor, Nusa Tenggara Timur",
+            "latitude": -8.191830463562995,
+            "longitude": 124.4342411697929,
+            "foto": "aimoli_alor.jpg"
+        }
+    ],
+    "masalahdesa": [
+        {
+            "id": 54,
+            "namaMasalah": "Fasilitas penunjang wisata yang masih minim",
+            "deskripsi": "",
+            "idDesa": 4
+        },
+        {
+            "id": 55,
+            "namaMasalah": "Wisata kuliner yang terbatas",
+            "deskripsi": "",
+            "idDesa": 4
+        },
+        {
+            "id": 56,
+            "namaMasalah": "Akses informasi wisata yang masih terbatas",
+            "deskripsi": "",
+            "idDesa": 4
+        }
+    ]
+}
+
+// Jika desa belum memiliki masalah
+{
+    "statusCode": 200,
+    "message": "Desa belum memiliki masalah",
+    "recDesa": []
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+---
+### Mengambil masalah desa
+#### Method: GET
+```https://be.api-amati.com/user/problem/{id}```
+#### Data yang dikirim:
+#### Query (perlu token)
+```
+    id = id masalah dari desa yang ditampilkan 
+    menggunakan /user/recommendation/{desa}
+```
+#### Response:
+1. Berhasil
+```
+{
+    "statusCode": 200,
+    "message": "Masalah berhasil diambil",
+    "masalah": {
+        "id": 56,
+        "namaMasalah": "Akses informasi wisata yang masih terbatas",
+        "deskripsi": "",
+        "idDesa": 4
+    },
+    "ambilmasalah": {
+        "id": 1,
+        "idMasalah": 56,
+        "idPengguna": 1,
+        "statusSelesai": false
+    }
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+---
+### Menyelesaikan masalah desa
+#### Method: PUT
+```https://be.api-amati.com/user/problem/{id}```
+#### Data yang dikirim:
+#### Query (perlu token)
+```
+    id = id masalah dari desa yang ditampilkan 
+    menggunakan /user/recommendation/{desa}
+```
+#### Response:
+1. Berhasil
+```
+// Karena user hanya bisa mengambil 1 masalah desa
+// maka hanya perlu menggantii statusSelesai
+{
+    "statusCode": 200,
+    "message": "Masalah berhasil diselesaikan",
+    "ambilmasalah": {
+        "id": 1,
+        "idMasalah": 56,
+        "idPengguna": 1,
+        "statusSelesai": true
+    }
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+---
+

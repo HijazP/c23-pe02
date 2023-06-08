@@ -61,9 +61,16 @@ const userPlugin = {
                 handler: userHandler.rekomendasiKursus,
             },
             {
+                // Mengambil detail modul dari id kursus atau id modul
+                method: 'GET',
+                path: '/user/course/module',
+                handler: userHandler.getModul,
+
+            },
+            {
                 // Rekomendasi desa berdasarkan kursus
                 method: 'GET',
-                path: '/user/course/recommendation/{desa}',
+                path: '/user/recommendation/{desa}',
                 handler: userHandler.rekomendasiDesa,
             },
             {
