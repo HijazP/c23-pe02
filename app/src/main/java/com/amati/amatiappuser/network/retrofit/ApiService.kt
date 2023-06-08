@@ -24,7 +24,7 @@ interface ApiService {
         requestProfil: RequestProfil
     ): Call<ProfilResponse>
 
-    @GET("user")
+    @GET("/user")
     fun getProfil(
         @Header("Authorization") token: String
     ): Call<GetProfilResponse>
