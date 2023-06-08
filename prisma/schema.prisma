@@ -39,8 +39,8 @@ model Modul {
 model Kursus {
   id  Int @id @default(autoincrement())
   namaKursus String
-  deskripsi String
-  dampak String
+  deskripsi String @db.LongText
+  dampak String @db.LongText
   foto String
   modul Modul[]
   ambilKursus AmbilKursus[]

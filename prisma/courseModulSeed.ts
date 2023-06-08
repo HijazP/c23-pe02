@@ -12,21 +12,21 @@ async function main() {
     dampak:
       "mengubah paradigma mengenai sustainability. Memahami Prinsip Ekologi. Memahami Elemen dasar Green Mindset. Memahami Konsep Carbon Footprint. Membuat Rancang Bangun Ecology. Memahami Sustainable Community. Memahami Poin-poin SGGs",
     foto: ''
-  });
+  })
   kursusTemplate.push({
     id: 2,
     namaKursus: "Fundamental Course(2)",
     deskripsi: "Innovation method as problem solving",
     dampak: "Memahami konsep Growth Mindset. Memahami konsep Design Thinking. Memahami Konsep Lean Startup. Memahami Digital Startup",
     foto: ''
-  });
+  })
   kursusTemplate.push({
     id: 3,
     namaKursus: "Fundamental Course (3)",
     deskripsi: "The way to build sustainable business",
     dampak: "Mengenal Sustainable Startup. Memahami SDGs poin ke-12. Mengembangkan Sustainable Business Idea and Process of Growth. Membuat Profit Model untuk bisnis",
     foto: ''
-  });
+  })
   kursusTemplate.push({
     id: 4,
     namaKursus: "Indonesia Sustainability Coral Reef University Network (ISCORE)",
@@ -34,7 +34,7 @@ async function main() {
       "Terumbu karang menutupi kurang dari 1% wilayah lautan, tetapi mereka secara langsung mendukung jutaan orang dengan menyediakan makanan, pekerjaan, dan sumber daya lainnya. Bahkan lebih banyak orang yang mendapat manfaat dari terumbu karang secara tidak langsung; ekosistem ini membantu memberi makan 1 miliar orang di Asia saja. Populasi manusia hampir 7 miliar orang, dan kemungkinan akan tumbuh menjadi 9 miliar pada tahun 2040. Kita membutuhkan terumbu karang (dan ekosistem lainnya) untuk memasok lebih banyak sumber daya untuk mendukung jumlah kita yang terus bertambah, tetapi mereka semakin terancam dengan kehancuran.",
     dampak: "pelindungan habibat. mengurangi polusi. mengurangi dampak erosi. Promosi pariwisata. Meningkatkan komunitas lokal. Pemeliharaan agen perubahan berkelanjutan dan perlindungan terumbu karang",
     foto: ''
-  });
+  })
   kursusTemplate.push({
     id: 5,
     namaKursus: "Ecotourism",
@@ -43,7 +43,7 @@ async function main() {
     dampak:
       "Pelestarian ekosistem terhadap biodiversitas. Penguatan obyek dan daya tarik wisata. Pelestarian budaya dari segi lokal wisdom dan narasi budaya. Penguatan layanan meliputi kepusan, kenyamanan & keselamatan. Penguatan ekonomi dalam peningkatan manfaat bagi pengguna, pengusaha dan pemerintah",
     foto: ''
-  });
+  })
   kursusTemplate.push({
     id: 6,
     namaKursus: "Moringa Academy",
@@ -52,7 +52,7 @@ async function main() {
     dampak:
       "Mengembangkan, memelihara dan melindungi hutan melalui pengembangan Kelor. Mendukung penanaman 5 juta Pohon Kelor di Indonesia. Bisnis Inklusif untuk mendukung komunitas yang terlibat termasuk perempuan, difabel. Menghasilkan pendapatan bagi masyarakat dengan menyediakan berbagai macam produk kelor yang mudah dibuat untuk dijual sebagai pendapatan. Meningkatkan kesehatan masyarakat, mengatasi isu stunting Menyediakan rute ke pasar lokal dan global untuk mengembangkan petani pedesaan",
     foto: ''
-  });
+  })
   kursusTemplate.push({
     id: 7,
     namaKursus: "Indonesia Sustainable Social Forestry Education Program (IS-FREE)",
@@ -61,7 +61,7 @@ async function main() {
     dampak:
       "Pemasaran produk-produk hutan yang Berkelanjutan. Pengembangan pengetahuan dan kapasitas masyarakat perhutanan sosial serta pemangku kepentingan yang lain. Kapasitas peserta ditingkatkan untuk secara efektif menjangkau pembuat keputusan yang relevan dan pemangku kepentingan yang berpengaruh dalam masyarakat",
     foto: ''
-  });
+  })
   kursusTemplate.push({
     id: 8,
     namaKursus: "Waste Management",
@@ -70,7 +70,7 @@ async function main() {
     dampak:
       "pelindungan habitat. mengurangi polusi sampah di tanah, air dan udara. Aksi nyata pemuda lokal. Sampah terpilah. Mengurangi timbunan sampah di TPU setempat. Recycle sampah ke pabrk pengolahan. Meningkatkan kemandirian warga Desa dengan merubah sampah menjadi sesuatu yang bernilai Mencegah musibah karna sampah",
     foto: ''
-  });
+  })
   kursusTemplate.push({
     id: 9,
     namaKursus: "Integrated Farming",
@@ -86,7 +86,7 @@ async function main() {
     deskripsi:
       "Pemerintah Indonesia saat ini memiliki target untuk meningkatkan rasio wirausaha menjadi 3,95% di tahun 2024. Jenis wirausaha yang diharapkan tidak hanya mengutamakan keuntungan semata, namun juga mengurangi dampak negatif terhadap Sosial dan Lingkungan sekitar. Saat ini sustainable business telah menjadi paradigma yg dipakai dalam membangun sebuah Bisnis. Paradigma baru yang lebih menguntungkan secara ekonomi sekaligus ramah sosial dan lingkungan. Indonesia mengharapkan munculnya wirausaha baru yang muncul dari issue SDGs terutama di Desa. Seperti kita ketahui, desa memiliki Mega Biodiversity yang sangat luar biasa untuk dikembangkan model bisnisnya.",
     dampak:
-      "Memberikan pengetahuan dan informasi terkini kepada mahasiswa dalam memahami terkait energi terbarukan, khususnya sistem PLTS (Pembangkit Listrik Tenaga Surya). Munculnya lulusan siap kerja dalam industri energi terbarukan. Munculnya Inovasi energi terbarukan untuk masyarakat Indonesia. Munculnya wirausaha baru di bidang energi terbarukan",
+      "Memberikan pengetahuan dan informasi terkini kepada mahasiswa dalam memahami terkait energi terbarukan, khususnya sistem PLTS (Pembangkit Listrik Tenaga Surya).  Munculnya Inovasi energi terbarukan untuk masyarakat Indonesia. Munculnya wirausaha baru di bidang energi terbarukan",
     foto: ''
   })
   kursusTemplate.push({
@@ -94,7 +94,7 @@ async function main() {
     namaKursus: "Program Startup",
     deskripsi:
       "Pemerintah Indonesia saat ini memiliki target untuk meningkatkan rasio wirausaha menjadi 3,95% di tahun 2024. Jenis wirausaha yang diharapkan tidak hanya mengutamakan keuntungan semata, namun juga mengurangi dampak negatif terhadap Sosial dan Lingkungan sekitar. Saat ini sustainable business telah menjadi paradigma yg dipakai dalam membangun sebuah Bisnis. Paradigma baru yang lebih menguntungkan secara ekonomi sekaligus ramah sosial dan lingkungan. Indonesia mengharapkan munculnya wirausaha baru yang muncul dari issue SDGs terutama di Desa. Seperti kita ketahui, desa memiliki Mega Biodiversity yang sangat luar biasa untuk dikembangkan model bisnisnya.",
-    dampak: "Munculnya usaha baru berbasis isu & potensi Desa. Mendukung pemenuhan SDGs Desa. Mental wirausaha & rasa percaya diri peserta meningkat. Alternatif pengembangan desa melalui Open Innovation",
+    dampak: "Munculnya usaha baru berbasis isu & potensi Desa.",
     foto: ''
   })
 
