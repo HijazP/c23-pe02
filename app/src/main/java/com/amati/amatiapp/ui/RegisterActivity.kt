@@ -46,6 +46,13 @@ class RegisterActivity : AppCompatActivity() {
                     finish()
                 }, 1000)
             }
+            else if (registerViewModel.code.value == 401) {
+                Toast.makeText(
+                    this,
+                    "Email Sudah Dipakai",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
 
