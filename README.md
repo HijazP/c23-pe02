@@ -4,7 +4,7 @@
 ---
 ### Daftar Desa
 #### Method: POST
-```https://be.api-amati.com/desa/register```  
+```https://be.api-amati.com/desa/register```
 #### Data yang dikirim:
 #### JSON
 ```
@@ -411,12 +411,11 @@
 ```
 {
     "statusCode": 201,
-    "message": "Desa berhasil ditambahkan",
+    "message": "Pengguna berhasil ditambahkan",
     "desa": {
         "id": 1,
-        "email": "kamu@ganteng.anjay",
-        "namaDesa": "Cihideung",
-        "telepon": "081234567890",
+        "namaLengkap": "",
+        "email": "sadar@diri"
     }
 }
 ```

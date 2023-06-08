@@ -26,9 +26,9 @@ async function registerDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
 
         if (checkDesa) {
             return h.response({
-                statusCode: 401,
+                statusCode: 409,
                 message: 'Desa sudah terdaftar dengan email yang sama'
-            }).code(401)
+            }).code(409)
         }
 
         const desa = await prisma.desa.create({

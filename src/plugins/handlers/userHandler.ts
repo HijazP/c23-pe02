@@ -4,12 +4,25 @@ import Jwt from '@hapi/jwt'
 
 async function registerUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
-    const { nama, email, password } = request.payload as any
+    const { namaLengkap, email, password } = request.payload as any
 
     try {
-        const desa = await prisma.pengguna.create({
+        const checkUser = await prisma.pengguna.findUnique({
+            where: {
+                email: email
+            }
+        })
+
+        if (checkUser) {
+            return h.response({
+                statusCode: 409,
+                message: 'Email sudah terdaftar'
+            }).code(409)
+        }
+
+        const user = await prisma.pengguna.create({
             data: {
-                namaLengkap: nama,
+                namaLengkap: namaLengkap,
                 email: email,
                 password: bcrypt.hashSync(password, 10),
                 foto: '',
@@ -23,7 +36,7 @@ async function registerUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
         return h.response({
             statusCode: 201,
             message: 'Pengguna berhasil ditambahkan',
-            desa
+            user
         }).code(201)
     } catch (err) {
         console.log(err)
