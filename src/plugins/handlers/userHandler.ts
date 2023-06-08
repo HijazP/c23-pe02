@@ -265,7 +265,116 @@ async function rekomendasiKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
     }
 }
 
+async function rekomendasiDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const { prisma } = request.server.app
+    const { desa } = request.params
+
+    try {
+        const recDesa = await prisma.desa.findMany({
+            where: {
+                namaDesa: desa
+            }
+        })
+
+        const masalahdesa = await prisma.masalah.findMany({
+            where: {
+                idDesa: recDesa[0].id
+            }
+        })
+        return h.response({
+            statusCode: 200,
+            message: 'Rekomendasi desa dan masalah berhasil ditampilkan',
+            recDesa,
+            masalahdesa
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
 async function ambilMasalah(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let userId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            userId = decode.decoded.payload.userId
+        }
+    }
+    const { prisma } = request.server.app
+    const { id } = request.params as { id: string }
+
+    try {
+        const masalah = await prisma.masalah.findUnique({
+            where: {
+                id: parseInt(id)
+            }
+        })
+        const ambilmasalah = await prisma.ambilmasalah.create({
+            data: {
+                masalah: {
+                    connect: {
+                        id: masalah?.id
+                    }
+                },
+                pengguna: {
+                    connect: { id: userId }
+                },
+                statusSelesai: false,
+            }
+        })
+        return h.response({
+            statusCode: 200,
+            message: 'Masalah berhasil diambil',
+            masalah,
+            ambilmasalah
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+async function selesaiMasalah(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let userId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            userId = decode.decoded.payload.userId
+        }
+    }
+    const { prisma } = request.server.app
+    const { id } = request.params as { id: string }
+
+    try {
+        const ambilmasalah = await prisma.ambilmasalah.update({
+            where: {
+                id: parseInt(id)
+            },
+            data: {
+                statusSelesai: true
+            }
+        })
+        return h.response({
+            statusCode: 200,
+            message: 'Masalah berhasil diselesaikan',
+            ambilmasalah
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
 
 }
 
@@ -276,5 +385,7 @@ export default {
     ambilKursus,
     updateAmbilKursus,
     rekomendasiKursus,
-    ambilMasalah
+    rekomendasiDesa,
+    ambilMasalah,
+    selesaiMasalah,
 }

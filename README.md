@@ -12,10 +12,7 @@
     "email": "kamu@ganteng.anjay",
     "password": "kamugantengdeh",
     "namaDesa": "Cihideung",
-    "telepon": "081234567890",
-    "lokasiDesa": "Desa Cihideung, Kec Cibodas, Kab Cileuncang, Jawa Barat",
-    "latitude": -6.987,
-    "longitude": 107.123
+    "telepon": "081234567890"
 }
 ```
 #### Response:
@@ -24,14 +21,11 @@
 {
     "statusCode": 201,
     "message": "Desa berhasil ditambahkan",
-    "createdDesa": {
+    "desa": {
         "id": 1,
         "email": "kamu@ganteng.anjay",
         "namaDesa": "Cihideung",
         "telepon": "081234567890",
-        "lokasiDesa": "Desa Cihideung, Kec Cibodas, Kab Cileuncang, Jawa Barat",
-        "longitude": 107.123,
-        "latitude": -6.987
     }
 }
 ```
@@ -42,6 +36,12 @@
     "statusCode": 400,
     "error": "Bad Request",
     "message": "Invalid request payload JSON format"
+}
+
+// Desa sudah pernah terdaftarkan (by email)
+{
+    "statusCode": 401,
+    "message": "Desa sudah terdaftar dengan email yang sama"
 }
 
 // Salah path atau method

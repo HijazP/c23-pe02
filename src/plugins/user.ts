@@ -49,10 +49,22 @@ const userPlugin = {
                 handler: userHandler.rekomendasiKursus,
             },
             {
+                // Rekomendasi desa berdasarkan kursus
+                method: 'GET',
+                path: '/user/course/recommendation/{desa}',
+                handler: userHandler.rekomendasiDesa,
+            },
+            {
                 // Mengambil masalah
                 method: 'GET',
                 path: '/user/problem/{id}',
                 handler: userHandler.ambilMasalah
+            },
+            {
+                // Menyelesaikan masalah
+                method: 'PUT',
+                path: '/user/problem/{id}',
+                handler: userHandler.selesaiMasalah
             },
         ])
     },
