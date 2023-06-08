@@ -209,7 +209,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 1 }
           }
         }
@@ -219,7 +219,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 2 }
           }
         }
@@ -229,7 +229,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 3 }
           }
         }
@@ -239,7 +239,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 4 }
           }
         }
@@ -249,7 +249,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 5 }
           }
         }
@@ -259,7 +259,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 6 }
           }
         }
@@ -269,7 +269,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 7 }
           }
         }
@@ -279,7 +279,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 8 }
           }
         }
@@ -289,7 +289,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 9 }
           }
         }
@@ -299,7 +299,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 10 }
           }
         }
@@ -309,7 +309,7 @@ async function main() {
       await prisma.modul.create({
         data: {
           namaModul: modulTemplate[i].namaModul,
-          Kursus: {
+          kursus: {
             connect: { id: 11 }
           }
         }

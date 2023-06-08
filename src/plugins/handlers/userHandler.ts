@@ -134,14 +134,14 @@ async function ambilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
             }
         })
 
-        const ambilKursus = await prisma.ambilKursus.create({
+        const ambilKursus = await prisma.ambilkursus.create({
             data: {
-                Kursus: {
+                kursus: {
                     connect: {
                         id: parseInt(id)
                     }
                 },
-                Pengguna: {
+                pengguna: {
                     connect: { id: userId }
                 },
                 jumlahModul: jumlahModul,
@@ -176,7 +176,7 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
     const { id, status } = request.query as { id: string, status: string }
 
     try {
-        const kursus = await prisma.ambilKursus.findUnique({
+        const kursus = await prisma.ambilkursus.findUnique({
             where: {
                 id: parseInt(id)
             }
@@ -184,7 +184,7 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
 
         if (kursus !== null) {
             if (status === 'completed') {
-                const ambilKursus = await prisma.ambilKursus.update({
+                const ambilKursus = await prisma.ambilkursus.update({
                     where: {
                         id: parseInt(id)
                     },
@@ -200,7 +200,7 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
                 }).code(200)
             }
             else if (status === 'next') {
-                const ambilKursus = await prisma.ambilKursus.update({
+                const ambilKursus = await prisma.ambilkursus.update({
                     where: {
                         id: parseInt(id)
                     },

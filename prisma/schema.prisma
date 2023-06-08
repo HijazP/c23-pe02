@@ -7,71 +7,81 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Desa {
-  id  Int @id @default(autoincrement())
-  email String @unique
-  password String
-  namaDesa String
-  telepon String
-  lokasiDesa String?
-  latitude Float?
-  longitude Float?
-  foto String?
-  masalah Masalah[]
-}
-
-model Masalah {
-  id  Int @id @default(autoincrement())
-  namaMasalah String
-  deskripsi String
-  idDesa Int
-  Desa Desa @relation(fields: [idDesa], references: [id])
-  ambilMasalah AmbilMasalah[]
-}
-
-model Modul {
-  id  Int @id @default(autoincrement())
-  namaModul String
-  idKursus Int
-  Kursus Kursus @relation(fields: [idKursus], references: [id])
-}
-
-model Kursus {
-  id  Int @id @default(autoincrement())
-  namaKursus String
-  deskripsi String @db.LongText
-  dampak String @db.LongText
-  foto String
-  modul Modul[]
-  ambilKursus AmbilKursus[]
-}
-
-model Pengguna {
-  id  Int @id @default(autoincrement())
-  namaLengkap String
-  email String @unique
-  password String
-  foto String
-  ambilMasalah AmbilMasalah[]
-  ambilKursus AmbilKursus[]
-}
-
-model AmbilMasalah {
-  id  Int @id @default(autoincrement())
-  idMasalah Int
-  idPengguna Int
-  statusSelesai Boolean
-  Masalah Masalah @relation(fields: [idMasalah], references: [id])
-  Pengguna Pengguna @relation(fields: [idPengguna], references: [id])
-}
-
-model AmbilKursus {
-  id  Int @id @default(autoincrement())
-  idKursus Int
-  idPengguna Int
-  jumlahModul Int
+model ambilkursus {
+  id            Int      @id @default(autoincrement())
+  idKursus      Int
+  idPengguna    Int
+  jumlahModul   Int
   modulSekarang Int
   statusSelesai Boolean
-  Kursus Kursus @relation(fields: [idKursus], references: [id])
-  Pengguna Pengguna @relation(fields: [idPengguna], references: [id])
+  kursus        kursus   @relation(fields: [idKursus], references: [id], map: "AmbilKursus_idKursus_fkey")
+  pengguna      pengguna @relation(fields: [idPengguna], references: [id], map: "AmbilKursus_idPengguna_fkey")
+
+  @@index([idKursus], map: "AmbilKursus_idKursus_fkey")
+  @@index([idPengguna], map: "AmbilKursus_idPengguna_fkey")
+}
+
+model ambilmasalah {
+  id            Int      @id @default(autoincrement())
+  idMasalah     Int
+  idPengguna    Int
+  statusSelesai Boolean
+  masalah       masalah  @relation(fields: [idMasalah], references: [id], map: "AmbilMasalah_idMasalah_fkey")
+  pengguna      pengguna @relation(fields: [idPengguna], references: [id], map: "AmbilMasalah_idPengguna_fkey")
+
+  @@index([idMasalah], map: "AmbilMasalah_idMasalah_fkey")
+  @@index([idPengguna], map: "AmbilMasalah_idPengguna_fkey")
+}
+
+model desa {
+  id         Int       @id @default(autoincrement())
+  email      String    @unique(map: "Desa_email_key")
+  password   String
+  namaDesa   String
+  telepon    String
+  lokasiDesa String?
+  latitude   Float?
+  longitude  Float?
+  foto       String?
+  masalah    masalah[]
+}
+
+model kursus {
+  id          Int           @id @default(autoincrement())
+  namaKursus  String
+  deskripsi   String        @db.LongText
+  dampak      String        @db.LongText
+  foto        String
+  ambilkursus ambilkursus[]
+  modul       modul[]
+}
+
+model masalah {
+  id           Int            @id @default(autoincrement())
+  namaMasalah  String
+  deskripsi    String
+  idDesa       Int
+  ambilmasalah ambilmasalah[]
+  desa         desa           @relation(fields: [idDesa], references: [id], map: "Masalah_idDesa_fkey")
+
+  @@index([idDesa], map: "Masalah_idDesa_fkey")
+}
+
+model modul {
+  id        Int    @id @default(autoincrement())
+  namaModul String
+  idKursus  Int
+  kursus    kursus @relation(fields: [idKursus], references: [id], map: "Modul_idKursus_fkey")
+
+  @@index([idKursus], map: "Modul_idKursus_fkey")
+}
+
+model pengguna {
+  id           Int            @id @default(autoincrement())
+  namaLengkap  String
+  email        String         @unique(map: "Pengguna_email_key")
+  password     String
+  foto         String
+  ambilkursus  ambilkursus[]
+  ambilmasalah ambilmasalah[]
 }

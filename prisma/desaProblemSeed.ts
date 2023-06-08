@@ -150,7 +150,7 @@ async function main() {
                 data: {
                     namaMasalah: masalahTemplate[i].namaMasalah,
                     deskripsi: masalahTemplate[i].deskripsi,
-                    Desa: {
+                    desa: {
                         connect: { id: desa1? desa1.id : 0 }
                     }
                 }
@@ -161,7 +161,7 @@ async function main() {
                 data: {
                     namaMasalah: masalahTemplate[i].namaMasalah,
                     deskripsi: masalahTemplate[i].deskripsi,
-                    Desa: {
+                    desa: {
                         connect: { id: desa2? desa2.id : 0 }
                     }
                 }
@@ -172,7 +172,7 @@ async function main() {
                 data: {
                     namaMasalah: masalahTemplate[i].namaMasalah,
                     deskripsi: masalahTemplate[i].deskripsi,
-                    Desa: {
+                    desa: {
                         connect: { id: desa3? desa3.id : 0 }
                     }
                 }
@@ -183,7 +183,7 @@ async function main() {
                 data: {
                     namaMasalah: masalahTemplate[i].namaMasalah,
                     deskripsi: masalahTemplate[i].deskripsi,
-                    Desa: {
+                    desa: {
                         connect: { id: desa4? desa4.id : 0 }
                     }
                 }
