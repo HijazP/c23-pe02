@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.amati.amatiapp.network.response.ProfilResponse
-import com.amati.amatiapp.network.response.RegisterResponse
 import com.amati.amatiapp.network.retrofit.ApiConfig
 import com.amati.amatiapp.response.RequestProfil
 import retrofit2.Call

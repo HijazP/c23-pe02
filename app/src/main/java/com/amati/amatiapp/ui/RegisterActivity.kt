@@ -65,7 +65,7 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     else -> {
                         if (password == repassword){
-                            val requestReg = RequestReg(email, password, repassword)
+                            val requestReg = RequestReg(email, password, repassword, "")
                             registerViewModel.register(requestReg)
 
                             registerViewModel.dataUser.observe(this@RegisterActivity) {
@@ -74,7 +74,7 @@ class RegisterActivity : AppCompatActivity() {
                                     getString(R.string.register_success),
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                if (registerViewModel.dataUser.value?.success == true) {
+                                if (registerViewModel.code.value == 201) {
                                     val moveIntent =
                                         Intent(this@RegisterActivity, LoginActivity::class.java)
                                     startActivity(moveIntent)

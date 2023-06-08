@@ -27,8 +27,8 @@ class LoginViewModel: ViewModel(){
                 val responseBody = response.body()
                 if (response.isSuccessful) {
                     if (responseBody != null) {
-                        _dataUser.value = responseBody!!
-                        _code.value = responseBody.code
+                        _dataUser.value = response.body()!!
+                        _code.value = responseBody.statusCode
                     }
                 } else{
                     _code.value = response.code()

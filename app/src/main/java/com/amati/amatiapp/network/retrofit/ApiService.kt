@@ -11,19 +11,19 @@ import retrofit2.http.*
 
 interface ApiService {
     @Headers("Content-Type: application/json")
-    @POST("api/v1/login")
+    @POST("desa/login")
     fun login(
         @Body
         requestLogin: RequestLogin
     ): Call<LoginResponse>
 
-    @POST("api/v1/register")
+    @POST("desa/register")
     fun register(
         @Body
-        userRequestReg: RequestReg
+        RequestReg: RequestReg
     ): Call<RegisterResponse>
 
-    @POST("api/v1/register")
+    @POST("desa/register")
     fun profil(
         @Body
         requestProfil: RequestProfil

@@ -3,10 +3,8 @@ package com.amati.amatiapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.amati.amatiapp.network.response.LoginResponse
 import com.amati.amatiapp.network.response.RegisterResponse
 import com.amati.amatiapp.network.retrofit.ApiConfig
-import com.amati.amatiapp.response.RequestLogin
 import com.amati.amatiapp.response.RequestReg
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,7 +31,7 @@ class RegisterViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     if (responseBody != null) {
                         _dataUser.value = responseBody!!
-                        _code.value = responseBody.code
+                        _code.value = responseBody.statusCode
                     }
                 } else{
                     _code.value = response.code()

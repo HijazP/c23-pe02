@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
             val user = loginViewModel.dataUser.value
             if (user != null) {
                 try {
-                    inputSession(it, user.data.token, session)
+                    inputSession(it, user.token, session)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
@@ -144,7 +144,7 @@ class LoginActivity : AppCompatActivity() {
             200 -> {
                 val response = loginViewModel.dataUser.value
                 if (response?.data  != null){
-                    session.setSession(response.data.user.name, response.data.user.id ,token)
+                    session.setSession(response.data.nama, response.data.id ,token)
                     Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                 } else{
                     Toast.makeText(this, "I dont have any idea", Toast.LENGTH_SHORT).show()
