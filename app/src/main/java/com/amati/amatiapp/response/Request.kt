@@ -19,3 +19,8 @@ data class RequestProfil(
     var latitude: Float = Float.MIN_VALUE,
     var longitude: Float = Float.MIN_VALUE
 )
+
+data class RequestProblem(
+    var masalah: String,
+    var deskripsi: String
+)

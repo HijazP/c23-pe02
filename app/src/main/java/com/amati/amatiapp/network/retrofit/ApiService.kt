@@ -1,9 +1,11 @@
 package com.amati.amatiapp.network.retrofit
 
 import com.amati.amatiapp.network.response.LoginResponse
+import com.amati.amatiapp.network.response.ProblemResponse
 import com.amati.amatiapp.network.response.ProfilResponse
 import com.amati.amatiapp.network.response.RegisterResponse
 import com.amati.amatiapp.response.RequestLogin
+import com.amati.amatiapp.response.RequestProblem
 import com.amati.amatiapp.response.RequestProfil
 import com.amati.amatiapp.response.RequestReg
 import retrofit2.Call
@@ -28,6 +30,12 @@ interface ApiService {
         @Body
         requestProfil: RequestProfil
     ): Call<ProfilResponse>
+
+    @POST("desa/problem")
+    fun add(
+        @Body
+        requestProblem: RequestProblem
+    ): Call<ProblemResponse>
 }
 
 

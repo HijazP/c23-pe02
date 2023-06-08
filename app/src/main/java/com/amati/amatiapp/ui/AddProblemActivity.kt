@@ -11,7 +11,7 @@ import com.amati.amatiapp.viewmodel.addProblemViewModel
 
 class AddProblemActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddProblemBinding
-    private val addProblemViewModel: addProblemViewModel by viewModels{}
+//    private val addProblemViewModel: addProblemViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class AddProblemActivity : AppCompatActivity() {
                         inputDesc.error = getString(R.string.desc_req)
                     }
                     else -> {
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this@AddProblemActivity, MainActivity::class.java)
                         startActivity(intent) }
                 }
             }
