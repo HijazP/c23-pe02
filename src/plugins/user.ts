@@ -25,6 +25,12 @@ const userPlugin = {
                 }
             },
             {
+                // Mendapatkan data user
+                method: 'GET',
+                path: '/user',
+                handler: userHandler.getUser,
+            },
+            {
                 // Update user berdasarkan id
                 method: 'PUT',
                 path: '/user/update',

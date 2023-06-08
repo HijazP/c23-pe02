@@ -26,9 +26,9 @@ async function registerDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
 
         if (checkDesa) {
             return h.response({
-                statusCode: 409,
+                statusCode: 401,
                 message: 'Desa sudah terdaftar dengan email yang sama'
-            }).code(409)
+            }).code(401)
         }
 
         const desa = await prisma.desa.create({
@@ -86,6 +86,48 @@ async function loginDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
             data: {id: desa.id, email: desa.email, nama: desa.namaDesa},
             message: `Berhasil masuk ke ${desa.namaDesa}`,
             token
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
+async function getDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let desaId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            desaId = decode.decoded.payload.desaId
+        }
+    }
+    const { prisma } = request.server.app
+
+    try {
+        const desa = await prisma.desa.findUnique({
+            where: {
+                id: desaId
+            },
+            select: {
+                id: true,
+                email: true,
+                namaDesa: true,
+                telepon: true,
+                lokasiDesa: true,
+                longitude: true,
+                latitude: true,
+                foto: true,
+            }
+        })
+
+        return h.response({
+            statusCode: 200,
+            message: 'Berhasil mendapatkan data desa',
+            desa
         }).code(200)
     } catch (err) {
         console.log(err)
@@ -377,6 +419,7 @@ async function deleteProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit)
 export default {
     registerDesa,
     loginDesa,
+    getDesa,
     updateDesa,
     addProblem,
     getAllProblems,

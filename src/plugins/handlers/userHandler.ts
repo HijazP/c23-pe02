@@ -15,9 +15,9 @@ async function registerUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
 
         if (checkUser) {
             return h.response({
-                statusCode: 409,
+                statusCode: 401,
                 message: 'Email sudah terdaftar'
-            }).code(409)
+            }).code(401)
         }
 
         const user = await prisma.pengguna.create({
@@ -84,6 +84,43 @@ async function loginUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     }
 }
 
+async function getUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let userId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            userId = decode.decoded.payload.userId
+        }
+    }
+    const { prisma } = request.server.app
+
+    try {
+        const user = await prisma.pengguna.findUnique({
+            where: {
+                id: userId
+            },
+            select: {
+                id: true,
+                namaLengkap: true,
+                email: true,
+                foto: true,
+            },
+        })
+        return h.response({
+            statusCode: 200,
+            message: 'User berhasil ditampilkan',
+            user
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
 async function updateUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const token = request.auth.artifacts.token
     let userId
@@ -94,7 +131,7 @@ async function updateUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
         }
     }
     const { prisma } = request.server.app
-    const { namaLengkap, email, password } = request.payload as any
+    const { namaLengkap, email, password, foto } = request.payload as any
 
     try {
         const user = await prisma.pengguna.update({
@@ -105,7 +142,7 @@ async function updateUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
                 namaLengkap: namaLengkap,
                 email: email,
                 password: bcrypt.hashSync(password, 10),
-                foto: '',
+                foto: foto,
             },
             select: {
                 id: true,
@@ -146,6 +183,26 @@ async function ambilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
                 idKursus: parseInt(id)
             }
         })
+
+        const checkAmbilKursus = await prisma.ambilkursus.findFirst({
+            where: {
+                AND: [
+                    {
+                        idKursus: parseInt(id)
+                    },
+                    {
+                        idPengguna: userId
+                    },
+                ]
+            }
+        })
+
+        if (checkAmbilKursus) {
+            return h.response({
+                statusCode: 400,
+                message: 'Kursus sudah diambil'
+            }).code(400)
+        }
 
         const ambilKursus = await prisma.ambilkursus.create({
             data: {
@@ -386,6 +443,7 @@ async function selesaiMasalah(request: Hapi.Request, h: Hapi.ResponseToolkit) {
 export default {
     registerUser,
     loginUser,
+    getUser,
     updateUser,
     ambilKursus,
     updateAmbilKursus,

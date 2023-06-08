@@ -38,6 +38,11 @@
     "message": "Invalid request payload JSON format"
 }
 
+// Desa sudah pernah terdaftar
+{
+    "statusCode": 401,
+    "message": "Desa sudah terdaftar dengan email yang sama"
+}
 
 // Salah path atau method
 {
@@ -46,11 +51,6 @@
     "message": "Not Found"
 }
 
-// Desa sudah pernah terdaftar
-{
-    "statusCode": 409,
-    "message": "Desa sudah terdaftar dengan email yang sama"
-}
 
 // Server error (bisa jadi data kurang lengkap)
 {
@@ -432,6 +432,12 @@
     "message": "Invalid request payload JSON format"
 }
 
+// Email sudah terdaftar
+{
+    "statusCode": 401,
+    "message": "Email sudah terdaftar"
+}
+
 // Salah path atau method
 {
     "statusCode": 404,
@@ -439,11 +445,6 @@
     "message": "Not Found"
 }
 
-// Email sudah terdaftar
-{
-    "statusCode": 409,
-    "message": "Email sudah terdaftar"
-}
 
 // Server error (bisa jadi data kurang lengkap)
 {

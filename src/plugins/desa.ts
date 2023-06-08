@@ -25,6 +25,12 @@ const desaPlugin = {
                 }
             },
             {
+                // Mendapatkan data desa
+                method: 'GET',
+                path: '/desa',
+                handler: desaHandler.getDesa,
+            },
+            {
                 // Update desa berdasarkan id
                 method: 'PUT',
                 path: '/desa/update',
