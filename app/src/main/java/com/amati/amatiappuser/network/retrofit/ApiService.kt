@@ -23,6 +23,11 @@ interface ApiService {
         @Body
         requestProfil: RequestProfil
     ): Call<ProfilResponse>
+
+    @GET("user")
+    fun getProfil(
+        @Header("Authorization") token: String
+    ): Call<GetProfilResponse>
 }
 
 

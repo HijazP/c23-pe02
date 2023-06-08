@@ -3,8 +3,10 @@ package com.amati.amatiappuser.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.amati.amatiappuser.network.response.GetProfilResponse
 import com.amati.amatiappuser.network.response.ProfilResponse
 import com.amati.amatiappuser.network.response.RequestProfil
+import com.amati.amatiappuser.network.response.UserItem
 import com.amati.amatiappuser.network.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,6 +18,13 @@ class ProfilViewModel: ViewModel() {
 
     private val _code = MutableLiveData<Int>()
     val code: LiveData<Int> = _code
+
+    private val _dataProfil = MutableLiveData<List<UserItem>>()
+    val dataProfil:  LiveData<List<UserItem>> = _dataProfil
+
+    private val _message = MutableLiveData<String>()
+    val msg: LiveData<String> = _message
+
 
     fun edit(requestProfil: RequestProfil) {
         val client = ApiConfig.getApiService().profil(requestProfil)
@@ -36,6 +45,31 @@ class ProfilViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<ProfilResponse>, t: Throwable) {
+                _code.value = 500
+            }
+        })
+    }
+
+    fun getProfil(token: String){
+        val client = ApiConfig.getApiService().getProfil(token)
+        client.enqueue(object : Callback<GetProfilResponse> {
+            override fun onResponse(
+                call: Call<GetProfilResponse>,
+                response: Response<GetProfilResponse>
+            ) {
+                val responseBody =  response.body()
+                if (response.isSuccessful) {
+                    if (responseBody != null) {
+                        _message.value = responseBody.message
+                        _dataProfil.value = responseBody.user
+                        _code.value = responseBody.statusCode
+                    }
+                } else {
+                    _code.value = responseBody?.statusCode
+                }
+            }
+
+            override fun onFailure(call: Call<GetProfilResponse>, t: Throwable) {
                 _code.value = 500
             }
         })

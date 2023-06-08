@@ -42,6 +42,11 @@ class ProfilFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val datastore: DataStore<Preferences> = requireContext().dataStore
 
+        //val pref = requireContext().dataStore
+        //val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+
+        //
+
         //belom
         binding.editName.setText(nama)
         binding.editTelepon.setText(telepon)
