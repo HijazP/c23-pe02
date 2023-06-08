@@ -3,4 +3,3 @@ node_modules/
 .idea/
 dist/
 prisma/migrations/
-prisma/seed.*

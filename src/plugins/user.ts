@@ -1,0 +1,54 @@
+import Hapi from '@hapi/hapi'
+import userHandler from './handlers/userHandler';
+
+const userPlugin = {
+    name: 'app/user',
+    dependencies: ['prisma'],
+    register: async function(server: Hapi.Server) {
+        server.route([
+            {
+                // Daftar user
+                method: 'POST',
+                path: '/user/register',
+                handler: userHandler.registerUser,
+                options: {
+                    auth: false,
+                }
+            },
+            {
+                // Masuk user
+                method: 'POST',
+                path: '/user/login',
+                handler: userHandler.loginUser,
+                options: {
+                    auth: false,
+                }
+            },
+            {
+                // Update user berdasarkan id
+                method: 'PUT',
+                path: '/user/update',
+                handler: userHandler.updateUser,
+            },
+            {
+                // Mengambil kursus
+                method: 'POST',
+                path: '/user/kursus/{id}',
+                handler: userHandler.ambilKursus,
+            },
+            {
+                // Update kursus yang sedang diambil
+                method: 'PUT',
+                path: '/user/kursus',
+                handler: userHandler.updateAmbilKursus,
+            },
+            {
+                // Mengambil masalah
+                method: 'GET',
+                path: '/user/problem/{id}',
+                handler: userHandler.ambilMasalah
+            },
+        ])
+    },
+}
+export default userPlugin

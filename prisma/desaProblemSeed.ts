@@ -16,7 +16,8 @@ async function main() {
                 telepon: '081234567890',
                 lokasiDesa: 'Desa Pinogu, Kecamatan Pinogu, Kabupaten Bone Bolango, Gorontalo',
                 latitude: 0.5039652206276404,
-                longitude: 123.43014019479045
+                longitude: 123.43014019479045,
+                foto: 'pinogu_gorontalo.jpg'
             },
             {
                 email: 'dataranhijau@gorontalo.id',
@@ -25,7 +26,8 @@ async function main() {
                 telepon: '081234567890',
                 lokasiDesa: 'Desa Dataran Hijau, Kecamatan Suwawa Timur, Kabupaten Bone Bolango, Gorontalo',
                 latitude: 0.4952209335295771,
-                longitude: 123.4404633690134
+                longitude: 123.4404633690134,
+                foto: 'dataran_hijau_gorontalo.jpg'
 
             },
             {
@@ -35,7 +37,8 @@ async function main() {
                 telepon: '081234567890',
                 lokasiDesa: 'Desa Lewalu, Kecamatan Alor Barat Laut, Kabupaten Alor, Nusa Tenggara Timur',
                 latitude: -8.256740689437446,
-                longitude: 124.4315629815835
+                longitude: 124.4315629815835,
+                foto: 'lewalu_alor.jpg'
             },
             {
                 email: 'aimoli@alor.id',
@@ -44,7 +47,8 @@ async function main() {
                 telepon: '081234567890',
                 lokasiDesa: 'Desa Aimoli, Kecamatan Alor Barat Laut, Kabupaten Alor, Nusa Tenggara Timur',
                 latitude: -8.191830463562995,
-                longitude: 124.43424116979291
+                longitude: 124.43424116979291,
+                foto: 'aimoli_alor.jpg'
             },
         ]
     })
@@ -139,8 +143,8 @@ async function main() {
         }
     })
 
-    const problem: number = 56
-    for (let i = 0; i < problem; i++) {
+    const problems: number = 56
+    for (let i = 0; i < problems; i++) {
         if (i < 18) {
             const masalah = await prisma.masalah.create({
                 data: {

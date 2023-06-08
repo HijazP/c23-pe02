@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev --respawn ./src/index.ts",
     "pm2": "tsc && pm2 start pm2.config.js",
-    "seed": "ts-node ./prisma/desaProblemSeed.ts",
+    "seed:desa": "ts-node ./prisma/desaProblemSeed.ts",
+    "seed:course": "ts-node ./prisma/courseModulSeed.ts",
     "migrate": "npx prisma migrate dev --preview-feature --skip-generate --name init",
     "generate": "npx prisma generate",
     "compile": "tsc"
@@ -15,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^21.3.2",
+    "@hapi/inert": "^7.1.0",
     "@hapi/jwt": "^3.2.0",
     "@prisma/client": "^4.15.0",
     "@types/hapi": "^18.0.8",

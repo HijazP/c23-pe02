@@ -1,7 +1,6 @@
-import Hapi from "@hapi/hapi";
-import bcrypt from "bcrypt";
-import Jwt from "@hapi/jwt";
-import desa from "../desa";
+import Hapi from '@hapi/hapi'
+import bcrypt from 'bcrypt'
+import Jwt from '@hapi/jwt'
 
 interface UserInput {
     email: string
@@ -27,6 +26,7 @@ async function registerDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
                 lokasiDesa: '',
                 longitude: 0,
                 latitude: 0,
+                foto: ''
             },
             select: {
                 id: true,
@@ -234,8 +234,8 @@ async function getProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit) {
             {
                 where: {
                     AND: [
-                        {id: parseInt(id, 10)},
-                        {idDesa: desaId}
+                        { id: parseInt(id) },
+                        { idDesa: desaId }
                     ]
                 },
             }
@@ -333,8 +333,8 @@ async function deleteProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit)
             {
                 where: {
                     AND: [
-                        {id: parseInt(id, 10)},
-                        {idDesa: desaId}
+                        { id: parseInt(id) },
+                        { idDesa: desaId }
                     ]
                 },
             }

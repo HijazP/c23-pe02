@@ -1,5 +1,5 @@
 import Hapi from '@hapi/hapi'
-import desaHandler from './handlers/desaHandler';
+import desaHandler from './handlers/desaHandler'
 
 const desaPlugin = {
     name: 'app/desa',
@@ -59,6 +59,18 @@ const desaPlugin = {
                 method: 'DELETE',
                 path: '/desa/problem/{id}',
                 handler: desaHandler.deleteProblemById,
+            },
+            {
+                // Menampilkan foto desa
+                method: 'GET',
+                path: '/desa/foto/{namaFoto}',
+                handler: function (request, h) {
+                    const foto = request.params.namaFoto
+                    return h.file(`src/img/desa/${foto}`)
+                },
+                options: {
+                    auth: false
+                }
             },
         ])
     },
