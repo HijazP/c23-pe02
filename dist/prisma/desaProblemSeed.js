@@ -1,17 +1,19 @@
-import { PrismaClient } from '@prisma/client'
-import bcrypt from "bcrypt";
-
-const prisma = new PrismaClient()
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const client_1 = require("@prisma/client");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const prisma = new client_1.PrismaClient();
 async function main() {
-    await prisma.masalah.deleteMany({})
-    await prisma.desa.deleteMany({})
-
-    await prisma.desa.createMany({
+    await prisma.masalah.deleteMany({});
+    await prisma.desa.deleteMany({});
+    const desa = await prisma.desa.createMany({
         data: [
             {
                 email: 'pinogu@gorontalo.id',
-                password: bcrypt.hashSync('123456', 10),
+                password: bcrypt_1.default.hashSync('123456', 10),
                 namaDesa: 'Pinogu',
                 telepon: '081234567890',
                 lokasiDesa: 'Desa Pinogu, Kecamatan Pinogu, Kabupaten Bone Bolango, Gorontalo',
@@ -21,18 +23,17 @@ async function main() {
             },
             {
                 email: 'dataranhijau@gorontalo.id',
-                password: bcrypt.hashSync('123456', 10),
+                password: bcrypt_1.default.hashSync('123456', 10),
                 namaDesa: 'Dataran Hijau',
                 telepon: '081234567890',
                 lokasiDesa: 'Desa Dataran Hijau, Kecamatan Suwawa Timur, Kabupaten Bone Bolango, Gorontalo',
                 latitude: 0.4952209335295771,
                 longitude: 123.4404633690134,
                 foto: 'dataran_hijau_gorontalo.jpg'
-
             },
             {
                 email: 'lewalu@alor.id',
-                password: bcrypt.hashSync('123456', 10),
+                password: bcrypt_1.default.hashSync('123456', 10),
                 namaDesa: 'Lewalu',
                 telepon: '081234567890',
                 lokasiDesa: 'Desa Lewalu, Kecamatan Alor Barat Laut, Kabupaten Alor, Nusa Tenggara Timur',
@@ -42,7 +43,7 @@ async function main() {
             },
             {
                 email: 'aimoli@alor.id',
-                password: bcrypt.hashSync('123456', 10),
+                password: bcrypt_1.default.hashSync('123456', 10),
                 namaDesa: 'Aimoli',
                 telepon: '081234567890',
                 lokasiDesa: 'Desa Aimoli, Kecamatan Alor Barat Laut, Kabupaten Alor, Nusa Tenggara Timur',
@@ -51,10 +52,8 @@ async function main() {
                 foto: 'aimoli_alor.jpg'
             },
         ]
-    })
-
-    const masalahTemplate: { namaMasalah: string, deskripsi: string }[] = []
-
+    });
+    const masalahTemplate = [];
     //Desa Pinogu - Gorontalo
     masalahTemplate.push({ namaMasalah: 'Akses jalan yang buruk', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Bahasa bonda yang mulai jarang digunakan di kalangan anak muda dan anak-anak', deskripsi: '' });
@@ -74,7 +73,6 @@ async function main() {
     masalahTemplate.push({ namaMasalah: 'Pengembangan kawasan organik', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Pengolahan produk dari sapi', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Penyalaan listrik yang belum 24 jam', deskripsi: '' });
-
     //Desa Dataran Hijau - Gorontalo
     masalahTemplate.push({ namaMasalah: 'Akses yang sulit', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Infrastruktur', deskripsi: '' });
@@ -98,7 +96,6 @@ async function main() {
     masalahTemplate.push({ namaMasalah: 'Tidak ada penerus usaha', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Tidak ada pengolahan limbah', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Tidak ada tempat wisata', deskripsi: '' });
-
     //Desa Lewalu - Alor
     masalahTemplate.push({ namaMasalah: 'Sulit mencari souvenir atau oleh-oleh', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Sampah', deskripsi: '' });
@@ -113,91 +110,85 @@ async function main() {
     masalahTemplate.push({ namaMasalah: 'Sampah di pantai (tanggul)', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Sedikit masalah perpolitikan', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Strategi marketing untuk menjual produk warga lokal', deskripsi: '' });
-
     //Desa Aimoli - Alor
     masalahTemplate.push({ namaMasalah: 'Fasilitas penunjang wisata yang masih minim', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Wisata kuliner yang terbatas', deskripsi: '' });
     masalahTemplate.push({ namaMasalah: 'Akses informasi wisata yang masih terbatas', deskripsi: '' });
-
     const desa1 = await prisma.desa.findUnique({
         where: {
             email: 'pinogu@gorontalo.id'
         }
-    })
-
+    });
     const desa2 = await prisma.desa.findUnique({
         where: {
             email: 'dataranhijau@gorontalo.id'
         }
-    })
-
+    });
     const desa3 = await prisma.desa.findUnique({
         where: {
             email: 'lewalu@alor.id'
         }
-    })
-
+    });
     const desa4 = await prisma.desa.findUnique({
         where: {
             email: 'aimoli@alor.id'
         }
-    })
-
-    const problems: number = 56
+    });
+    const problems = 56;
     for (let i = 0; i < problems; i++) {
         if (i < 18) {
-            await prisma.masalah.create({
+            const masalah = await prisma.masalah.create({
                 data: {
-                    namaMasalah: masalahTemplate[i]?.namaMasalah as string,
-                    deskripsi: masalahTemplate[i]?.deskripsi as string,
+                    namaMasalah: masalahTemplate[i].namaMasalah,
+                    deskripsi: masalahTemplate[i].deskripsi,
                     desa: {
-                        connect: { id: desa1? desa1.id : 0 }
+                        connect: { id: desa1 ? desa1.id : 0 }
                     }
                 }
-            })
+            });
         }
         else if (i < 40) {
-            await prisma.masalah.create({
+            const masalah = await prisma.masalah.create({
                 data: {
-                    namaMasalah: masalahTemplate[i]?.namaMasalah as string,
-                    deskripsi: masalahTemplate[i]?.deskripsi as string,
+                    namaMasalah: masalahTemplate[i].namaMasalah,
+                    deskripsi: masalahTemplate[i].deskripsi,
                     desa: {
-                        connect: { id: desa2? desa2.id : 0 }
+                        connect: { id: desa2 ? desa2.id : 0 }
                     }
                 }
-            })
+            });
         }
         else if (i < 53) {
-            await prisma.masalah.create({
+            const masalah = await prisma.masalah.create({
                 data: {
-                    namaMasalah: masalahTemplate[i]?.namaMasalah as string,
-                    deskripsi: masalahTemplate[i]?.deskripsi as string,
+                    namaMasalah: masalahTemplate[i].namaMasalah,
+                    deskripsi: masalahTemplate[i].deskripsi,
                     desa: {
-                        connect: { id: desa3? desa3.id : 0 }
+                        connect: { id: desa3 ? desa3.id : 0 }
                     }
                 }
-            })
+            });
         }
         else {
-            await prisma.masalah.create({
+            const masalah = await prisma.masalah.create({
                 data: {
-                    namaMasalah: masalahTemplate[i]?.namaMasalah as string,
-                    deskripsi: masalahTemplate[i]?.deskripsi as string,
+                    namaMasalah: masalahTemplate[i].namaMasalah,
+                    deskripsi: masalahTemplate[i].deskripsi,
                     desa: {
-                        connect: { id: desa4? desa4.id : 0 }
+                        connect: { id: desa4 ? desa4.id : 0 }
                     }
                 }
-            })
+            });
         }
     }
 }
-
 main()
-    .catch((e: Error) => {
-        console.error(e)
-        process.exit(1)
-    })
+    .catch((e) => {
+    console.error(e);
+    process.exit(1);
+})
     .finally(async () => {
-        // Disconnect Prisma Client
-        await prisma.$disconnect()
-    })
+    // Disconnect Prisma Client
+    await prisma.$disconnect();
+});
+//# sourceMappingURL=desaProblemSeed.js.map

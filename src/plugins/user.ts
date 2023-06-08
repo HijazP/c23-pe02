@@ -36,12 +36,12 @@ const userPlugin = {
                 path: '/user/course/{id}',
                 handler: userHandler.ambilKursus,
             },
-            {
-                // Update kursus yang sedang diambil
-                method: 'PUT',
-                path: '/user/course',
-                handler: userHandler.updateAmbilKursus,
-            },
+            // {
+            //     // Update kursus yang sedang diambil
+            //     method: 'PUT',
+            //     path: '/user/course',
+            //     handler: userHandler.updateAmbilKursus,
+            // },
             {
                 // Rekomendasi kursus
                 method: 'POST',

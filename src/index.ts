@@ -32,7 +32,7 @@ export async function start(): Promise<Hapi.Server> {
             maxAgeSec: 14400, // 4 hours
             timeSkewSec: 15,
         },
-        validate: (decoded: any, request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+        validate: (decoded: any) => {
             return {
                 isValid: true,
                 credentials: decoded
