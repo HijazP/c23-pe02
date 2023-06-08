@@ -29,6 +29,7 @@
     <string name="go_login">Silahkan Login Terlebih Dahulu</string>
     <string name="login_failed">Gagal Masuk</string>
     <string name="unauthorized">Email atau password mungkin salah</string>
+    <string name="unauthorized2">Tidak memiliki akses, silahkan login/logout terlebih dahulu</string>
     <string name="invalid_email">Format email tidak sesuai</string>
     <string name="data_not_found">Data tidak ditemukan</string>
     <string name="server_error">Server Error</string>
@@ -63,4 +64,6 @@
     <string name="button_problem">Ajukan Problem</string>
     <string name="tittle_req">Masukkan Judul Masalah</string>
     <string name="desc_req">Masukkan Deskripsi Masalah</string>
+    <string name="masalah">Tidak ada masalah yang dapat ditampilkan.\nAnda dapat menambahkan masalah dengan menekan tombol tambah pada pojok kanan bawah layar.</string>
+    <string name="tampil_problem">Data berhasil ditampilkan</string>
 </resources>

@@ -1,9 +1,6 @@
 package com.amati.amatiapp.network.retrofit
 
-import com.amati.amatiapp.network.response.LoginResponse
-import com.amati.amatiapp.network.response.ProblemResponse
-import com.amati.amatiapp.network.response.ProfilResponse
-import com.amati.amatiapp.network.response.RegisterResponse
+import com.amati.amatiapp.network.response.*
 import com.amati.amatiapp.response.RequestLogin
 import com.amati.amatiapp.response.RequestProblem
 import com.amati.amatiapp.response.RequestProfil
@@ -30,6 +27,11 @@ interface ApiService {
         @Body
         requestProfil: RequestProfil
     ): Call<ProfilResponse>
+
+    @GET("desa/problem")
+    fun getProblem(
+        @Header("Authorization") token: String
+    ): Call<GetProblemResponse>
 
     @POST("desa/problem")
     fun add(

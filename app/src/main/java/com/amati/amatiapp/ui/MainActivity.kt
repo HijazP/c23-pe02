@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -12,9 +13,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amati.amatiapp.R
 import com.amati.amatiapp.adapter.ProblemAdapter
-import com.amati.amatiapp.data.DataDummy
 import com.amati.amatiapp.database.UserPreferencesDatastore
 import com.amati.amatiapp.databinding.ActivityMainBinding
+import com.amati.amatiapp.network.response.MasalahItem
 import com.amati.amatiapp.viewmodel.MainViewModel
 import com.amati.amatiapp.viewmodel.Session
 import com.amati.amatiapp.viewmodel.SessionModelFactory
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         session.getToken().observe(this) {
             if (it != null) {
                 token = it
-//                mainViewModel.getStories(token)
+                mainViewModel.getProblem(token)
             } else  {
                 Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                 finishAffinity()
@@ -48,11 +49,37 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvProblem.addItemDecoration(itemDecoration)
 
-        setProblemData()
+        mainViewModel.code.observe(this) {
+            when(it){
+                401 -> {
+                    Toast.makeText(this, getString(R.string.unauthorized2), Toast.LENGTH_SHORT).show()
+                }
+                404 -> {
+                    Toast.makeText(this, getString(R.string.data_not_found), Toast.LENGTH_SHORT).show()
+                }
+                500 ->{
+                    Toast.makeText(this, getString(R.string.server_error), Toast.LENGTH_SHORT).show()
+                }
+                200 -> {
+                    Toast.makeText(this, getString(R.string.tampil_problem), Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        mainViewModel.dataProblem.observe(this) {
+            val data = mainViewModel.dataProblem.value
+            if (data != null) {
+                binding.tvMasalah.visibility = View.INVISIBLE
+                setProblemData(data)
+            } else {
+                binding.tvMasalah.visibility = View.VISIBLE
+            }
+        }
+
     }
 
-    private fun setProblemData() {
-        val adapter = ProblemAdapter(DataDummy.dummyList)
+    private fun setProblemData(listProblem: List<MasalahItem>) {
+        val adapter = ProblemAdapter(listProblem)
         binding.rvProblem.adapter = adapter
     }
 
