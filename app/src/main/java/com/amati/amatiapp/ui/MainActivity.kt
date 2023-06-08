@@ -46,13 +46,6 @@ class MainActivity : AppCompatActivity() {
             else {
                 token = it
                 mainViewModel.getProblem(token)
-
-//            if (it != null) {
-//                token = it
-//                mainViewModel.getProblem(token)
-//            } else {
-//                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-//                finishAffinity()
             }
         }
 
@@ -85,10 +78,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 showText(false)
             }
-
-//            if (data != null) {
-//                setProblemData(data)
-//            }
         }
 
         showText(true)
@@ -122,10 +111,6 @@ class MainActivity : AppCompatActivity() {
             R.id.profile -> {
                 val intentToAbout = Intent(this@MainActivity, ProfilActivity::class.java)
                 startActivity(intentToAbout)
-            }
-            R.id.logout -> {
-                session.logout()
-                Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)
