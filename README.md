@@ -510,6 +510,55 @@
 ```
 
 ---
+### Mendapatkan data user
+#### Method: GET
+```https://be.api-amati.com/user```
+#### perlu token
+#### Response:
+1. Berhasil
+```
+{
+    "statusCode": 200,
+    "message": "User berhasil ditampilkan",
+    "user": {
+        "id": 1,
+        "namaLengkap": "saya sad dong",
+        "email": "kamu@ganteng.anjay",
+        "foto": ""
+    }
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+
+---
 ### Ubah profil user
 #### Masih error, nanti dilanjut kalau ga males
 
