@@ -33,14 +33,20 @@ const userPlugin = {
             {
                 // Mengambil kursus
                 method: 'POST',
-                path: '/user/kursus/{id}',
+                path: '/user/course/{id}',
                 handler: userHandler.ambilKursus,
             },
             {
                 // Update kursus yang sedang diambil
                 method: 'PUT',
-                path: '/user/kursus',
+                path: '/user/course',
                 handler: userHandler.updateAmbilKursus,
+            },
+            {
+                // Rekomendasi kursus
+                method: 'POST',
+                path: '/user/course/recommendation/list',
+                handler: userHandler.rekomendasiKursus,
             },
             {
                 // Mengambil masalah

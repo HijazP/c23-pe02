@@ -225,6 +225,46 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
     }
 }
 
+async function rekomendasiKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const { prisma } = request.server.app
+    const { kursus1, kursus2, kursus3, kursus4, kursus5 } = request.payload as any
+
+    try {
+        const kursus = await prisma.kursus.findMany({
+            where: {
+                OR: [
+                    {
+                        namaKursus: kursus1
+                    },
+                    {
+                        namaKursus: kursus2
+                    },
+                    {
+                        namaKursus: kursus3
+                    },
+                    {
+                        namaKursus: kursus4
+                    },
+                    {
+                        namaKursus: kursus5
+                    }
+                ]
+            }
+        })
+        return h.response({
+            statusCode: 200,
+            message: 'Kursus berhasil diambil',
+            kursus
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
 async function ambilMasalah(request: Hapi.Request, h: Hapi.ResponseToolkit) {
 
 }
@@ -235,5 +275,6 @@ export default {
     updateUser,
     ambilKursus,
     updateAmbilKursus,
+    rekomendasiKursus,
     ambilMasalah
 }

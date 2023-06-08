@@ -14,15 +14,28 @@ interface UserInput {
 
 async function registerDesa(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
-    const payload = request.payload as UserInput
+    const { email, password, namaDesa, telepon } = request.payload as any
 
     try {
+        const checkDesa = await prisma.desa.findUnique({
+            where: {
+                email: email
+            }
+        })
+
+        if (checkDesa) {
+            return h.response({
+                statusCode: 401,
+                message: 'Desa sudah terdaftar dengan email yang sama'
+            }).code(401)
+        }
+
         const desa = await prisma.desa.create({
             data: {
-                email: payload.email,
-                password: bcrypt.hashSync(payload.password, 10),
-                namaDesa: payload.namaDesa,
-                telepon: payload.telepon,
+                email: email,
+                password: bcrypt.hashSync(password, 10),
+                namaDesa: namaDesa,
+                telepon: telepon,
                 lokasiDesa: '',
                 longitude: 0,
                 latitude: 0,
@@ -362,7 +375,6 @@ async function deleteProblemById(request: Hapi.Request, h: Hapi.ResponseToolkit)
         }).code(500)
     }
 }
-
 export default {
     registerDesa,
     loginDesa,
@@ -371,5 +383,5 @@ export default {
     getAllProblems,
     getProblemById,
     updateProblemById,
-    deleteProblemById
+    deleteProblemById,
 }
