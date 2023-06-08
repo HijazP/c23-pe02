@@ -35,13 +35,8 @@ class MainActivity : AppCompatActivity() {
         val pref = UserPreferencesDatastore.getInstance(dataStore)
         session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
 
-        session.getToken().observe(this) { it ->
-            if (it == null || it == "") {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            else {
+        session.getToken().observe(this) {
+            if (it != null) {
                 token = it
                 mainViewModel.getProblem("Bearer $token")
             }
@@ -77,10 +72,10 @@ class MainActivity : AppCompatActivity() {
                 showText(false)
             }
 
-            setProblemData(data)
+            if (data != null) {
+                setProblemData(data)
+            }
         }
-
-        showText(true)
 
         addProblem()
     }
