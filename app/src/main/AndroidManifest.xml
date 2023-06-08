@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AmatiApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.DetailProblemActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ModulActivity"
             android:exported="false" />
         <activity
