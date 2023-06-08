@@ -859,40 +859,44 @@ Internal Server Error
 #### Response:
 1. Berhasil
 ```
-// next, modulSekarang sebelumnya 1
-// statusSelesai = false
 {
     "statusCode": 200,
-    "message": "Kursus berhasil diupdate",
-    "ambilKursus": {
+    "message": "Kursus berhasil diambil",
+    "kursuspertama": {
+        "id": 2,
+        "namaKursus": "Fundamental Course (2)",
+        "deskripsi": "Innovation method as problem solving",
+        "dampak": "Memahami konsep Growth Mindset. Memahami konsep Design Thinking. Memahami Konsep Lean Startup. Memahami Digital Startup",
+        "foto": ""
+    },
+    "kursuskedua": {
         "id": 1,
-        "idKursus": 1,
-        "idPengguna": 1,
-        "jumlahModul": 7,
-        "modulSekarang": 2,
-        "statusSelesai": false
-    }
-}
-
-// completed, modulSekarang = jumlahModul
-// statusSelesai = true
-{
-    "statusCode": 200,
-    "message": "Kursus berhasil diselesaikan",
-    "ambilKursus": {
+        "namaKursus": "Fundamental Course (1)",
+        "deskripsi": "Fundamental Attitude toward sustainability",
+        "dampak": "mengubah paradigma mengenai sustainability. Memahami Prinsip Ekologi. Memahami Elemen dasar Green Mindset. Memahami Konsep Carbon Footprint. Membuat Rancang Bangun Ecology. Memahami Sustainable Community. Memahami Poin-poin SGGs",
+        "foto": ""
+    },
+    "kursusketiga": {
         "id": 1,
-        "idKursus": 1,
-        "idPengguna": 1,
-        "jumlahModul": 7,
-        "modulSekarang": 7,
-        "statusSelesai": true
+        "namaKursus": "Fundamental Course (1)",
+        "deskripsi": "Fundamental Attitude toward sustainability",
+        "dampak": "mengubah paradigma mengenai sustainability. Memahami Prinsip Ekologi. Memahami Elemen dasar Green Mindset. Memahami Konsep Carbon Footprint. Membuat Rancang Bangun Ecology. Memahami Sustainable Community. Memahami Poin-poin SGGs",
+        "foto": ""
+    },
+    "kursuskeempat": {
+        "id": 1,
+        "namaKursus": "Fundamental Course (1)",
+        "deskripsi": "Fundamental Attitude toward sustainability",
+        "dampak": "mengubah paradigma mengenai sustainability. Memahami Prinsip Ekologi. Memahami Elemen dasar Green Mindset. Memahami Konsep Carbon Footprint. Membuat Rancang Bangun Ecology. Memahami Sustainable Community. Memahami Poin-poin SGGs",
+        "foto": ""
+    },
+    "kursuskelima": {
+        "id": 1,
+        "namaKursus": "Fundamental Course (1)",
+        "deskripsi": "Fundamental Attitude toward sustainability",
+        "dampak": "mengubah paradigma mengenai sustainability. Memahami Prinsip Ekologi. Memahami Elemen dasar Green Mindset. Memahami Konsep Carbon Footprint. Membuat Rancang Bangun Ecology. Memahami Sustainable Community. Memahami Poin-poin SGGs",
+        "foto": ""
     }
-}
-
-// Salah query
-{
-    "statusCode": 200,
-    "message": "Tidak ada kursus yang diupdate"
 }
 ```
 2. Gagal

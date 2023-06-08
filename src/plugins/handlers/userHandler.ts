@@ -319,31 +319,31 @@ async function rekomendasiKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
     const { kursus1, kursus2, kursus3, kursus4, kursus5 } = request.payload as any
 
     try {
-        const kursuspertama = await prisma.kursus.findFirst({
+        const kursuspertama = await prisma.kursus.findMany({
             where: {
                 namaKursus: kursus1
             }
         })
 
-        const kursuskedua = await prisma.kursus.findFirst({
+        const kursuskedua = await prisma.kursus.findMany({
             where: {
                 namaKursus: kursus2
             }
         })
 
-        const kursusketiga = await prisma.kursus.findFirst({
+        const kursusketiga = await prisma.kursus.findMany({
             where: {
                 namaKursus: kursus3
             }
         })
 
-        const kursuskeempat = await prisma.kursus.findFirst({
+        const kursuskeempat = await prisma.kursus.findMany({
             where: {
                 namaKursus: kursus4
             }
         })
 
-        const kursuskelima = await prisma.kursus.findFirst({
+        const kursuskelima = await prisma.kursus.findMany({
             where: {
                 namaKursus: kursus5
             }
