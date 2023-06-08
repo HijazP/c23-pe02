@@ -38,6 +38,11 @@ interface ApiService {
         @Header("Authorization") bearer: String,
         @Body requestProblem: RequestProblem
     ): Call<ProblemResponse>
+
+    @GET("/desa")
+    fun getProfil(
+        @Header("Authorization") token: String
+    ): Call<GetProfilResponse>
 }
 
 
