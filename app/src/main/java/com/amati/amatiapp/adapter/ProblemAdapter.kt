@@ -10,7 +10,7 @@ import com.amati.amatiapp.databinding.ItemRowBinding
 import com.amati.amatiapp.network.response.MasalahItem
 import com.amati.amatiapp.ui.DetailActivity
 
-class ProblemAdapter (private val listProblem: List<Dummy>): RecyclerView.Adapter<ProblemAdapter.ViewHolder>() {
+class ProblemAdapter (private val listProblem: List<MasalahItem>): RecyclerView.Adapter<ProblemAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -24,12 +24,10 @@ class ProblemAdapter (private val listProblem: List<Dummy>): RecyclerView.Adapte
     }
 
     class ViewHolder(private var binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Dummy) {
+        fun bind(data: MasalahItem) {
             with(binding) {
-                tvName.text = data.problem
-                tvProblem.text = data.isi
-//                tvName.text = data.namaMasalah
-//                tvProblem.text = data.deskripsi
+                tvName.text = data.namaMasalah
+                tvProblem.text = data.deskripsi
             }
 
             binding.root.setOnClickListener {

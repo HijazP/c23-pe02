@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 token = it
-                mainViewModel.getProblem(token)
+                mainViewModel.getProblem("Bearer $token")
             }
         }
 
@@ -78,11 +78,11 @@ class MainActivity : AppCompatActivity() {
             } else {
                 showText(false)
             }
+
+            setProblemData(data)
         }
 
         showText(true)
-
-        setProblemData(DataDummy.dummyList)
 
         addProblem()
     }
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setProblemData(listProblem: List<Dummy>) {
+    private fun setProblemData(listProblem: List<MasalahItem>) {
         val adapter = ProblemAdapter(listProblem)
         binding.rvProblem.adapter = adapter
     }

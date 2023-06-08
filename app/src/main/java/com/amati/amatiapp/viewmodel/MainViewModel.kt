@@ -1,5 +1,6 @@
 package com.amati.amatiapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,14 +39,14 @@ class MainViewModel: ViewModel() {
                     }
                 } else{
                     _code.value = responseBody?.statusCode
+                    Log.e("AddProblemViewModel", "onFailure: ${response.message()}")
+                    Log.d("AddProblemViewModel", response.toString())
                 }
             }
 
             override fun onFailure(call: Call<GetProblemResponse>, t: Throwable) {
-//                _isLoading.value = false
-//                isError = true
                 _code.value = 500
-//                Toast.makeText(context, "onFailure: ${_message.value}", Toast.LENGTH_SHORT).show()
+                Log.e("AddProblemViewModel", "onFailure: ${t.message.toString()}")
             }
         })
     }
