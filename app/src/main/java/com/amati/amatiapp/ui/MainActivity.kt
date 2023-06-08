@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        addProblem()
     }
 
     private fun setProblemData(listProblem: List<MasalahItem>) {
@@ -97,5 +98,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun addProblem(){
+        binding.fabAdd.setOnClickListener{
+            val intent = Intent (this@MainActivity, AddProblemActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
