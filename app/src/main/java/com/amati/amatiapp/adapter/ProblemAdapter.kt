@@ -4,8 +4,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.amati.amatiapp.data.DataDummy
-import com.amati.amatiapp.data.Dummy
 import com.amati.amatiapp.databinding.ItemRowBinding
 import com.amati.amatiapp.network.response.MasalahItem
 import com.amati.amatiapp.ui.DetailActivity

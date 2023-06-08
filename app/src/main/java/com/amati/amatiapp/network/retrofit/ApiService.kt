@@ -1,10 +1,7 @@
 package com.amati.amatiapp.network.retrofit
 
 import com.amati.amatiapp.network.response.*
-import com.amati.amatiapp.response.RequestLogin
-import com.amati.amatiapp.response.RequestProblem
-import com.amati.amatiapp.response.RequestProfil
-import com.amati.amatiapp.response.RequestReg
+import com.amati.amatiapp.response.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -38,6 +35,12 @@ interface ApiService {
         @Header("Authorization") bearer: String,
         @Body requestProblem: RequestProblem
     ): Call<ProblemResponse>
+
+    @GET("desa/problem/{id}")
+    fun displayDetail(
+        @Header("Authorization") bearer: String,
+        @Path("id") id: String
+    ): Call<DetailResponse>
 
     @GET("/desa")
     fun getProfil(

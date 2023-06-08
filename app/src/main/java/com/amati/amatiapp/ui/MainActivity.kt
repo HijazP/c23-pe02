@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amati.amatiapp.R
 import com.amati.amatiapp.adapter.ProblemAdapter
-import com.amati.amatiapp.data.DataDummy
-import com.amati.amatiapp.data.Dummy
 import com.amati.amatiapp.database.UserPreferencesDatastore
 import com.amati.amatiapp.databinding.ActivityMainBinding
 import com.amati.amatiapp.network.response.MasalahItem
