@@ -41,8 +41,16 @@
     <string name="title_home">Home</string>
     <string name="title_desaku">Desaku</string>
     <string name="title_profil">Profil</string>
-    <string name="hi_home">Hi, </string>
-    <string name="bingung">I dont have any idea</string>
+
+    <string name="hi_home">"Hi, "</string>
+    <string name="nama_user">Nama</string>
     <string name="judul_modul">Judul Modul</string>
+    <string name="masukkan_nama_user">Masukkan nama kamu...</string>
+    <string name="nomor_telepon">Nomor Telepon</string>
+    <string name="masukkan_nomor_telepon">Masukkan nomor telepon</string>
+    <string name="lokasi_user">Lokasi</string>
+    <string name="masukkan_lokasi_user">Masukkan lokasi kamu</string>
+    <string name="editProfile_button">Edit Profile</string>
+    <string name="logout_button">Log Out</string>
 
 </resources>
