@@ -22,14 +22,12 @@ class MainViewModel: ViewModel() {
     val msg: LiveData<String> = _message
 
     fun getProblem(token: String) {
-//        _isLoading.value = true
         val client = ApiConfig.getApiService().getProblem(token)
         client.enqueue(object : Callback<GetProblemResponse> {
             override fun onResponse(
                 call: Call<GetProblemResponse>,
                 response: Response<GetProblemResponse>
             ) {
-//                _isLoading.value = false
                 val responseBody = response.body()
                 if (response.isSuccessful) {
                     if (responseBody != null) {

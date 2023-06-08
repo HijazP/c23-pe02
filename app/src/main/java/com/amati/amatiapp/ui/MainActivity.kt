@@ -58,15 +58,13 @@ class MainActivity : AppCompatActivity() {
                 500 -> {
                     Toast.makeText(this, getString(R.string.server_error), Toast.LENGTH_SHORT).show()
                 }
-                200 -> {
-                    Toast.makeText(this, getString(R.string.tampil_problem), Toast.LENGTH_SHORT).show()
-                }
             }
         }
 
         mainViewModel.dataProblem.observe(this) { data ->
             val msg = mainViewModel.msg.value
             if (msg == "0" || msg == null || msg == "") {
+                binding.tvMasalah.text = getString(R.string.masalah)
                 showText(true)
             } else {
                 showText(false)
