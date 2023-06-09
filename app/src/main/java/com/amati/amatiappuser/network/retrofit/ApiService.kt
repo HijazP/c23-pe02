@@ -69,6 +69,11 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<GetDesakuResponse>
 
+    @GET("desa/problem/{id}")
+    fun displayDetail(
+        @Header("Authorization") bearer: String,
+        @Path("id") id: String
+    ): Call<DetailProblemResponse>
 }
 
 

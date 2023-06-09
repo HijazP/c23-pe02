@@ -31,7 +31,7 @@ class ModulActivity : AppCompatActivity() {
 
         idKursus = intent.getIntExtra(EXTRA_ITEM, 0)
         val namaKursus = intent.getStringExtra(EXTRA_NAMA)
-//        idModul = intent.getIntExtra(EXTRA_MODUL, 0)
+        idModul = intent.getIntExtra(EXTRA_MODUL, 0)
 
         val pref = UserPreferencesDatastore.getInstance(dataStore)
         val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
