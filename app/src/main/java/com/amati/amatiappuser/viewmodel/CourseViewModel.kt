@@ -74,7 +74,7 @@ class CourseViewModel: ViewModel(){
         })
     }
 
-    fun detailModul(token: String, idModul: Int? = null){
+    fun detailModul(token: String, idModul: Int){
         val client = ApiConfig.getApiService().getDetailModul(token, idModul)
         client.enqueue(object : Callback<GetCourseResponse> {
             override fun onResponse(
@@ -97,28 +97,4 @@ class CourseViewModel: ViewModel(){
             }
         })
     }
-
-//    fun getDetailCourse(token: String, id: Int){
-//        val client = ApiConfig.getApiService().getCourseDetail(token, id)
-//        client.enqueue(object : Callback<GetDetailCourseResponse> {
-//            override fun onResponse(
-//                call: Call<GetDetailCourseResponse>,
-//                response: Response<GetDetailCourseResponse>
-//            ) {
-//                val responseBody = response.body()
-//                if (response.isSuccessful) {
-//                    if (responseBody != null) {
-//                        _dataDetailCourse.value = responseBody.kursus
-//                        _code.value = responseBody.statusCode
-//                    }
-//                } else{
-//                    _code.value = response.code()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<GetDetailCourseResponse>, t: Throwable) {
-//                _code.value = 500
-//            }
-//        })
-//    }
 }

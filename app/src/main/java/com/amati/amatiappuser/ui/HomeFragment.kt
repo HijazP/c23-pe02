@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amati.amatiappuser.R
 import com.amati.amatiappuser.adapter.ModulAdapter
+import com.amati.amatiappuser.adapter.ProgressAdapter
 import com.amati.amatiappuser.database.UserPreferencesDatastore
 import com.amati.amatiappuser.databinding.FragmentHomeBinding
 import com.amati.amatiappuser.network.response.KursusItem
+import com.amati.amatiappuser.network.response.ProgressItem
 import com.amati.amatiappuser.viewmodel.HomeViewModel
 import com.amati.amatiappuser.viewmodel.Session
 import com.amati.amatiappuser.viewmodel.SessionModelFactory
@@ -25,6 +27,7 @@ import com.amati.amatiappuser.viewmodel.SessionModelFactory
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
+    private var token: String? = null
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     override fun onCreateView(
@@ -49,13 +52,17 @@ class HomeFragment : Fragment() {
 
         setStatusBarColorToMatchTopBar()
 
-        session.getToken().observe(viewLifecycleOwner){ token ->
-            if (token != "" && token != null) {
+        session.getToken().observe(viewLifecycleOwner){
+            if (it != "" && it != null) {
+                token = it
                 homeViewModel.getAllCourse("Bearer $token")
+                homeViewModel.getAllProgress("Bearer $token")
             }
         }
 
-//        progress()
+        homeViewModel.dataAllProgress.observe(viewLifecycleOwner){
+            progress(it)
+        }
 
         homeViewModel.dataAllCourse.observe(viewLifecycleOwner){
             setCourse(it)
@@ -72,24 +79,19 @@ class HomeFragment : Fragment() {
         binding.rvCourse.adapter = adapter
     }
 
-    private fun progress(){
-//        if (){
-//            val layoutManager = LinearLayoutManager(requireContext())
-//            binding.rvProgress.layoutManager = layoutManager
-//            val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
-//            binding.rvProgress.addItemDecoration(itemDecoration)
-//
-//            val adapter = ProgressAdapter(DataDummy.dummyList)
-//            binding.rvProgress.adapter = adapter
-//        } else {
-//        }
-        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.rvProgress.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
-        binding.rvProgress.addItemDecoration(itemDecoration)
+    private fun progress(data: List<ProgressItem>){
+        if (!homeViewModel.dataAllProgress.value.isNullOrEmpty()){
+            val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            binding.rvProgress.layoutManager = layoutManager
+            val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
+            binding.rvProgress.addItemDecoration(itemDecoration)
 
-//        val adapter = ProgressAdapter(DataDummy.dummyList)
-//        binding.rvProgress.adapter = adapter
+            val adapter = ProgressAdapter(data, homeViewModel, token)
+            binding.rvProgress.adapter = adapter
+        } else {
+            binding.lanjutBelajar.visibility = View.GONE
+        }
+
 
     }
 

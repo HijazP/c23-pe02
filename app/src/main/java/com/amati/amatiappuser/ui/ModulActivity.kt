@@ -22,26 +22,31 @@ class ModulActivity : AppCompatActivity() {
     private var progress: Int = 0
     private var jumlahModul: Int = 0
     private var idModul: Int? = null
+    private var idKursus: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityModulBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        idKursus = intent.getIntExtra(EXTRA_ITEM, 0)
+        val namaKursus = intent.getStringExtra(EXTRA_NAMA)
+//        idModul = intent.getIntExtra(EXTRA_MODUL, 0)
+
         val pref = UserPreferencesDatastore.getInstance(dataStore)
         val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
 
-        val idKursus = intent.getIntExtra(EXTRA_ITEM, 0)
-        val namaKursus = intent.getStringExtra(EXTRA_NAMA)
-
-        binding.judulCourse.text = namaKursus
-
-        session.getToken().observe(this){
-            if (it != "" && it != null) {
-                token = it
-                courseViewModel.getCourse("Bearer $token", idKursus)
+        session.getToken().observe(this) { token ->
+            if (!token.isNullOrEmpty()) {
+                this.token = token
+                if (idModul != 0) {
+                    courseViewModel.detailModul("Bearer $token", idModul!!)
+                }
+                courseViewModel.getCourse("Bearer $token", idKursus!!)
             }
         }
+
+        binding.judulCourse.text = namaKursus
 
         setStatusBarColorToMatchTopBar()
         setBackButtonClickListener()
@@ -49,30 +54,30 @@ class ModulActivity : AppCompatActivity() {
 
         courseViewModel.dataCourse.observe(this) {
             if (it != null) {
-                setLanjutButton(idKursus)
+                setLanjutButton(idKursus!!)
             }
-            idModul = courseViewModel.dataModul.value!!.id
             progress = courseViewModel.dataProgressCourse.value!!.modulSekarang
             jumlahModul = courseViewModel.dataCourse.value!!.jumlahModul
         }
 
-        courseViewModel.detailModul("Bearer $token", idModul)
-        courseViewModel.dataDetailModul.observe(this) {
-            if (it != null) {
-                setModulData(it)
-            }
+        courseViewModel.dataModul.observe(this) {
+            idModul = it.id
+            setModulData(it)
         }
 
+        courseViewModel.detailModul("Bearer $token", idModul!!)
+        courseViewModel.dataDetailModul.observe(this) {
+            setModulData(it)
+        }
     }
 
-    private fun setModulData(listData: Modul) {
+    private fun setModulData(modul: Modul) {
         binding.apply {
-            judulModul.text = listData.namaModul
+            judulModul.text = modul.namaModul
             gambar.setImageResource(R.drawable.amati_logo)
             desc.text = getString(R.string.detail_desc)
         }
     }
-
 
     private fun setLanjutButton(idModul: Int) {
         binding.lanjut.setOnClickListener {
@@ -119,5 +124,6 @@ class ModulActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ITEM = "key_item"
         const val EXTRA_NAMA = "key_nama"
+        const val EXTRA_MODUL = "key_progress"
     }
 }

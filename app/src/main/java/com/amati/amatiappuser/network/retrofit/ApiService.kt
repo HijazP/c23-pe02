@@ -43,7 +43,7 @@ interface ApiService {
     @GET("user/course/module")
     fun getDetailModul(
         @Header("Authorization") token: String,
-        @Query("idModul") idModul: Int? = 0
+        @Query("idModul") idModul: Int
     ): Call<GetCourseResponse>
 
     @GET("user/course/progress")

@@ -3,10 +3,7 @@ package com.amati.amatiappuser.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.amati.amatiappuser.network.response.GetAllCourseResponse
-import com.amati.amatiappuser.network.response.GetAllProgressResponse
-import com.amati.amatiappuser.network.response.KursusItem
-import com.amati.amatiappuser.network.response.ProgressItem
+import com.amati.amatiappuser.network.response.*
 import com.amati.amatiappuser.network.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,6 +15,12 @@ class HomeViewModel: ViewModel() {
 
     private val _dataAllProgress = MutableLiveData<List<ProgressItem>>()
     val dataAllProgress: LiveData<List<ProgressItem>> = _dataAllProgress
+
+    private val _dataDetailCourse = MutableLiveData<Kursus>()
+    val dataDetailCourse: LiveData<Kursus> = _dataDetailCourse
+
+    private val _dataModul = MutableLiveData<Modul>()
+    val dataModul: LiveData<Modul> = _dataModul
 
     private val _code = MutableLiveData<Int>()
     val code: LiveData<Int> = _code
@@ -69,5 +72,51 @@ class HomeViewModel: ViewModel() {
             }
         })
     }
+    fun getDetailCourse(token: String, id: Int){
+        val client = ApiConfig.getApiService().getCourseDetail(token, id)
+        client.enqueue(object : Callback<GetDetailCourseResponse> {
+            override fun onResponse(
+                call: Call<GetDetailCourseResponse>,
+                response: Response<GetDetailCourseResponse>
+            ) {
+                val responseBody = response.body()
+                if (response.isSuccessful) {
+                    if (responseBody != null) {
+                        _dataDetailCourse.value = responseBody.kursus
+                        _code.value = responseBody.statusCode
+                    }
+                } else{
+                    _code.value = response.code()
+                }
+            }
 
+            override fun onFailure(call: Call<GetDetailCourseResponse>, t: Throwable) {
+                _code.value = 500
+            }
+        })
+    }
+
+    fun getCourse(token: String, id: Int) {
+        val client = ApiConfig.getApiService().getCoursebyId(token, id)
+        client.enqueue(object : Callback<GetCourseResponse> {
+            override fun onResponse(
+                call: Call<GetCourseResponse>,
+                response: Response<GetCourseResponse>
+            ) {
+                val responseBody = response.body()
+                if (response.isSuccessful) {
+                    if (responseBody != null) {
+                        _dataModul.value = responseBody.modul
+                        _code.value = responseBody.statusCode
+                    }
+                } else{
+                    _code.value = response.code()
+                }
+            }
+
+            override fun onFailure(call: Call<GetCourseResponse>, t: Throwable) {
+                _code.value = 500
+            }
+        })
+    }
 }
