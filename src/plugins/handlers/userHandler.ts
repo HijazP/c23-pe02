@@ -277,6 +277,22 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
                 }).code(200)
             }
             else if (status === 'next') {
+                if (kursus.modulSekarang === kursus.jumlahModul) {
+                    const ambilKursus = await prisma.ambilkursus.update({
+                        where: {
+                            id: parseInt(id)
+                        },
+                        data: {
+                            modulSekarang: kursus.jumlahModul,
+                            statusSelesai: true
+                        }
+                    })
+                    return h.response({
+                        statusCode: 200,
+                        message: 'Kursus berhasil diselesaikan',
+                        ambilKursus
+                    }).code(200)
+                }
                 const ambilKursus = await prisma.ambilkursus.update({
                     where: {
                         id: parseInt(id)
