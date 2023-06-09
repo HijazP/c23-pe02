@@ -39,9 +39,6 @@ class ModulActivity : AppCompatActivity() {
         session.getToken().observe(this) { token ->
             if (!token.isNullOrEmpty()) {
                 this.token = token
-                if (idModul != 0) {
-                    courseViewModel.detailModul("Bearer $token", idModul!!)
-                }
                 courseViewModel.getCourse("Bearer $token", idKursus!!)
             }
         }
@@ -66,6 +63,13 @@ class ModulActivity : AppCompatActivity() {
             setModulData(it)
         }
 
+//        courseViewModel.dataProgressCourse.observe(this) {
+//            idModul = it.id
+//            if (progress == jumlahModul) {
+//                binding.lanjut.text = getString(R.string.selesai)
+//            }
+//        }
+
 //        courseViewModel.detailModul("Bearer $token", idModul!!)
         courseViewModel.dataDetailModul.observe(this) {
             setModulData(it)
@@ -82,16 +86,12 @@ class ModulActivity : AppCompatActivity() {
 
     private fun setLanjutButton(idModul: Int) {
         binding.lanjut.setOnClickListener {
-            if (progress == jumlahModul) {
-                val intentToDetail = Intent(this@ModulActivity, MainActivity::class.java)
-                courseViewModel.progressCourse("Bearer $token", idModul, true)
-                startActivity(intentToDetail)
-            } else {
-                val intentToDetail = Intent(this@ModulActivity, ModulActivity::class.java)
-                intentToDetail.putExtra(EXTRA_ITEM, idModul+1)
-                courseViewModel.progressCourse("Bearer $token", idModul, false)
-                startActivity(intentToDetail)
-            }
+            val intentToDetail = Intent(this@ModulActivity, ModulActivity::class.java)
+            intentToDetail.putExtra(EXTRA_ITEM, idModul)
+            intentToDetail.putExtra(EXTRA_NAMA, binding.judulCourse.text.toString())
+            courseViewModel.progressCourse("Bearer $token", idModul, "next")
+            startActivity(intentToDetail)
+            finish()
         }
     }
 

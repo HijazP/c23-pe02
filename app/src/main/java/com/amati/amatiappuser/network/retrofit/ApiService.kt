@@ -55,7 +55,7 @@ interface ApiService {
     fun putProgress(
         @Header("Authorization") token: String,
         @Query("id") id: Int,
-        @Query("status") status: Boolean
+        @Query("status") status: String
     ): Call<GetCourseResponse>
 
     @GET("user/course/{id}/detail")

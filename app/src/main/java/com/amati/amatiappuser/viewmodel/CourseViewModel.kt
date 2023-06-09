@@ -19,8 +19,8 @@ class CourseViewModel: ViewModel(){
     private val _dataDetailModul = MutableLiveData<Modul>()
     val dataDetailModul: LiveData<Modul> = _dataDetailModul
 
-    private val _dataProgressCourse = MutableLiveData<AmbilKursus>()
-    val dataProgressCourse: LiveData<AmbilKursus> = _dataProgressCourse
+    private val _dataProgressCourse = MutableLiveData<GetCourseResponse>()
+    val dataProgressCourse: LiveData<GetCourseResponse> = _dataProgressCourse
 
     private val _code = MutableLiveData<Int>()
     val code: LiveData<Int> = _code
@@ -50,7 +50,7 @@ class CourseViewModel: ViewModel(){
         })
     }
 
-    fun progressCourse(token: String, id: Int, status: Boolean){
+    fun progressCourse(token: String, id: Int, status: String){
         val client = ApiConfig.getApiService().putProgress(token, id, status)
         client.enqueue(object : Callback<GetCourseResponse> {
             override fun onResponse(
@@ -60,7 +60,7 @@ class CourseViewModel: ViewModel(){
                 val responseBody = response.body()
                 if (response.isSuccessful) {
                     if (responseBody != null) {
-                        _dataProgressCourse.value = responseBody.ambilKursus
+                        _dataProgressCourse.value = response.body()
                         _code.value = responseBody.statusCode
                     }
                 } else{
