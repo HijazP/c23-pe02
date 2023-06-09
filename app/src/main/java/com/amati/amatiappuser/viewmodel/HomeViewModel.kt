@@ -1,0 +1,73 @@
+package com.amati.amatiappuser.viewmodel
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.amati.amatiappuser.network.response.GetAllCourseResponse
+import com.amati.amatiappuser.network.response.GetAllProgressResponse
+import com.amati.amatiappuser.network.response.KursusItem
+import com.amati.amatiappuser.network.response.ProgressItem
+import com.amati.amatiappuser.network.retrofit.ApiConfig
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+class HomeViewModel: ViewModel() {
+    private val _dataAllCourse = MutableLiveData<List<KursusItem>>()
+    val dataAllCourse: LiveData<List<KursusItem>> = _dataAllCourse
+
+    private val _dataAllProgress = MutableLiveData<List<ProgressItem>>()
+    val dataAllProgress: LiveData<List<ProgressItem>> = _dataAllProgress
+
+    private val _code = MutableLiveData<Int>()
+    val code: LiveData<Int> = _code
+
+    fun getAllCourse(token: String) {
+        val client = ApiConfig.getApiService().getCourse(token)
+        client.enqueue(object : Callback<GetAllCourseResponse> {
+            override fun onResponse(
+                call: Call<GetAllCourseResponse>,
+                response: Response<GetAllCourseResponse>
+            ) {
+                val responseBody = response.body()
+                if (response.isSuccessful) {
+                    if (responseBody != null) {
+                        _dataAllCourse.value = responseBody.kursus
+                        _code.value = responseBody.statusCode
+                    }
+                } else{
+                    _code.value = response.code()
+                }
+            }
+
+            override fun onFailure(call: Call<GetAllCourseResponse>, t: Throwable) {
+                _code.value = 500
+            }
+        })
+    }
+
+    fun getAllProgress(token: String) {
+        val client = ApiConfig.getApiService().getProgressCourse(token)
+        client.enqueue(object : Callback<GetAllProgressResponse> {
+            override fun onResponse(
+                call: Call<GetAllProgressResponse>,
+                response: Response<GetAllProgressResponse>
+            ) {
+                val responseBody = response.body()
+                if (response.isSuccessful) {
+                    if (responseBody != null) {
+                        _dataAllProgress.value = responseBody.progress
+                        _code.value = responseBody.statusCode
+                    }
+                } else{
+                    _code.value = response.code()
+                }
+            }
+
+            override fun onFailure(call: Call<GetAllProgressResponse>, t: Throwable) {
+                _code.value = 500
+            }
+        })
+    }
+
+}

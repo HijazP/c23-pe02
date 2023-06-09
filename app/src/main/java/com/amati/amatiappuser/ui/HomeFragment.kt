@@ -9,20 +9,23 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amati.amatiappuser.R
 import com.amati.amatiappuser.adapter.ModulAdapter
-import com.amati.amatiappuser.adapter.ProgressAdapter
-import com.amati.amatiappuser.data.DataDummy
 import com.amati.amatiappuser.database.UserPreferencesDatastore
 import com.amati.amatiappuser.databinding.FragmentHomeBinding
+import com.amati.amatiappuser.network.response.KursusItem
+import com.amati.amatiappuser.viewmodel.HomeViewModel
 import com.amati.amatiappuser.viewmodel.Session
 import com.amati.amatiappuser.viewmodel.SessionModelFactory
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private val homeViewModel: HomeViewModel by viewModels()
+
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +41,7 @@ class HomeFragment : Fragment() {
         val pref = UserPreferencesDatastore.getInstance(dataStore)
         val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
 
-        session.getName().observe(viewLifecycleOwner){nama ->
+        session.getName().observe(viewLifecycleOwner){ nama ->
             if (nama != "") {
                 binding.nama.text = nama
             }
@@ -48,24 +51,25 @@ class HomeFragment : Fragment() {
 
         session.getToken().observe(viewLifecycleOwner){ token ->
             if (token != "" && token != null) {
-
+                homeViewModel.getAllCourse("Bearer $token")
             }
         }
 
-        progress()
+//        progress()
 
-        val layoutManager = LinearLayoutManager(requireContext())
-        binding.rvDesaku.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
-        binding.rvDesaku.addItemDecoration(itemDecoration)
-
-        setCourse()
-
+        homeViewModel.dataAllCourse.observe(viewLifecycleOwner){
+            setCourse(it)
+        }
     }
 
-    private fun setCourse() {
-        val adapter = ModulAdapter(DataDummy.dummyList)
-        binding.rvDesaku.adapter = adapter
+    private fun setCourse(data: List<KursusItem>) {
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.rvCourse.layoutManager = layoutManager
+        val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
+        binding.rvCourse.addItemDecoration(itemDecoration)
+
+        val adapter = ModulAdapter(data)
+        binding.rvCourse.adapter = adapter
     }
 
     private fun progress(){
@@ -84,8 +88,8 @@ class HomeFragment : Fragment() {
         val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
         binding.rvProgress.addItemDecoration(itemDecoration)
 
-        val adapter = ProgressAdapter(DataDummy.dummyList)
-        binding.rvProgress.adapter = adapter
+//        val adapter = ProgressAdapter(DataDummy.dummyList)
+//        binding.rvProgress.adapter = adapter
 
     }
 

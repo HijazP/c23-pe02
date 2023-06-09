@@ -16,14 +16,12 @@ class LoginViewModel: ViewModel(){
     val code: LiveData<Int> = _code
 
     fun login(requestLogin: RequestLogin) {
-//        _isLoading.value = true
         val client = ApiConfig.getApiService().login(requestLogin)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
                 call: Call<LoginResponse>,
                 response: Response<LoginResponse>
             ) {
-//                _isLoading.value = false
                 val responseBody = response.body()
                 if (response.isSuccessful) {
                     if (responseBody != null) {
@@ -36,10 +34,7 @@ class LoginViewModel: ViewModel(){
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-//                _isLoading.value = false
-//                isError = true
                 _code.value = 500
-//                Toast.makeText(context, "onFailure: ${_message.value}", Toast.LENGTH_SHORT).show()
             }
         })
     }

@@ -2,22 +2,19 @@ package com.amati.amatiappuser.network.response
 
 import com.google.gson.annotations.SerializedName
 
-data class GetCourseResponse(
+data class GetAllProgressResponse(
 
-	@field:SerializedName("modul")
-	val modul: Modul,
+	@field:SerializedName("progress")
+	val progress: List<ProgressItem>,
 
 	@field:SerializedName("message")
 	val message: String,
 
 	@field:SerializedName("statusCode")
-	val statusCode: Int,
-
-	@field:SerializedName("ambilKursus")
-	val ambilKursus: AmbilKursus
+	val statusCode: Int
 )
 
-data class AmbilKursus(
+data class ProgressItem(
 
 	@field:SerializedName("jumlahModul")
 	val jumlahModul: Int,
@@ -33,18 +30,6 @@ data class AmbilKursus(
 
 	@field:SerializedName("statusSelesai")
 	val statusSelesai: Boolean,
-
-	@field:SerializedName("id")
-	val id: Int
-)
-
-data class Modul(
-
-	@field:SerializedName("idKursus")
-	val idKursus: Int,
-
-	@field:SerializedName("namaModul")
-	val namaModul: String,
 
 	@field:SerializedName("id")
 	val id: Int

@@ -127,7 +127,7 @@
                 android:text="@string/rekomendasi" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_desaku"
+                android:id="@+id/rv_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

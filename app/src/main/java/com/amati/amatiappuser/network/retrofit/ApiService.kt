@@ -29,18 +29,41 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<GetProfilResponse>
 
-    @PUT("user/course?id={id}&status={status}")
+    @GET("user/course")
+    fun getCourse(
+        @Header("Authorization") token: String
+    ): Call<GetAllCourseResponse>
+
+    @GET("user/course/{id}")
+    fun getCoursebyId(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Call<GetCourseResponse>
+
+    @GET("user/course/module")
+    fun getDetailModul(
+        @Header("Authorization") token: String,
+        @Query("idModul") idModul: Int? = 0
+    ): Call<GetCourseResponse>
+
+    @GET("user/course/progress")
+    fun getProgressCourse(
+        @Header("Authorization") token: String
+    ): Call<GetAllProgressResponse>
+
+    @PUT("user/course")
     fun putProgress(
         @Header("Authorization") token: String,
-        @Path("id") id: String,
-        @Path("status") status: String
+        @Query("id") id: Int,
+        @Query("status") status: Boolean
     ): Call<GetCourseResponse>
 
     @GET("user/course/{id}/detail")
-    fun getCourse(
+    fun getCourseDetail(
         @Header("Authorization") token: String,
-        @Path("id") id: String
+        @Path("id") id: Int
     ): Call<GetDetailCourseResponse>
+
 }
 
 

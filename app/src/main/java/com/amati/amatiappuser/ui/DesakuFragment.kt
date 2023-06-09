@@ -62,8 +62,8 @@ class DesakuFragment : Fragment() {
     }
 
     private fun setCourse(){
-        val adapter = ModulAdapter(DataDummy.dummyList)
-        binding.rvDesaku.adapter = adapter
+//        val adapter = ModulAdapter(DataDummy.dummyList)
+//        binding.rvDesaku.adapter = adapter
     }
 
     private fun setStatusBarColorToMatchTopBar() {

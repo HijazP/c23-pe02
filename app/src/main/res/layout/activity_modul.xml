@@ -49,14 +49,14 @@
                     android:contentDescription="Back" />
 
                 <TextView
-                    android:id="@+id/judul_modul"
+                    android:id="@+id/judul_course"
                     android:layout_width="280dp"
                     android:layout_height="25dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:gravity="left|center"
-                    android:text="@string/judul_modul"
+                    android:text="@string/judul_course"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -94,6 +94,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/judul_modul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="@string/judul_modul"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <ImageView
                 android:id="@+id/gambar"
                 android:layout_width="350dp"
@@ -103,7 +116,8 @@
                 android:src="@drawable/amati_logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/judul_modul"
+                 />
 
             <TextView
                 android:id="@+id/desc"
