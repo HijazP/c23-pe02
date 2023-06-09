@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.amati.amatiappuser.R
+import com.amati.amatiappuser.data.DataDummy
 import com.amati.amatiappuser.databinding.ActivityModulBinding
 
 class ModulActivity : AppCompatActivity() {
@@ -20,20 +21,43 @@ class ModulActivity : AppCompatActivity() {
         setBackButtonClickListener()
         setModulList()
 
-        val idmodul = intent.getIntExtra(EXTRA_ITEM, 0)
+        val idModul = intent.getIntExtra(EXTRA_ITEM, 0)
 
-        when (idmodul) {
-            1 -> {
-                binding.judulModul.text = "Modul 1"
-                binding.gambar.setImageResource(R.drawable.modul)
-                binding.desc.text = getString(R.string.detail_desc)
-            }
-            2 -> {
-                binding.judulModul.text = "Modul 2"
-                binding.gambar.setImageResource(R.drawable.modul)
-                binding.desc.text = getString(R.string.detail_desc)
+        setModulData(idModul)
+
+        setLanjutButton(idModul)
+    }
+
+    private fun setModulData(idmodul: Int) {
+        binding.apply {
+            when (idmodul) {
+                1 -> {
+                    judulModul.text = DataDummy.dummyList[0].kursus
+                    gambar.setImageResource(R.drawable.modul)
+                    desc.text = getString(R.string.detail_desc)
+                }
+                2 -> {
+                    judulModul.text = DataDummy.dummyList[1].kursus
+                    gambar.setImageResource(R.drawable.modul)
+                    desc.text = getString(R.string.detail_desc)
+                }
             }
         }
+    }
+
+
+    private fun setLanjutButton(idModul: Int) {
+        binding.lanjut.setOnClickListener {
+            if (idModul == 2) {
+                val intentToDetail = Intent(this@ModulActivity, HomeFragment::class.java)
+                startActivity(intentToDetail)
+            } else  {
+                val intentToDetail = Intent(this@ModulActivity, ModulActivity::class.java)
+                intentToDetail.putExtra(EXTRA_ITEM, idModul+1)
+                startActivity(intentToDetail)
+            }
+        }
+
     }
 
     private fun setModulList() {
