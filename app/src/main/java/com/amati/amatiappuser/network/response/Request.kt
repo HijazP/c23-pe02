@@ -6,11 +6,14 @@ data class RequestLogin(
 )
 
 data class RequestReg(
+    var namaLengkap: String,
     var email: String,
     var password: String
 )
 
 data class RequestProfil(
-    var nama: String,
-    var telepon: String
+    var namaLengkap: String,
+    var email: String,
+    var password: String,
+    var foto: String
 )

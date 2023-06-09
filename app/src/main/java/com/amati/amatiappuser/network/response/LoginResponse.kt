@@ -19,8 +19,8 @@ data class LoginResponse(
 
 data class Data(
 
-	@field:SerializedName("nama")
-	val nama: String,
+	@field:SerializedName("nama lengkap")
+	val namaLengkap: String,
 
 	@field:SerializedName("id")
 	val id: Int,

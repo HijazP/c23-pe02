@@ -30,6 +30,12 @@ class UserPreferencesDatastore private constructor(private val dataStore: DataSt
         }
     }
 
+    fun getId(): Flow<Int> {
+        return dataStore.data.map { pref ->
+            pref[USER_ID] ?: 0
+        }
+    }
+
     suspend fun logout() {
         dataStore.edit { pref ->
             pref[USER_NAME] = ""

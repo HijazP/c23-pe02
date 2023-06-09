@@ -64,8 +64,8 @@ class ProfilFragment : Fragment() {
                 val nama = editName.text.toString()
                 val telepon = editTelepon.text.toString()
 
-                val requestProfil = RequestProfil(nama, telepon)
-                profilViewModel.edit(requestProfil)
+//                val requestProfil = RequestProfil(nama, telepon)
+//                profilViewModel.edit(requestProfil)
 
                 profilViewModel.dataUser.observe(viewLifecycleOwner, Observer {
                     Toast.makeText(

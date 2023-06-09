@@ -6,28 +6,41 @@ import retrofit2.http.*
 
 interface ApiService {
     @Headers("Content-Type: application/json")
-    @POST("desa/login")
+    @POST("user/login")
     fun login(
         @Body
         requestLogin: RequestLogin
     ): Call<LoginResponse>
 
-    @POST("api/v1/register")
+    @POST("user/register")
     fun register(
         @Body
         userRequestReg: RequestReg
     ): Call<RegisterResponse>
 
-    @POST("desa/register")
+    @PUT("user/update")
     fun profil(
         @Body
         requestProfil: RequestProfil
     ): Call<ProfilResponse>
 
-    @GET("/user")
+    @GET("user")
     fun getProfil(
         @Header("Authorization") token: String
     ): Call<GetProfilResponse>
+
+    @PUT("user/course?id={id}&status={status}")
+    fun putProgress(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Path("status") status: String
+    ): Call<GetCourseResponse>
+
+    @GET("user/course/{id}/detail")
+    fun getCourse(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Call<GetDetailCourseResponse>
 }
 
 

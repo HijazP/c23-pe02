@@ -34,7 +34,7 @@ class RegisterActivity : AppCompatActivity() {
         val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
 
         session.getToken().observe(this) { token ->
-            if (token != "") {
+            if (token != "" && token != null) {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -50,11 +50,15 @@ class RegisterActivity : AppCompatActivity() {
     private fun registerAct() {
         binding.btnRegister.setOnClickListener {
             binding.apply {
-                val email = edRegisterEmail.text.toString()
-                val password = edRegisterPassword.text.toString()
-                val repassword = edRegisterRepassword.text.toString()
+                val nama = edRegisterNama.text.toString()
+                val email = edRegisterEmail.text.toString().trim()
+                val password = edRegisterPassword.text.toString().trim()
+                val repassword = edRegisterRepassword.text.toString().trim()
 
                 when {
+                    nama.isEmpty() -> {
+                        edRegisterNama.error = getString(R.string.register_nama_required)
+                    }
                     email.isEmpty() -> {
                         edRegisterEmail.error = getString(R.string.register_email_required)
                     }
@@ -72,7 +76,7 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     else -> {
                         if (password == repassword) {
-                            val requestReg = RequestReg(email, password)
+                            val requestReg = RequestReg(nama, email, password)
                             registerViewModel.register(requestReg)
 
                             registerViewModel.dataUser.observe(this@RegisterActivity) {
@@ -82,7 +86,7 @@ class RegisterActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
 
-                                if (registerViewModel.dataUser.value?.success == true) {
+                                if (registerViewModel.code.value == 201) {
                                     val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                                     startActivity(intent)
                                     finish()

@@ -1,5 +1,6 @@
 package com.amati.amatiappuser.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
@@ -17,34 +18,37 @@ class ModulActivity : AppCompatActivity() {
 
         setStatusBarColorToMatchTopBar()
         setBackButtonClickListener()
+        setModulList()
 
-        val idmodul = intent.getStringExtra(EXTRA_ITEM)?.toInt()
+        val idmodul = intent.getIntExtra(EXTRA_ITEM, 0)
 
-        if (idmodul != null) {
-            when (idmodul) {
-                1 -> {
-                    binding.judulModul.text = "Modul 1"
-                    binding.gambar.setImageResource(R.drawable.modul)
-                    binding.desc.text = getString(R.string.detail_desc)
-                }
-                2 -> {
-                    binding.judulModul.text = "Modul 2"
-                    binding.gambar.setImageResource(R.drawable.modul)
-                    binding.desc.text = getString(R.string.detail_desc)
-                }
+        when (idmodul) {
+            1 -> {
+                binding.judulModul.text = "Modul 1"
+                binding.gambar.setImageResource(R.drawable.modul)
+                binding.desc.text = getString(R.string.detail_desc)
             }
+            2 -> {
+                binding.judulModul.text = "Modul 2"
+                binding.gambar.setImageResource(R.drawable.modul)
+                binding.desc.text = getString(R.string.detail_desc)
+            }
+        }
+    }
+
+    private fun setModulList() {
+        binding.listModul.setOnClickListener {
+            val intent = Intent(this@ModulActivity, ListModulActivity::class.java)
+            intent.putExtra(ListModulActivity.EXTRA_ITEM, binding.judulModul.text.toString())
+            startActivity(intent)
         }
     }
 
     private fun setBackButtonClickListener() {
         val backButton = binding.back
         backButton.setOnClickListener {
-            goBack()
+            onBackPressed()
         }
-    }
-
-    private fun goBack() {
-        onBackPressed()
     }
 
     private fun setStatusBarColorToMatchTopBar() {

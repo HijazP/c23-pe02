@@ -20,6 +20,10 @@ class Session(private val pref : UserPreferencesDatastore) : ViewModel(){
         return pref.getName().asLiveData()
     }
 
+    fun getIdUser(): LiveData<Int> {
+        return pref.getId().asLiveData()
+    }
+
     fun logout() {
         viewModelScope.launch {
             pref.logout()

@@ -8,6 +8,7 @@
     <string name="register_email_hint">Email address</string>
     <string name="register_pass_hint">Password</string>
     <string name="register_repass_hint">Re-enter password</string>
+    <string name="register_nama_auto_fill_hint">nama lengkap</string>
     <string name="register_email_auto_fill_hint">email</string>
     <string name="register_pass_auto_fill_hint">password</string>
     <string name="register_button">Register</string>
@@ -18,6 +19,7 @@
     <string name="register_invalid_email">Format email tidak sesuai</string>
     <string name="register_invalid_pass">Password harus mengandung minimal 6 karakter</string>
     <string name="register_invalid_repass">Masukkan kembali password dengan benar</string>
+    <string name="register_nama_hint">Nama lengkap</string>
 
 
     <!--Login Activity-->
@@ -64,4 +66,5 @@
     <string name="alert_logout">Apakah Anda yakin ingin keluar?</string>
     <string name="yes">Ya</string>
     <string name="cancel">Batal</string>
+    <string name="register_nama_required">Masukkan nama lengkap anda</string>
 </resources>
