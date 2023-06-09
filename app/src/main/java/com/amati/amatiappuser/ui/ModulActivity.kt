@@ -1,5 +1,6 @@
 package com.amati.amatiappuser.ui
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -49,7 +50,7 @@ class ModulActivity : AppCompatActivity() {
     private fun setLanjutButton(idModul: Int) {
         binding.lanjut.setOnClickListener {
             if (idModul == 2) {
-                val intentToDetail = Intent(this@ModulActivity, HomeFragment::class.java)
+                val intentToDetail = Intent(this@ModulActivity, MainActivity::class.java)
                 startActivity(intentToDetail)
             } else  {
                 val intentToDetail = Intent(this@ModulActivity, ModulActivity::class.java)
@@ -57,7 +58,6 @@ class ModulActivity : AppCompatActivity() {
                 startActivity(intentToDetail)
             }
         }
-
     }
 
     private fun setModulList() {
