@@ -49,7 +49,7 @@ class ProfilViewModel: ViewModel() {
         })
     }
 
-    fun getProfil(token: String){
+    fun getProfil(token: String, id: String){
         val client = ApiConfig.getApiService().getProfil(token)
         client.enqueue(object : Callback<GetProfilResponse> {
             override fun onResponse(
