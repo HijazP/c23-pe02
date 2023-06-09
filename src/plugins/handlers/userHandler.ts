@@ -219,10 +219,18 @@ async function ambilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
                 statusSelesai: false,
             }
         })
+
+        const moduldetail = await prisma.modul.findMany({
+            where: {
+                idKursus: parseInt(id)
+            }
+        })
+
         return h.response({
             statusCode: 201,
             message: 'Kursus berhasil diambil',
-            ambilKursus
+            ambilKursus,
+            modul: moduldetail[ambilKursus.modulSekarang]
         }).code(201)
     } catch (err) {
         console.log(err)
@@ -244,6 +252,12 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
             }
         })
 
+        const detailmodul = await prisma.modul.findMany({
+            where: {
+                idKursus: parseInt(id)
+            }
+        })
+
         if (kursus !== null) {
             if (status === 'completed') {
                 const ambilKursus = await prisma.ambilkursus.update({
@@ -258,7 +272,8 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
                 return h.response({
                     statusCode: 200,
                     message: 'Kursus berhasil diselesaikan',
-                    ambilKursus
+                    ambilKursus,
+                    modul: detailmodul[ambilKursus.modulSekarang]
                 }).code(200)
             }
             else if (status === 'next') {
@@ -273,7 +288,8 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
                 return h.response({
                     statusCode: 200,
                     message: 'Kursus berhasil diupdate',
-                    ambilKursus
+                    ambilKursus,
+                    modul: detailmodul[ambilKursus.modulSekarang]
                 }).code(200)
             }
         }
