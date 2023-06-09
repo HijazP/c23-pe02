@@ -64,6 +64,11 @@ interface ApiService {
         @Path("id") id: Int
     ): Call<GetDetailCourseResponse>
 
+    @POST("user/course/recommendation/list")
+    fun getDesaku(
+        @Header("Authorization") token: String
+    ): Call<GetDesakuResponse>
+
 }
 
 

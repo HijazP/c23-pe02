@@ -31,3 +31,4 @@ data class KursusItem(
 	@field:SerializedName("deskripsi")
 	val deskripsi: String
 )
+
