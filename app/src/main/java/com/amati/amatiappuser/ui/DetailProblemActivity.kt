@@ -2,7 +2,6 @@ package com.amati.amatiappuser.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.amati.amatiappuser.R
 import com.amati.amatiappuser.databinding.ActivityDetailProblemBinding
 
 class DetailProblemActivity : AppCompatActivity() {

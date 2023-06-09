@@ -28,14 +28,12 @@
                     <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
                         android:background="@drawable/topbar"
-                        android:minHeight="?attr/actionBarSize"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:titleTextColor="@color/white" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -59,7 +57,7 @@
                         android:layout_marginStart="1dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="Nama"
+                        android:text="@string/nama_home"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -86,8 +84,9 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="Lanjutkan Pembelajaran"
+                android:text="@string/lanjutkan_pembelajaran"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="18sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -114,8 +113,7 @@
                 android:background="@drawable/custom_search"
                 android:iconifiedByDefault="false"
                 android:queryHint="Cari Materi"
-                app:iconifiedByDefault="false"
-                style="@style/SearchViewStyle" />
+                app:iconifiedByDefault="false" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -124,8 +122,9 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="20sp"
-                android:text="Rekomendasi" />
+                android:text="@string/rekomendasi" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_desaku"

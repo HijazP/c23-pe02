@@ -67,4 +67,7 @@
     <string name="yes">Ya</string>
     <string name="cancel">Batal</string>
     <string name="register_nama_required">Masukkan nama lengkap anda</string>
+    <string name="lanjutkan_pembelajaran">Lanjutkan Pembelajaran</string>
+    <string name="rekomendasi">Rekomendasi Course</string>
+    <string name="nama_home">Nama</string>
 </resources>
