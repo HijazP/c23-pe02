@@ -667,7 +667,7 @@
 ```
 
 ---
-### Mengambil semua kursus
+### Mengambil semua kursus dari database
 #### Method: GET
 ```https://be.api-amati.com/user/course```
 #### perlu token
@@ -788,7 +788,7 @@
 }
 ```
 ---
-### User Mengambil Kursus
+### User mengambil kursus baru
 #### Method: GET
 ```https://be.api-amati.com/user/course/{id}```
 #### Parameter {id} = Kursus id, sudah ada 11 kursus di db
@@ -797,15 +797,20 @@
 1. Berhasil
 ```
 {
-    "statusCode": 200,
+    "statusCode": 201,
     "message": "Kursus berhasil diambil",
     "ambilKursus": {
-        "id": 1,
-        "idKursus": 1,
+        "id": 3,
+        "idKursus": 3,
         "idPengguna": 1,
-        "jumlahModul": 7,
+        "jumlahModul": 5,
         "modulSekarang": 0,
         "statusSelesai": false
+    },
+    "modul": {
+        "id": 12,
+        "namaModul": "Mengenal Sustainable Startup",
+        "idKursus": 3
     }
 }
 ```
@@ -846,7 +851,7 @@
 ```
 
 ---
-### Update Progress Kursus
+### Update progress kursus
 #### Method: PUT
 ```https://be.api-amati.com/user/course?id={id}&status={status}```
 #### Data yang dikirim:
@@ -862,16 +867,37 @@
 ```
 // next, modulSekarang sebelumnya 1
 // statusSelesai = false
+// menampilkan modul yang baru
 {
     "statusCode": 200,
     "message": "Kursus berhasil diupdate",
     "ambilKursus": {
-        "id": 1,
-        "idKursus": 1,
+        "id": 3,
+        "idKursus": 3,
         "idPengguna": 1,
-        "jumlahModul": 7,
-        "modulSekarang": 2,
+        "jumlahModul": 5,
+        "modulSekarang": 1,
         "statusSelesai": false
+    },
+    "modul": {
+        "id": 13,
+        "namaModul": "SDGs 12 Responsible Consumption and Production",
+        "idKursus": 3
+    }
+}
+
+// next, modulSekarang = jumlahModul
+// statusSelesai = true
+{
+    "statusCode": 200,
+    "message": "Kursus berhasil diselesaikan",
+    "ambilKursus": {
+        "id": 3,
+        "idKursus": 3,
+        "idPengguna": 1,
+        "jumlahModul": 5,
+        "modulSekarang": 5,
+        "statusSelesai": true
     }
 }
 
@@ -894,6 +920,74 @@
 {
     "statusCode": 200,
     "message": "Tidak ada kursus yang diupdate"
+}
+```
+2. Gagal
+```
+// Salah format
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Invalid request payload JSON format"
+}
+
+// Tidak ada token
+{
+    "statusCode": 401,
+    "error": "Unauthorized",
+    "message": "Missing authentication"
+}
+
+// Salah path atau method
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "Not Found"
+}
+
+// Server error (bisa jadi data kurang lengkap)
+{
+    "statusCode": 500,
+    "message": "Ada masalah di server"
+}
+```
+---
+### Menampilkan progress semua kursus
+#### Method: GET
+```https://be.api-amati.com/user/course/progress```
+#### perlu token
+#### Response:
+1. Berhasil
+```
+{
+    "statusCode": 200,
+    "message": "Progress kursus berhasil ditampilkan",
+    "progress": [
+        {
+            "id": 1,
+            "idKursus": 1,
+            "idPengguna": 1,
+            "jumlahModul": 7,
+            "modulSekarang": 0,
+            "statusSelesai": false
+        },
+        {
+            "id": 2,
+            "idKursus": 4,
+            "idPengguna": 1,
+            "jumlahModul": 5,
+            "modulSekarang": 5,
+            "statusSelesai": true
+        },
+        {
+            "id": 3,
+            "idKursus": 3,
+            "idPengguna": 1,
+            "jumlahModul": 5,
+            "modulSekarang": 5,
+            "statusSelesai": true
+        }
+    ]
 }
 ```
 2. Gagal
@@ -1110,7 +1204,7 @@ Internal Server Error
 #### Method: GET
 ```
 https://be.api-amati.com/user/course/module?idKursus={idKursus}
-https://be.api-amati.com/user/course/module?idModul={idModul}`    
+https://be.api-amati.com/user/course/module?idModul={idModul}    
 ```
 #### Data yang dikirim:
 #### Query (perlu token)
