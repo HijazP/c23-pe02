@@ -48,6 +48,7 @@ class ModulActivity : AppCompatActivity() {
 
         binding.judulCourse.text = namaKursus
 
+
         setStatusBarColorToMatchTopBar()
         setBackButtonClickListener()
         setModulList()
@@ -56,7 +57,7 @@ class ModulActivity : AppCompatActivity() {
             if (it != null) {
                 setLanjutButton(idKursus!!)
             }
-            progress = courseViewModel.dataProgressCourse.value!!.modulSekarang
+//            progress = courseViewModel.dataProgressCourse.value!!.modulSekarang
             jumlahModul = courseViewModel.dataCourse.value!!.jumlahModul
         }
 
@@ -65,7 +66,7 @@ class ModulActivity : AppCompatActivity() {
             setModulData(it)
         }
 
-        courseViewModel.detailModul("Bearer $token", idModul!!)
+//        courseViewModel.detailModul("Bearer $token", idModul!!)
         courseViewModel.dataDetailModul.observe(this) {
             setModulData(it)
         }
