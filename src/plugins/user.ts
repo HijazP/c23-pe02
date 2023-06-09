@@ -37,6 +37,12 @@ const userPlugin = {
                 handler: userHandler.updateUser,
             },
             {
+                // Mengambil semua kursus
+                method: 'GET',
+                path: '/user/course',
+                handler: userHandler.getAllKursus,
+            },
+            {
                 // Mengambil kursus
                 method: 'GET',
                 path: '/user/course/{id}',

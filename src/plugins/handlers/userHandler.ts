@@ -291,6 +291,32 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
     }
 }
 
+async function getAllKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const { prisma } = request.server.app
+
+    try {
+        const kursus = await prisma.kursus.findMany({
+            select: {
+                id: true,
+                namaKursus: true,
+                deskripsi: true,
+                dampak: true,
+                foto: true,
+            }
+        })
+        return h.response({
+            statusCode: 200,
+            message: 'Semua kursus berhasil ditampilkan',
+            kursus
+        }).code(200)
+    } catch (err) {
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
 async function getKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
     const { id } = request.params as { id: string }
@@ -345,7 +371,7 @@ async function rekomendasiKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
 
 async function getModul(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
-    const { idKursus, idModul  } = request.params as { idKursus: string, idModul: string }
+    const { idKursus, idModul  } = request.query as { idKursus: string, idModul: string }
 
     try {
         if (idModul === undefined) {
@@ -354,6 +380,13 @@ async function getModul(request: Hapi.Request, h: Hapi.ResponseToolkit) {
                     idKursus: parseInt(idKursus)
                 }
             })
+
+            if (allModul.length === 0) {
+                return h.response({
+                    statusCode: 404,
+                    message: 'Modul tidak ditemukan'
+                }).code(404)
+            }
             return h.response({
                 statusCode: 200,
                 message: 'Semua modul berhasil ditampilkan',
@@ -366,6 +399,13 @@ async function getModul(request: Hapi.Request, h: Hapi.ResponseToolkit) {
                 id: parseInt(idModul)
             }
         })
+
+        if (modul === null) {
+            return h.response({
+                statusCode: 404,
+                message: 'Modul tidak ditemukan'
+            }).code(404)
+        }
         return h.response({
             statusCode: 200,
             message: 'Modul berhasil ditampilkan',
@@ -498,6 +538,7 @@ export default {
     updateUser,
     ambilKursus,
     updateAmbilKursus,
+    getAllKursus,
     getKursus,
     rekomendasiKursus,
     getModul,
