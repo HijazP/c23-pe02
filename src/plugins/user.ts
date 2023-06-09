@@ -55,6 +55,12 @@ const userPlugin = {
                 handler: userHandler.updateAmbilKursus,
             },
             {
+                // Progress kursus
+                method: 'GET',
+                path: '/user/course/progress',
+                handler: userHandler.progressKursus,
+            },
+            {
                 // Mengambil detail kursus
                 method: 'GET',
                 path: '/user/course/{id}/detail',

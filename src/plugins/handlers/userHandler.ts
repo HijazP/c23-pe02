@@ -307,6 +307,37 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
     }
 }
 
+async function progressKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let userId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            userId = decode.decoded.payload.userId
+        }
+    }
+    const { prisma } = request.server.app
+
+    try {
+        const progress = await prisma.ambilkursus.findMany({
+            where: {
+                idPengguna: userId
+            }
+        })
+        return h.response({
+            statusCode: 200,
+            message: 'Progress kursus berhasil ditampilkan',
+            progress
+        }).code(200)
+    } catch (err) {
+        console.log(err)
+        return h.response({
+            statusCode: 500,
+            message: 'Ada masalah di server'
+        }).code(500)
+    }
+}
+
 async function getAllKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
 
@@ -554,6 +585,7 @@ export default {
     updateUser,
     ambilKursus,
     updateAmbilKursus,
+    progressKursus,
     getAllKursus,
     getKursus,
     rekomendasiKursus,
