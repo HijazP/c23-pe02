@@ -74,7 +74,7 @@
                     android:layout_marginBottom="10dp"
                     android:foregroundGravity="center"
                     android:onClick="goBack"
-                    android:src="@drawable/baseline_list_24"
+                    android:src="@drawable/baseline_dehaze_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/toolbar"
                     app:layout_constraintTop_toTopOf="parent"
@@ -96,12 +96,11 @@
 
             <ImageView
                 android:id="@+id/gambar"
-                android:layout_width="250dp"
-                android:layout_height="150dp"
+                android:layout_width="350dp"
+                android:layout_height="160dp"
                 android:layout_gravity="center"
-                android:scaleType="centerCrop"
-                android:src="@drawable/amati_logo"
                 android:layout_marginTop="10dp"
+                android:src="@drawable/amati_logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

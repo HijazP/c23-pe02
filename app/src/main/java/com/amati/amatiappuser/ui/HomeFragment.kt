@@ -22,7 +22,6 @@ import com.amati.amatiappuser.viewmodel.Session
 import com.amati.amatiappuser.viewmodel.SessionModelFactory
 
 class HomeFragment : Fragment() {
-
     private lateinit var binding: FragmentHomeBinding
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     private var nama : String = ""
@@ -37,16 +36,14 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val dataStore: DataStore<Preferences> = requireContext().dataStore
 
-        nama = "User"
+        val pref = UserPreferencesDatastore.getInstance(dataStore)
+        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
 
-//        val pref = UserPreferencesDatastore.getInstance(dataStore)
-//        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
-//a
-//        session.getName().observe(viewLifecycleOwner){
-//            if (it != "") {
-//                nama = it
-//            }
-//        }
+        session.getName().observe(viewLifecycleOwner){
+            if (it != "") {
+                nama = it
+            }
+        }
 
         setStatusBarColorToMatchTopBar()
 
@@ -101,12 +98,5 @@ class HomeFragment : Fragment() {
 
         binding.nama.text = nama
 
-//
-////        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
-//        (activity as AppCompatActivity?)!!.supportActionBar?.title = null
-////            buildString {
-//            append(getString(R.string.hi_home))
-//            append(nama)
-//        }
     }
 }

@@ -23,18 +23,19 @@
             android:id="@+id/img_Desa"
             android:layout_width="100dp"
             android:layout_height="90dp"
-            android:src="@drawable/coba"
             android:padding="5dp"
-            tools:layout_editor_absoluteX="10dp"
-            tools:layout_editor_absoluteY="10dp"
-            tools:ignore="MissingClass,MissingConstraints" />
+            android:foregroundGravity="left"
+            android:src="@drawable/coba"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
             android:textColor="@color/black"
             android:textSize="20sp"

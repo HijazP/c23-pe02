@@ -13,22 +13,24 @@ import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amati.amatiappuser.R
 import com.amati.amatiappuser.adapter.ModulAdapter
 import com.amati.amatiappuser.data.DataDummy
 import com.amati.amatiappuser.data.DataDummy.dummyList
+import com.amati.amatiappuser.database.UserPreferencesDatastore
 import com.amati.amatiappuser.databinding.FragmentDesakuBinding
-import java.util.prefs.PreferenceChangeEvent
-import java.util.prefs.Preferences
+import com.amati.amatiappuser.viewmodel.Session
+import com.amati.amatiappuser.viewmodel.SessionModelFactory
+import androidx.datastore.preferences.core.Preferences
 
 
 class DesakuFragment : Fragment() {
     private lateinit var binding: FragmentDesakuBinding
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
-    private var nama : String = ""
-
+    private val nama : String = "Desaku"
 
 
     override fun onCreateView(
@@ -48,7 +50,8 @@ class DesakuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val dataStore: DataStore<Preferences> = requireContext().dataStore
 
-        nama = "User"
+        val pref = UserPreferencesDatastore.getInstance(dataStore)
+        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
 
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvDesaku.layoutManager = layoutManager
@@ -76,13 +79,5 @@ class DesakuFragment : Fragment() {
         (activity as AppCompatActivity?)?.supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.nama.text = nama
-
-//
-////        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
-//        (activity as AppCompatActivity?)!!.supportActionBar?.title = null
-////            buildString {
-//            append(getString(R.string.hi_home))
-//            append(nama)
-//        }
     }
 }

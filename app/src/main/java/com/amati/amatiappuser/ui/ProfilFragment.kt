@@ -1,15 +1,12 @@
 package com.amati.amatiappuser.ui
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -28,6 +25,7 @@ import com.amati.amatiappuser.viewmodel.SessionModelFactory
 class ProfilFragment : Fragment() {
     private lateinit var binding: FragmentProfilBinding
     private val profilViewModel: ProfilViewModel by viewModels()
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     private var nama : String = ""
     private var telepon : String = ""
     override fun onCreateView(
@@ -40,14 +38,17 @@ class ProfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val datastore: DataStore<Preferences> = requireContext().dataStore
+        val dataStore: DataStore<Preferences> = requireContext().dataStore
 
-        //val pref = requireContext().dataStore
-        //val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+        val pref = UserPreferencesDatastore.getInstance(dataStore)
+        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
 
-        //
+        session.getName().observe(viewLifecycleOwner){
+            if (it != "") {
+                nama = it
+            }
+        }
 
-        //belom
         binding.editName.setText(nama)
         binding.editTelepon.setText(telepon)
 
