@@ -200,7 +200,9 @@ async function ambilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
         if (checkAmbilKursus) {
             return h.response({
                 statusCode: 400,
-                message: 'Kursus sudah diambil'
+                message: 'Kursus sudah diambil',
+                checkAmbilKursus,
+
             }).code(400)
         }
 
