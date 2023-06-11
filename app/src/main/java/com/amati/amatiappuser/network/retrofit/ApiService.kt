@@ -38,13 +38,13 @@ interface ApiService {
     fun getCoursebyId(
         @Header("Authorization") token: String,
         @Path("id") id: Int
-    ): Call<GetCourseResponse>
+    ): Call<GetCourseByIdResponse>
 
     @GET("user/course/module")
     fun getDetailModul(
         @Header("Authorization") token: String,
         @Query("idModul") idModul: Int
-    ): Call<GetCourseResponse>
+    ): Call<GetCourseByIdResponse>
 
     @GET("user/course/progress")
     fun getProgressCourse(
@@ -56,7 +56,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Query("id") id: Int,
         @Query("status") status: String
-    ): Call<GetCourseResponse>
+    ): Call<GetCourseByIdResponse>
 
     @GET("user/course/{id}/detail")
     fun getCourseDetail(

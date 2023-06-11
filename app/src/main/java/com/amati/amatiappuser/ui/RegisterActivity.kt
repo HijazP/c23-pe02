@@ -85,7 +85,6 @@ class RegisterActivity : AppCompatActivity() {
                                     getString(R.string.register_success),
                                     Toast.LENGTH_SHORT
                                 ).show()
-
                                 if (registerViewModel.code.value == 201) {
                                     val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                                     startActivity(intent)

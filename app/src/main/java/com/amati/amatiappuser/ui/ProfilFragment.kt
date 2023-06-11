@@ -61,8 +61,8 @@ class ProfilFragment : Fragment() {
                 editName.clearFocus()
                 editTelepon.clearFocus()
 
-                val nama = editName.text.toString()
-                val telepon = editTelepon.text.toString()
+//                val nama = editName.text.toString()
+//                val telepon = editTelepon.text.toString()
 
 //                val requestProfil = RequestProfil(nama, telepon)
 //                profilViewModel.edit(requestProfil)

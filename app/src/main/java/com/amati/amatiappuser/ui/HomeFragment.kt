@@ -1,6 +1,7 @@
 package com.amati.amatiappuser.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +12,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amati.amatiappuser.R
 import com.amati.amatiappuser.adapter.ModulAdapter
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,12 +56,40 @@ class HomeFragment : Fragment() {
             if (it != "" && it != null) {
                 token = it
                 homeViewModel.getAllCourse("Bearer $token")
+                var code = homeViewModel.code.value
+                if (code == 401) {
+                    session.logout()
+                    val intent = Intent(requireActivity(), LoginActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
                 homeViewModel.getAllProgress("Bearer $token")
+                code = homeViewModel.code.value
+                if (code == 401) {
+                    session.logout()
+                    val intent = Intent(requireActivity(), LoginActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
             }
         }
 
-        homeViewModel.dataAllProgress.observe(viewLifecycleOwner){
-            progress(it)
+        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvProgress.layoutManager = layoutManager
+
+        homeViewModel.dataAllProgress.observe(viewLifecycleOwner) { progressList ->
+            val detailCourseList: List<KursusItem>? = homeViewModel.dataAllCourse.value
+            progressList?.let { progressItems ->
+                detailCourseList?.let { detailCourseItems ->
+                    progress(progressItems, detailCourseItems)
+
+                    if (progressItems.isNotEmpty()) {
+                        binding.rvProgress.visibility = View.VISIBLE
+                    } else {
+                        binding.rvProgress.visibility = View.GONE
+                    }
+                }
+            }
         }
 
         homeViewModel.dataAllCourse.observe(viewLifecycleOwner){
@@ -72,29 +100,24 @@ class HomeFragment : Fragment() {
     private fun setCourse(data: List<KursusItem>) {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvCourse.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
-        binding.rvCourse.addItemDecoration(itemDecoration)
 
         val adapter = ModulAdapter(data)
         binding.rvCourse.adapter = adapter
     }
 
-    private fun progress(data: List<ProgressItem>){
-        if (!homeViewModel.dataAllProgress.value.isNullOrEmpty()){
-            val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            binding.rvProgress.layoutManager = layoutManager
-            val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
-            binding.rvProgress.addItemDecoration(itemDecoration)
+    private fun progress(data: List<ProgressItem>, detailCourse: List<KursusItem>) {
+        val filteredData = data.filter { progressItem ->
+            detailCourse.any { kursusItem -> kursusItem.id == progressItem.idKursus }
+        }
 
-            val adapter = ProgressAdapter(data, homeViewModel, token)
-            binding.rvProgress.adapter = adapter
+        if (filteredData.isNotEmpty()) {
+            binding.lanjutBelajar.visibility = View.VISIBLE
+            val progressAdapter = ProgressAdapter(filteredData, detailCourse)
+            binding.rvProgress.adapter = progressAdapter
         } else {
             binding.lanjutBelajar.visibility = View.GONE
         }
-
-
     }
-
     private fun setStatusBarColorToMatchTopBar() {
         val topBarColor = ContextCompat.getColor(requireContext(), R.color.topbar_color)
 

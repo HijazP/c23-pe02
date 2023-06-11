@@ -25,6 +25,9 @@ class HomeViewModel: ViewModel() {
     private val _code = MutableLiveData<Int>()
     val code: LiveData<Int> = _code
 
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
+
     fun getAllCourse(token: String) {
         val client = ApiConfig.getApiService().getCourse(token)
         client.enqueue(object : Callback<GetAllCourseResponse> {
@@ -37,6 +40,7 @@ class HomeViewModel: ViewModel() {
                     if (responseBody != null) {
                         _dataAllCourse.value = responseBody.kursus
                         _code.value = responseBody.statusCode
+                        _message.value = responseBody.message
                     }
                 } else{
                     _code.value = response.code()
@@ -61,6 +65,7 @@ class HomeViewModel: ViewModel() {
                     if (responseBody != null) {
                         _dataAllProgress.value = responseBody.progress
                         _code.value = responseBody.statusCode
+                        _message.value = responseBody.message
                     }
                 } else{
                     _code.value = response.code()
@@ -98,15 +103,15 @@ class HomeViewModel: ViewModel() {
 
     fun getCourse(token: String, id: Int) {
         val client = ApiConfig.getApiService().getCoursebyId(token, id)
-        client.enqueue(object : Callback<GetCourseResponse> {
+        client.enqueue(object : Callback<GetCourseByIdResponse> {
             override fun onResponse(
-                call: Call<GetCourseResponse>,
-                response: Response<GetCourseResponse>
+                call: Call<GetCourseByIdResponse>,
+                response: Response<GetCourseByIdResponse>
             ) {
                 val responseBody = response.body()
                 if (response.isSuccessful) {
                     if (responseBody != null) {
-                        _dataModul.value = responseBody.modul
+                        _dataModul.value = responseBody.modul!!
                         _code.value = responseBody.statusCode
                     }
                 } else{
@@ -114,7 +119,7 @@ class HomeViewModel: ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<GetCourseResponse>, t: Throwable) {
+            override fun onFailure(call: Call<GetCourseByIdResponse>, t: Throwable) {
                 _code.value = 500
             }
         })

@@ -19,9 +19,6 @@ class ModulActivity : AppCompatActivity() {
     private lateinit var binding: ActivityModulBinding
     private val courseViewModel: CourseViewModel by viewModels()
     private var token: String = ""
-    private var progress: Int = 0
-    private var jumlahModul: Int = 0
-    private var idModul: Int? = null
     private var idKursus: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +28,6 @@ class ModulActivity : AppCompatActivity() {
 
         idKursus = intent.getIntExtra(EXTRA_ITEM, 0)
         val namaKursus = intent.getStringExtra(EXTRA_NAMA)
-        idModul = intent.getIntExtra(EXTRA_MODUL, 0)
 
         val pref = UserPreferencesDatastore.getInstance(dataStore)
         val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
@@ -45,7 +41,6 @@ class ModulActivity : AppCompatActivity() {
 
         binding.judulCourse.text = namaKursus
 
-
         setStatusBarColorToMatchTopBar()
         setBackButtonClickListener()
         setModulList()
@@ -55,11 +50,9 @@ class ModulActivity : AppCompatActivity() {
                 setLanjutButton(idKursus!!)
             }
 //            progress = courseViewModel.dataProgressCourse.value!!.modulSekarang
-            jumlahModul = courseViewModel.dataCourse.value!!.jumlahModul
         }
 
         courseViewModel.dataModul.observe(this) {
-            idModul = it.id
             setModulData(it)
         }
 
@@ -84,12 +77,14 @@ class ModulActivity : AppCompatActivity() {
         }
     }
 
-    private fun setLanjutButton(idModul: Int) {
+    private fun setLanjutButton(idKursus: Int) {
         binding.lanjut.setOnClickListener {
+            courseViewModel.progressCourse("Bearer $token", idKursus, "next")
+//            courseViewModel.detailModul("Bearer $token", idModul+1)
+
             val intentToDetail = Intent(this@ModulActivity, ModulActivity::class.java)
-            intentToDetail.putExtra(EXTRA_ITEM, idModul)
+            intentToDetail.putExtra(EXTRA_ITEM, idKursus)
             intentToDetail.putExtra(EXTRA_NAMA, binding.judulCourse.text.toString())
-            courseViewModel.progressCourse("Bearer $token", idModul, "next")
             startActivity(intentToDetail)
             finish()
         }
@@ -125,6 +120,5 @@ class ModulActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ITEM = "key_item"
         const val EXTRA_NAMA = "key_nama"
-        const val EXTRA_MODUL = "key_progress"
     }
 }
