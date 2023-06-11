@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/profile"
-        android:title="@string/profil"
-        android:icon="@drawable/baseline_person_24"
+        android:id="@+id/logout"
+        android:title="@string/logout"
+        android:icon="@drawable/ic_logout_white"
         app:showAsAction="ifRoom" />
 </menu>

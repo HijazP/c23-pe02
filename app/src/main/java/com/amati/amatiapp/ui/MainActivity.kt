@@ -1,5 +1,6 @@
 package com.amati.amatiapp.ui
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var token: String
     private lateinit var session: Session
 
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,6 +41,12 @@ class MainActivity : AppCompatActivity() {
 
         val pref = UserPreferencesDatastore.getInstance(dataStore)
         session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+
+        session.getName().observe(this){ nama ->
+            if (nama != "") {
+                binding.nama.text = nama
+            }
+        }
 
         session.getToken().observe(this) {
             if (it != null) {
@@ -99,9 +112,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.profile -> {
-                val intentToAbout = Intent(this@MainActivity, ProfilActivity::class.java)
-                startActivity(intentToAbout)
+            R.id.logout -> {
+                showLogoutDialog()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -112,5 +124,28 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent (this@MainActivity, AddProblemActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun showLogoutDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setTitle(getString(R.string.logout))
+            .setMessage(getString(R.string.alert_logout))
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                logout()
+            }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .show()
+    }
+
+    private fun logout() {
+        val pref = UserPreferencesDatastore.getInstance(dataStore)
+        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+
+        session.logout()
+
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
     }
 }
