@@ -55,16 +55,9 @@ class HomeFragment : Fragment() {
         session.getToken().observe(viewLifecycleOwner){
             if (it != "" && it != null) {
                 token = it
-                homeViewModel.getAllCourse("Bearer $token")
-                var code = homeViewModel.code.value
-                if (code == 401) {
-                    session.logout()
-                    val intent = Intent(requireActivity(), LoginActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                }
                 homeViewModel.getAllProgress("Bearer $token")
-                code = homeViewModel.code.value
+                homeViewModel.getAllCourse("Bearer $token")
+                val code = homeViewModel.code.value
                 if (code == 401) {
                     session.logout()
                     val intent = Intent(requireActivity(), LoginActivity::class.java)
@@ -79,16 +72,8 @@ class HomeFragment : Fragment() {
 
         homeViewModel.dataAllProgress.observe(viewLifecycleOwner) { progressList ->
             val detailCourseList: List<KursusItem>? = homeViewModel.dataAllCourse.value
-            progressList?.let { progressItems ->
-                detailCourseList?.let { detailCourseItems ->
-                    progress(progressItems, detailCourseItems)
-
-                    if (progressItems.isNotEmpty()) {
-                        binding.rvProgress.visibility = View.VISIBLE
-                    } else {
-                        binding.rvProgress.visibility = View.GONE
-                    }
-                }
+            if (progressList != null) {
+                detailCourseList?.let { progress(progressList, it) }
             }
         }
 
@@ -109,7 +94,6 @@ class HomeFragment : Fragment() {
         val filteredData = data.filter { progressItem ->
             detailCourse.any { kursusItem -> kursusItem.id == progressItem.idKursus }
         }
-
         if (filteredData.isNotEmpty()) {
             binding.lanjutBelajar.visibility = View.VISIBLE
             val progressAdapter = ProgressAdapter(filteredData, detailCourse)

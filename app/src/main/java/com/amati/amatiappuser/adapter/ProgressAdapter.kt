@@ -15,11 +15,15 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>, private val 
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = listProgress.size
+    override fun getItemCount(): Int {
+        return listProgress.count { !it.statusSelesai }
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = listProgress[position]
-        holder.bind(item, listDetail)
+        val progressItem = listProgress[position]
+        if (!progressItem.statusSelesai) {
+            holder.bind(progressItem, listDetail)
+        }
     }
 
     class ViewHolder(private val binding: RvprogressItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -59,17 +63,3 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>, private val 
 //                itemView.context.startActivity(intentToDetail)
 //            }
 //        }
-
-    //    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val item = mergedList[position]
-//
-//        if (item is ProgressItem) {
-//            val data = item
-//            holder.bind(data)
-//        } else if (item is KursusItem) {
-//            val detailCourse = item
-//            holder.bindDetailCourse(detailCourse)
-//        }
-//
-////        holder.bind(data, viewModel, token)
-//    }

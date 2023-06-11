@@ -98,7 +98,6 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/rvprogress_item" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/bawah"
             android:layout_width="match_parent"
