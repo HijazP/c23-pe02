@@ -132,9 +132,9 @@ def get_recommendations(input: str):
     recommended_desa = nearest_indices[input]
     recommended_desa_parts = recommended_desa.split(",")  # Memisahkan nama desa dan provinsi
     recommended_desa_clean = recommended_desa_parts[0].strip().split("desa ")[1]  # Mengambil nama desa setelah kata "desa"
-    provinsi = recommended_desa_parts[1].strip()
+    kab = recommended_desa_parts[1].strip()
 
     return {
         "Rekomendasi Desa": recommended_desa_clean,
-        "Provinsi": provinsi
+        "Kabupaten": kab
     }
