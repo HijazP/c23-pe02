@@ -125,10 +125,16 @@ def get_top_3_similar_indices(index1, similarity_matrix):
 
     return sorted_indices.tolist()
 
-
 @app.get("/predict/{input}")
 def get_recommendations(input: str):
-
     nearest_indices, nearest_similarities = find_nearest_similarity(course_clean, prob_clean)
 
-    return {"Nearest similarity pair for [{}]: [{}], Similarity: {}".format([input], nearest_indices[input], nearest_similarities[input])}
+    recommended_desa = nearest_indices[input]
+    recommended_desa_parts = recommended_desa.split(",")  # Memisahkan nama desa dan provinsi
+    recommended_desa_clean = recommended_desa_parts[0].strip().split("desa ")[1]  # Mengambil nama desa setelah kata "desa"
+    provinsi = recommended_desa_parts[1].strip()
+
+    return {
+        "Rekomendasi Desa": recommended_desa_clean,
+        "Provinsi": provinsi
+    }
