@@ -56,7 +56,7 @@ class DesakuFragment : Fragment() {
                 desakuViewModel.getAllProgress("Bearer $token")
                 desakuViewModel.dataAllProgress.observe(viewLifecycleOwner){ progress ->
                     if (progress.isNotEmpty()) {
-                        val latestProgress = progress.last() // Mengambil data terbaru dari daftar progress
+                        val latestProgress = progress.last()
                         val id = latestProgress.idKursus
                         desakuViewModel.getDetailCourse("Bearer $token", id)
                     }
