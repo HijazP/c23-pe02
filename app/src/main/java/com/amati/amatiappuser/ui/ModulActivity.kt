@@ -65,15 +65,6 @@ class ModulActivity : AppCompatActivity() {
         courseViewModel.dataDetailModul.observe(this) {
             setModulData(it)
         }
-
-
-//        courseViewModel.dataProgressCourse.observe(this) {
-//            idModul = it.id
-//            if (progress == jumlahModul) {
-//                binding.lanjut.text = getString(R.string.selesai)
-//            }
-//        }
-
     }
 
     private fun setModulData(modul: Modul) {
@@ -88,7 +79,6 @@ class ModulActivity : AppCompatActivity() {
         binding.lanjut.setOnClickListener {
             Log.e(TAG, "Isi token apa sih: $token")
             courseViewModel.putProgressCourse("Bearer $token", idKursus, "next")
-//            courseViewModel.detailModul("Bearer $token", idModul+1)
             courseViewModel.dataProgressCourse.observe(this) {
                 Log.e(TAG, "Isi ambil kursus apa sih: ${it.updateKursus}")
                 if (it.updateKursus.statusSelesai) {

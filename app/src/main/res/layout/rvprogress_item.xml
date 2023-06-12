@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="100dp"
-            android:layout_height="0dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
@@ -42,7 +42,7 @@
         <TextView
             android:id="@+id/tv_desc"
             android:layout_width="126dp"
-            android:layout_height="42dp"
+            android:layout_height="80dp"
             android:layout_marginStart="16dp"
             android:textColor="@color/white"
             android:textSize="13sp"

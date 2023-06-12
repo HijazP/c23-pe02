@@ -2,6 +2,7 @@ package com.amati.amatiappuser.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
@@ -19,14 +20,12 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>, private val 
     }
 
     override fun getItemCount(): Int{
-        return listProgress.count { !it.statusSelesai }
+        return listProgress.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = listProgress[position]
-        if (!data.statusSelesai) {
-            holder.bind(data, viewModel, token)
-        }
+        holder.bind(data, viewModel, token)
     }
 
     class ViewHolder(private var binding: RvprogressItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -51,3 +50,17 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>, private val 
         }
     }
 }
+
+//                Ini buat kl mau statusSelesai = true, itemnya dihilangin
+//                with(binding) {
+//                if (!data.statusSelesai) {
+//                    viewModel.dataDetailCourse.observe(itemView.context as LifecycleOwner) { kursus ->
+//                        if (data.idKursus == kursus?.id) {
+//                            tvName.text = kursus.namaKursus
+//                            tvDesc.text = kursus.dampak
+//                        }
+//                    }
+//                } else {
+//                    itemView.visibility = View.GONE
+//                    itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
+//                }
