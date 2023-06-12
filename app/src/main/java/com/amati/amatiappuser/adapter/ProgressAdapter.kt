@@ -3,11 +3,14 @@ package com.amati.amatiappuser.adapter
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.amati.amatiappuser.databinding.RvprogressItemBinding
 import com.amati.amatiappuser.network.response.*
 import com.amati.amatiappuser.ui.ModulActivity
-class ProgressAdapter(private val listProgress: List<ProgressItem>, private val listDetail: List<KursusItem>)
+import com.amati.amatiappuser.viewmodel.HomeViewModel
+
+class ProgressAdapter(private val listProgress: List<ProgressItem>, private val viewModel: HomeViewModel, private val token: String?)
     : RecyclerView.Adapter<ProgressAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -15,51 +18,36 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>, private val 
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount(): Int{
         return listProgress.count { !it.statusSelesai }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val progressItem = listProgress[position]
-        if (!progressItem.statusSelesai) {
-            holder.bind(progressItem, listDetail)
+        val data = listProgress[position]
+        if (!data.statusSelesai) {
+            holder.bind(data, viewModel, token)
         }
     }
 
-    class ViewHolder(private val binding: RvprogressItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(progressItem: ProgressItem, listDetail: List<KursusItem>) {
-            val detailCourse = listDetail.find { it.id == progressItem.idKursus }
-            detailCourse?.let {
-                binding.tvName.text = it.namaKursus
-                binding.tvDesc.text = it.dampak
+    class ViewHolder(private var binding: RvprogressItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(data : ProgressItem, viewModel: HomeViewModel, token: String?) {
+            viewModel.getDetailCourse("Bearer $token", data.idKursus)
+            viewModel.getCourse("Bearer $token", data.idKursus)
+            with(binding) {
+                viewModel.dataDetailCourse.observe(itemView.context as LifecycleOwner) { kursus ->
+                    if (data.idKursus == kursus?.id) {
+                        tvName.text = kursus.namaKursus
+                        tvDesc.text = kursus.dampak
+                    }
+                }
             }
+
             binding.root.setOnClickListener {
                 val intentToDetail = Intent(itemView.context, ModulActivity::class.java)
-                intentToDetail.putExtra(ModulActivity.EXTRA_ITEM, progressItem.id)
-                val kursusItem = listDetail.find { it.id == progressItem.idKursus }
-                intentToDetail.putExtra(ModulActivity.EXTRA_NAMA, kursusItem?.namaKursus)
+                intentToDetail.putExtra(ModulActivity.EXTRA_ITEM, data.idKursus)
+                intentToDetail.putExtra(ModulActivity.EXTRA_NAMA, binding.tvName.text)
                 itemView.context.startActivity(intentToDetail)
             }
         }
     }
 }
-
-//        fun bind(data : ProgressItem, viewModel: HomeViewModel, token: String?) {
-//            viewModel.getDetailCourse("Bearer $token", data.idKursus)
-//            viewModel.getCourse("Bearer $token", data.idKursus)
-//            with(binding) {
-//                viewModel.dataDetailCourse.observe(itemView.context as LifecycleOwner) { kursus ->
-//                    if (data.idKursus == kursus?.id) {
-//                        tvName.text = kursus.namaKursus
-//                        tvDesc.text = kursus.dampak
-//                    }
-//                }
-//            }
-//
-//            binding.root.setOnClickListener {
-//                val intentToDetail = Intent(itemView.context, ModulActivity::class.java)
-//                intentToDetail.putExtra(ModulActivity.EXTRA_ITEM, data.idKursus)
-//                intentToDetail.putExtra(ModulActivity.EXTRA_NAMA, binding.tvName.text)
-//                itemView.context.startActivity(intentToDetail)
-//            }
-//        }

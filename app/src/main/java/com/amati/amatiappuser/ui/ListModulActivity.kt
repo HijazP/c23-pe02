@@ -3,14 +3,23 @@ package com.amati.amatiappuser.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amati.amatiappuser.R
+import com.amati.amatiappuser.adapter.ListModulAdapter
+import com.amati.amatiappuser.database.UserPreferencesDatastore
 import com.amati.amatiappuser.databinding.ActivityListModulBinding
+import com.amati.amatiappuser.network.response.AllModulItem
+import com.amati.amatiappuser.viewmodel.ListModulViewModel
+import com.amati.amatiappuser.viewmodel.Session
+import com.amati.amatiappuser.viewmodel.SessionModelFactory
 
 class ListModulActivity : AppCompatActivity() {
     private lateinit var binding: ActivityListModulBinding
+    private val listModulViewModel : ListModulViewModel by viewModels()
+    private var idKursus: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,25 +29,28 @@ class ListModulActivity : AppCompatActivity() {
         setStatusBarColorToMatchTopBar()
         setBackButtonClickListener()
 
+        idKursus = intent.getIntExtra(EXTRA_ITEM, 0)
+
+        val pref = UserPreferencesDatastore.getInstance(dataStore)
+        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
+
+        session.getToken().observe(this){token ->
+            if (token != "" && token != null) {
+                listModulViewModel.getListModul("Bearer $token", idKursus)
+            }
+        }
+
         val layoutManager = LinearLayoutManager(this)
         binding.rvListModul.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        binding.rvListModul.addItemDecoration(itemDecoration)
 
-//        val collapsibleLayout = findViewById<LinearLayout>(R.id.collapsibleLayout)
-//        val expandCollapseButton = findViewById<ImageButton>(R.id.ib_list_modul)
-//        var isExpanded = false
-//
-//        expandCollapseButton.setOnClickListener {
-//            if (isExpanded) {
-//                collapsibleLayout.visibility = View.GONE
-//                expandCollapseButton.setImageResource(R.drawable.baseline_arrow_drop_down_24)
-//            } else {
-//                collapsibleLayout.visibility = View.VISIBLE
-//                expandCollapseButton.setImageResource(R.drawable.baseline_arrow_drop_up_24)
-//            }
-//            isExpanded = !isExpanded
-//        }
+        listModulViewModel.dataListModul.observe(this) {
+            setListModul(it)
+        }
+    }
+
+    private fun setListModul(data: List<AllModulItem>) {
+        val adapter = ListModulAdapter(data, idKursus)
+        binding.rvListModul.adapter = adapter
     }
 
     private fun setBackButtonClickListener() {
@@ -59,10 +71,11 @@ class ListModulActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        binding.judulModul.text = intent.getStringExtra(EXTRA_ITEM)
+        binding.judulModul.text = intent.getStringExtra(EXTRA_NAMA)
     }
 
     companion object {
         const val EXTRA_ITEM = "key_item"
+        const val EXTRA_NAMA = "key_nama"
     }
 }

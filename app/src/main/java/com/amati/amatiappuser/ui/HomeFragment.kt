@@ -70,11 +70,8 @@ class HomeFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvProgress.layoutManager = layoutManager
 
-        homeViewModel.dataAllProgress.observe(viewLifecycleOwner) { progressList ->
-            val detailCourseList: List<KursusItem>? = homeViewModel.dataAllCourse.value
-            if (progressList != null) {
-                detailCourseList?.let { progress(progressList, it) }
-            }
+        homeViewModel.dataAllProgress.observe(viewLifecycleOwner){
+            progress(it)
         }
 
         homeViewModel.dataAllCourse.observe(viewLifecycleOwner){
@@ -89,19 +86,15 @@ class HomeFragment : Fragment() {
         val adapter = ModulAdapter(data)
         binding.rvCourse.adapter = adapter
     }
-
-    private fun progress(data: List<ProgressItem>, detailCourse: List<KursusItem>) {
-        val filteredData = data.filter { progressItem ->
-            detailCourse.any { kursusItem -> kursusItem.id == progressItem.idKursus }
-        }
-        if (filteredData.isNotEmpty()) {
-            binding.lanjutBelajar.visibility = View.VISIBLE
-            val progressAdapter = ProgressAdapter(filteredData, detailCourse)
-            binding.rvProgress.adapter = progressAdapter
+    private fun progress(data: List<ProgressItem>){
+        if (!homeViewModel.dataAllProgress.value.isNullOrEmpty()){
+            val adapter = ProgressAdapter(data, homeViewModel, token)
+            binding.rvProgress.adapter = adapter
         } else {
             binding.lanjutBelajar.visibility = View.GONE
         }
     }
+
     private fun setStatusBarColorToMatchTopBar() {
         val topBarColor = ContextCompat.getColor(requireContext(), R.color.topbar_color)
 

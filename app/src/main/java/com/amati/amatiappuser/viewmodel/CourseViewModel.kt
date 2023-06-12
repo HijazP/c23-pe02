@@ -22,10 +22,13 @@ class CourseViewModel: ViewModel(){
     private val _dataProgressCourse = MutableLiveData<GetCourseByIdResponse>()
     val dataProgressCourse: LiveData<GetCourseByIdResponse> = _dataProgressCourse
 
+    private val _dataDetailCourse = MutableLiveData<Kursus>()
+    val dataDetailCourse: LiveData<Kursus> = _dataDetailCourse
+
     private val _code = MutableLiveData<Int>()
     val code: LiveData<Int> = _code
 
-    fun getCourse(token: String, id: Int) {
+    fun getCourseById(token: String, id: Int) {
         val client = ApiConfig.getApiService().getCoursebyId(token, id)
         client.enqueue(object : Callback<GetCourseByIdResponse> {
             override fun onResponse(
@@ -50,7 +53,7 @@ class CourseViewModel: ViewModel(){
         })
     }
 
-    fun progressCourse(token: String, id: Int, status: String){
+    fun putProgressCourse(token: String, id: Int, status: String){
         val client = ApiConfig.getApiService().putProgress(token, id, status)
         client.enqueue(object : Callback<GetCourseByIdResponse> {
             override fun onResponse(
@@ -74,7 +77,7 @@ class CourseViewModel: ViewModel(){
         })
     }
 
-    fun detailModul(token: String, idModul: Int){
+    fun getDetailModul(token: String, idModul: Int){
         val client = ApiConfig.getApiService().getDetailModul(token, idModul)
         client.enqueue(object : Callback<GetCourseByIdResponse> {
             override fun onResponse(
@@ -93,6 +96,30 @@ class CourseViewModel: ViewModel(){
             }
 
             override fun onFailure(call: Call<GetCourseByIdResponse>, t: Throwable) {
+                _code.value = 500
+            }
+        })
+    }
+
+    fun getDetailCourse(token: String, id: Int){
+        val client = ApiConfig.getApiService().getCourseDetail(token, id)
+        client.enqueue(object : Callback<GetDetailCourseResponse> {
+            override fun onResponse(
+                call: Call<GetDetailCourseResponse>,
+                response: Response<GetDetailCourseResponse>
+            ) {
+                val responseBody = response.body()
+                if (response.isSuccessful) {
+                    if (responseBody != null) {
+                        _dataDetailCourse.value = responseBody.kursus
+                        _code.value = responseBody.statusCode
+                    }
+                } else{
+                    _code.value = response.code()
+                }
+            }
+
+            override fun onFailure(call: Call<GetDetailCourseResponse>, t: Throwable) {
                 _code.value = 500
             }
         })

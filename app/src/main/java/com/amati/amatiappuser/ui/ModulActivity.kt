@@ -3,6 +3,7 @@ package com.amati.amatiappuser.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -19,7 +20,9 @@ class ModulActivity : AppCompatActivity() {
     private lateinit var binding: ActivityModulBinding
     private val courseViewModel: CourseViewModel by viewModels()
     private var token: String = ""
-    private var idKursus: Int? = null
+    private var idKursus: Int = 0
+    private var idModul: Int? = null
+    private val TAG = "YourActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +31,28 @@ class ModulActivity : AppCompatActivity() {
 
         idKursus = intent.getIntExtra(EXTRA_ITEM, 0)
         val namaKursus = intent.getStringExtra(EXTRA_NAMA)
+        idModul = intent.getIntExtra(EXTRA_ID_MODUL, 0)
 
         val pref = UserPreferencesDatastore.getInstance(dataStore)
         val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
 
-        session.getToken().observe(this) { token ->
-            if (!token.isNullOrEmpty()) {
-                this.token = token
-                courseViewModel.getCourse("Bearer $token", idKursus!!)
+        session.getToken().observe(this) {
+            token = it
+            if (!it.isNullOrEmpty()) {
+                courseViewModel.getCourseById("Bearer $token", idKursus)
+                idKursus.let {
+                    courseViewModel.getDetailCourse("Bearer $token", it)
+                    courseViewModel.dataDetailCourse.observe(this) { kursus ->
+                        binding.judulCourse.text = kursus.namaKursus
+                    }
+                    setLanjutButton(idKursus)
+                }
+                idModul?.let {
+                    courseViewModel.getDetailModul("Bearer $token", it)
+                    courseViewModel.dataDetailModul.observe(this) { modul ->
+                        setModulData(modul)
+                    }
+                }
             }
         }
 
@@ -45,16 +62,10 @@ class ModulActivity : AppCompatActivity() {
         setBackButtonClickListener()
         setModulList()
 
-        courseViewModel.dataCourse.observe(this) {
-            if (it != null) {
-                setLanjutButton(idKursus!!)
-            }
-//            progress = courseViewModel.dataProgressCourse.value!!.modulSekarang
-        }
-
         courseViewModel.dataModul.observe(this) {
             setModulData(it)
         }
+
 
 //        courseViewModel.dataProgressCourse.observe(this) {
 //            idModul = it.id
@@ -63,10 +74,6 @@ class ModulActivity : AppCompatActivity() {
 //            }
 //        }
 
-//        courseViewModel.detailModul("Bearer $token", idModul!!)
-        courseViewModel.dataDetailModul.observe(this) {
-            setModulData(it)
-        }
     }
 
     private fun setModulData(modul: Modul) {
@@ -79,21 +86,30 @@ class ModulActivity : AppCompatActivity() {
 
     private fun setLanjutButton(idKursus: Int) {
         binding.lanjut.setOnClickListener {
-            courseViewModel.progressCourse("Bearer $token", idKursus, "next")
+            Log.e(TAG, "Isi token apa sih: $token")
+            courseViewModel.putProgressCourse("Bearer $token", idKursus, "next")
 //            courseViewModel.detailModul("Bearer $token", idModul+1)
-
-            val intentToDetail = Intent(this@ModulActivity, ModulActivity::class.java)
-            intentToDetail.putExtra(EXTRA_ITEM, idKursus)
-            intentToDetail.putExtra(EXTRA_NAMA, binding.judulCourse.text.toString())
-            startActivity(intentToDetail)
-            finish()
+            courseViewModel.dataProgressCourse.observe(this) {
+                Log.e(TAG, "Isi ambil kursus apa sih: ${it.ambilKursus}")
+                if (it.ambilKursus!!.statusSelesai) {
+                    val intent = Intent(this@ModulActivity, MainActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    val intentToDetail = Intent(this@ModulActivity, ModulActivity::class.java)
+                    intentToDetail.putExtra(EXTRA_ITEM, idKursus)
+                    intentToDetail.putExtra(EXTRA_NAMA, binding.judulCourse.text.toString())
+                    startActivity(intentToDetail)
+                    finish()
+                }
+            }
         }
     }
 
     private fun setModulList() {
         binding.listModul.setOnClickListener {
             val intent = Intent(this@ModulActivity, ListModulActivity::class.java)
-            intent.putExtra(ListModulActivity.EXTRA_ITEM, binding.judulModul.text.toString())
+            intent.putExtra(ListModulActivity.EXTRA_ITEM, idKursus)
+            intent.putExtra(ListModulActivity.EXTRA_NAMA, binding.judulCourse.text.toString())
             startActivity(intent)
         }
     }
@@ -120,5 +136,6 @@ class ModulActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ITEM = "key_item"
         const val EXTRA_NAMA = "key_nama"
+        const val EXTRA_ID_MODUL = "key_id_modul"
     }
 }

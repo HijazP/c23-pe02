@@ -74,6 +74,12 @@ interface ApiService {
         @Header("Authorization") bearer: String,
         @Path("id") id: String
     ): Call<DetailProblemResponse>
+
+    @GET("user/course/module")
+    fun getListModul(
+        @Header("Authorization") token: String,
+        @Query("idKursus") idKursus: Int
+    ): Call<ListModulResponse>
 }
 
 
