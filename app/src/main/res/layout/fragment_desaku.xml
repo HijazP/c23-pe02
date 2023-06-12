@@ -71,10 +71,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDesaku"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@id/search_bar"
-        tools:listitem="layout/desaku_item"/>
+        android:layout_below="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/desaku_item"/>
 
 
 </RelativeLayout>

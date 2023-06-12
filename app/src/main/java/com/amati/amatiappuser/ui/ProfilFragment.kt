@@ -1,6 +1,7 @@
 package com.amati.amatiappuser.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -53,6 +54,13 @@ class ProfilFragment : Fragment() {
         binding.editTelepon.setText(telepon)
 
         profilAct()
+
+        binding.btnLogout.setOnClickListener {
+            session.logout()
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
     }
 
     private fun profilAct() {
@@ -61,8 +69,8 @@ class ProfilFragment : Fragment() {
                 editName.clearFocus()
                 editTelepon.clearFocus()
 
-//                val nama = editName.text.toString()
-//                val telepon = editTelepon.text.toString()
+                val nama = editName.text.toString()
+                val telepon = editTelepon.text.toString()
 
 //                val requestProfil = RequestProfil(nama, telepon)
 //                profilViewModel.edit(requestProfil)
@@ -77,15 +85,4 @@ class ProfilFragment : Fragment() {
             }
         }
     }
-
-    /*private fun logout() {
-        val pref = requireContext().dataStore
-        val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
-
-        session.logout()
-
-        val intent = Intent(activity, LoginActivity::class.java)
-        startActivity(intent)
-        activity?.finish()
-    }*/
 }

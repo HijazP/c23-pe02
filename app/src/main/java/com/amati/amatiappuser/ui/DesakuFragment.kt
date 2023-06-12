@@ -1,8 +1,8 @@
 package com.amati.amatiappuser.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,24 +14,24 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amati.amatiappuser.R
-import com.amati.amatiappuser.adapter.ModulAdapter
 import com.amati.amatiappuser.data.DataDummy
-import com.amati.amatiappuser.data.DataDummy.dummyList
 import com.amati.amatiappuser.database.UserPreferencesDatastore
 import com.amati.amatiappuser.databinding.FragmentDesakuBinding
 import com.amati.amatiappuser.viewmodel.Session
 import com.amati.amatiappuser.viewmodel.SessionModelFactory
 import androidx.datastore.preferences.core.Preferences
+import com.amati.amatiappuser.adapter.DesakuAdapter
+import com.amati.amatiappuser.viewmodel.DesakuViewModel
 
 
 class DesakuFragment : Fragment() {
     private lateinit var binding: FragmentDesakuBinding
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+    private val desakuViewModel: DesakuViewModel by viewModels()
     private val nama : String = "Desaku"
-
+    private var token: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,29 +41,46 @@ class DesakuFragment : Fragment() {
         return binding.root
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        val inflater = menuInflater
-//        inflater.inflate(R.menu.item_menu, menu)
-//        return true
-//    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val dataStore: DataStore<Preferences> = requireContext().dataStore
 
+        setStatusBarColorToMatchTopBar()
+
         val pref = UserPreferencesDatastore.getInstance(dataStore)
         val session = ViewModelProvider(this, SessionModelFactory(pref))[Session::class.java]
 
+        session.getToken().observe(viewLifecycleOwner){
+            if (it != "" && it != null) {
+                token = it
+                desakuViewModel.getAllProgress("Bearer $token")
+                desakuViewModel.dataAllProgress.observe(viewLifecycleOwner){ progress ->
+                    if (progress.isNotEmpty()) {
+                        val latestProgress = progress.last() // Mengambil data terbaru dari daftar progress
+                        val id = latestProgress.idKursus
+                        desakuViewModel.getDetailCourse("Bearer $token", id)
+                    }
+                }
+                val code = desakuViewModel.code.value
+                if (code == 401) {
+                    session.logout()
+                    val intent = Intent(requireActivity(), LoginActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
+            }
+        }
+
+
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvDesaku.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
-        binding.rvDesaku.addItemDecoration(itemDecoration)
 
         setCourse()
     }
 
     private fun setCourse(){
-//        val adapter = ModulAdapter(DataDummy.dummyList)
-//        binding.rvDesaku.adapter = adapter
+        val adapter = DesakuAdapter(DataDummy.dummyList)
+        binding.rvDesaku.adapter = adapter
     }
 
     private fun setStatusBarColorToMatchTopBar() {
