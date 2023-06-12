@@ -80,6 +80,17 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Query("idKursus") idKursus: Int
     ): Call<ListModulResponse>
+
+    @GET("predict/{kursus}")
+    fun prediksiKursus(
+        @Path("kursus") kursus: String
+    ): Call<RekomendasiNamaDesaResponse>
+
+    @GET("user/recommendation/{desa}")
+    fun getUserRekomendasi(
+        @Header("Authorization") token: String,
+        @Path("desa") desa: String
+    ): Call<RekomendasiMasalahResponse>
 }
 
 

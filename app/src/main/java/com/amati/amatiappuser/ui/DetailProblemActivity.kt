@@ -49,5 +49,7 @@ class DetailProblemActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_ID = "id"
+        const val EXTRA_NAME = "title"
+        const val EXTRA_ID_DESA = "desc"
     }
 }

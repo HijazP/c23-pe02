@@ -3,6 +3,7 @@ package com.amati.amatiappuser.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,7 @@ import com.amati.amatiappuser.viewmodel.Session
 import com.amati.amatiappuser.viewmodel.SessionModelFactory
 import androidx.datastore.preferences.core.Preferences
 import com.amati.amatiappuser.adapter.DesakuAdapter
+import com.amati.amatiappuser.network.response.MasalahdesaItem
 import com.amati.amatiappuser.viewmodel.DesakuViewModel
 
 
@@ -32,6 +34,7 @@ class DesakuFragment : Fragment() {
     private val desakuViewModel: DesakuViewModel by viewModels()
     private val nama : String = "Desaku"
     private var token: String? = null
+    private var namaDesanya: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,13 +57,6 @@ class DesakuFragment : Fragment() {
             if (it != "" && it != null) {
                 token = it
                 desakuViewModel.getAllProgress("Bearer $token")
-                desakuViewModel.dataAllProgress.observe(viewLifecycleOwner){ progress ->
-                    if (progress.isNotEmpty()) {
-                        val latestProgress = progress.last()
-                        val id = latestProgress.idKursus
-                        desakuViewModel.getDetailCourse("Bearer $token", id)
-                    }
-                }
                 val code = desakuViewModel.code.value
                 if (code == 401) {
                     session.logout()
@@ -68,18 +64,40 @@ class DesakuFragment : Fragment() {
                     startActivity(intent)
                     requireActivity().finish()
                 }
+                desakuViewModel.dataAllProgress.observe(viewLifecycleOwner){ progress ->
+                    if (progress.isNotEmpty()) {
+                        val latestProgress = progress.last()
+                        val id = latestProgress.idKursus
+                        desakuViewModel.getDetailCourse("Bearer $token", id)
+                        desakuViewModel.dataDetailCourse.observe(viewLifecycleOwner){ detail ->
+                            detail.namaKursus.let { namaKursus -> desakuViewModel.getNamaDesa(namaKursus) }
+                        }
+                        desakuViewModel.dataNamaDesa.observe(viewLifecycleOwner){ namaDesa ->
+                            namaDesa.let { desa ->
+                                namaDesanya = namaDesa.rekomendasiDesa
+                                desakuViewModel.getRekomendasiMasalah("Bearer $token", desa.rekomendasiDesa)
+                            }
+                        }
+                    }
+                }
             }
         }
 
+        Log.e("nama desa", namaDesanya.toString())
 
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvDesaku.layoutManager = layoutManager
 
-        setCourse()
+        desakuViewModel.problemDesa.observe(viewLifecycleOwner){ problem ->
+            if (problem.isNotEmpty()) {
+                setCourse(problem)
+            }
+        }
     }
 
-    private fun setCourse(){
-        val adapter = DesakuAdapter(DataDummy.dummyList)
+    private fun setCourse(problem : List<MasalahdesaItem>){
+        Log.e("nama Desa", "nyampe adapter kaga?"+namaDesanya.toString())
+        val adapter = DesakuAdapter(problem, namaDesanya.toString())
         binding.rvDesaku.adapter = adapter
     }
 
