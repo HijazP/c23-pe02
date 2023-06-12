@@ -12,6 +12,7 @@ model ambilkursus {
   idKursus      Int
   idPengguna    Int
   jumlahModul   Int
+  statusModul   Int
   modulSekarang Int
   statusSelesai Boolean
   kursus        kursus   @relation(fields: [idKursus], references: [id], map: "AmbilKursus_idKursus_fkey")

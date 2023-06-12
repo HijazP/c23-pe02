@@ -791,7 +791,7 @@
 ### User mengambil kursus baru
 #### Method: GET
 ```https://be.api-amati.com/user/course/{id}```
-#### Parameter {id} = Kursus id, sudah ada 11 kursus di db
+#### Parameter {id} = Kursus id, ambil list id kursus dari /user/course
 #### Perlu token
 #### Response:
 1. Berhasil
@@ -800,17 +800,13 @@
     "statusCode": 201,
     "message": "Kursus berhasil diambil",
     "ambilKursus": {
-        "id": 3,
-        "idKursus": 3,
+        "id": 1,
+        "idKursus": 1,
         "idPengguna": 1,
-        "jumlahModul": 5,
-        "modulSekarang": 0,
+        "jumlahModul": 7,
+        "statusModul": 1, // status x/jumlahModul
+        "modulSekarang": 1, // id modul
         "statusSelesai": false
-    },
-    "modul": {
-        "id": 12,
-        "namaModul": "Mengenal Sustainable Startup",
-        "idKursus": 3
     }
 }
 ```
@@ -819,7 +815,16 @@
 // id kursus sama dengan yang pernah diambil
 {
     "statusCode": 400,
-    "message": "Kursus sudah diambil"
+    "message": "Kursus sudah diambil",
+    "checkAmbilKursus": {
+        "id": 1,
+        "idKursus": 1,
+        "idPengguna": 1,
+        "jumlahModul": 7,
+        "statusModul": 1, // status x/jumlahModul
+        "modulSekarang": 1, // id modul
+        "statusSelesai": false
+    }
 }
 
 // Salah format
@@ -857,7 +862,7 @@
 #### Data yang dikirim:
 #### Query (perlu token)
 ```
-    id = id kursus
+    id = id progress kursus
     status = next || completed
     next ketika lanjut ke modul selanjutnya (modulSekarang + 1)
     completed ketika menyelesaikan modul
@@ -865,61 +870,76 @@
 #### Response:
 1. Berhasil
 ```
-// next, modulSekarang sebelumnya 1
+// next, modulSekarang sebelumnya 12
 // statusSelesai = false
 // menampilkan modul yang baru
 {
     "statusCode": 200,
     "message": "Kursus berhasil diupdate",
-    "ambilKursus": {
+    "updateKursus": {
         "id": 3,
         "idKursus": 3,
         "idPengguna": 1,
         "jumlahModul": 5,
-        "modulSekarang": 1,
+        "statusModul": 2, // status x/jumlahModul
+        "modulSekarang": 13, // id modul
         "statusSelesai": false
-    },
-    "modul": {
-        "id": 13,
-        "namaModul": "SDGs 12 Responsible Consumption and Production",
-        "idKursus": 3
     }
 }
 
-// next, modulSekarang = jumlahModul
+// next, statusModul = jumlahModul
 // statusSelesai = true
 {
     "statusCode": 200,
     "message": "Kursus berhasil diselesaikan",
-    "ambilKursus": {
+    "updateKursus": {
         "id": 3,
         "idKursus": 3,
         "idPengguna": 1,
         "jumlahModul": 5,
-        "modulSekarang": 5,
+        "statusModul": 5, // status x/jumlahModul
+        "modulSekarang": 16, // id modul
         "statusSelesai": true
     }
 }
 
-// completed, modulSekarang = jumlahModul
+// completed, statusModul = jumlahModul
 // statusSelesai = true
 {
     "statusCode": 200,
     "message": "Kursus berhasil diselesaikan",
-    "ambilKursus": {
-        "id": 1,
-        "idKursus": 1,
+    "updateKursus": {
+        "id": 2,
+        "idKursus": 2,
         "idPengguna": 1,
-        "jumlahModul": 7,
-        "modulSekarang": 7,
+        "jumlahModul": 4,
+        "statusModul": 4, // status x/jumlahModul
+        "modulSekarang": 11, // id modul
         "statusSelesai": true
     }
 }
 
 // Salah query
+/// Jika id kursus benar, status salah
 {
     "statusCode": 200,
-    "message": "Tidak ada kursus yang diupdate"
+    "message": "Tidak ada kursus yang diupdate",
+    "kursus": {
+        "id": 1,
+        "idKursus": 1,
+        "idPengguna": 1,
+        "jumlahModul": 7,
+        "statusModul": 4,
+        "modulSekarang": 4,
+        "statusSelesai": false
+    }
+}
+/// Jika id kursus salah, status benar,
+/// atau dua-duanya salah
+{
+    "statusCode": 200,
+    "message": "Tidak ada kursus yang diupdate",
+    "kursus": null
 }
 ```
 2. Gagal
@@ -968,15 +988,17 @@
             "idKursus": 1,
             "idPengguna": 1,
             "jumlahModul": 7,
-            "modulSekarang": 0,
+            "statusModul": 4,
+            "modulSekarang": 4,
             "statusSelesai": false
         },
         {
             "id": 2,
-            "idKursus": 4,
+            "idKursus": 2,
             "idPengguna": 1,
-            "jumlahModul": 5,
-            "modulSekarang": 5,
+            "jumlahModul": 4,
+            "statusModul": 4,
+            "modulSekarang": 11,
             "statusSelesai": true
         },
         {
@@ -984,7 +1006,8 @@
             "idKursus": 3,
             "idPengguna": 1,
             "jumlahModul": 5,
-            "modulSekarang": 5,
+            "statusModul": 5,
+            "modulSekarang": 16,
             "statusSelesai": true
         }
     ]

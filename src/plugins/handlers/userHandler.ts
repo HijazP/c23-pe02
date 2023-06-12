@@ -201,10 +201,15 @@ async function ambilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
             return h.response({
                 statusCode: 400,
                 message: 'Kursus sudah diambil',
-                checkAmbilKursus,
-
+                checkAmbilKursus
             }).code(400)
         }
+
+        const modulSekarang = await prisma.modul.findMany({
+            where: {
+                idKursus: parseInt(id)
+            }
+        })
 
         const ambilKursus = await prisma.ambilkursus.create({
             data: {
@@ -217,22 +222,16 @@ async function ambilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
                     connect: { id: userId }
                 },
                 jumlahModul: jumlahModul,
-                modulSekarang: 0,
+                statusModul: 1,
+                modulSekarang: modulSekarang[0].id,
                 statusSelesai: false,
-            }
-        })
-
-        const moduldetail = await prisma.modul.findMany({
-            where: {
-                idKursus: parseInt(id)
             }
         })
 
         return h.response({
             statusCode: 201,
             message: 'Kursus berhasil diambil',
-            ambilKursus,
-            modul: moduldetail[ambilKursus.modulSekarang]
+            ambilKursus
         }).code(201)
     } catch (err) {
         console.log(err)
@@ -244,17 +243,32 @@ async function ambilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
 }
 
 async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    const token = request.auth.artifacts.token
+    let userId
+    if (typeof token === "string") {
+        const decode = Jwt.token.decode(token)
+        if (decode !== undefined) {
+            userId = decode.decoded.payload.userId
+        }
+    }
     const { prisma } = request.server.app
     const { id, status } = request.query as { id: string, status: string }
 
     try {
-        const kursus = await prisma.ambilkursus.findUnique({
+        const kursus = await prisma.ambilkursus.findFirst({
             where: {
-                id: parseInt(id)
+                AND: [
+                    {
+                        idKursus: parseInt(id)
+                    },
+                    {
+                        idPengguna: userId
+                    },
+                ]
             }
         })
 
-        const detailmodul = await prisma.modul.findMany({
+        const modulList = await prisma.modul.findMany({
             where: {
                 idKursus: parseInt(id)
             }
@@ -262,59 +276,60 @@ async function updateAmbilKursus(request: Hapi.Request, h: Hapi.ResponseToolkit)
 
         if (kursus !== null) {
             if (status === 'completed') {
-                const ambilKursus = await prisma.ambilkursus.update({
+                const updateKursus = await prisma.ambilkursus.update({
                     where: {
-                        id: parseInt(id)
+                        id: kursus.id
                     },
                     data: {
-                        modulSekarang: kursus.jumlahModul,
+                        statusModul: kursus.jumlahModul,
+                        modulSekarang: modulList[modulList.length - 1].id,
                         statusSelesai: true
                     }
                 })
                 return h.response({
                     statusCode: 200,
                     message: 'Kursus berhasil diselesaikan',
-                    ambilKursus,
-                    modul: detailmodul[ambilKursus.modulSekarang]
+                    updateKursus
                 }).code(200)
             }
             else if (status === 'next') {
-                if (kursus.modulSekarang === kursus.jumlahModul) {
-                    const ambilKursus = await prisma.ambilkursus.update({
+                if (kursus.statusModul === kursus.jumlahModul) {
+                    const updateKursus = await prisma.ambilkursus.update({
                         where: {
-                            id: parseInt(id)
+                            id: kursus.id
                         },
                         data: {
-                            modulSekarang: kursus.jumlahModul,
+                            statusModul: kursus.jumlahModul,
+                            modulSekarang: modulList[modulList.length - 1].id,
                             statusSelesai: true
                         }
                     })
                     return h.response({
                         statusCode: 200,
                         message: 'Kursus berhasil diselesaikan',
-                        ambilKursus
+                        updateKursus
                     }).code(200)
                 }
-                const ambilKursus = await prisma.ambilkursus.update({
+                const updateKursus = await prisma.ambilkursus.update({
                     where: {
-                        id: parseInt(id)
+                        id: kursus.id
                     },
                     data: {
-                        modulSekarang: kursus.modulSekarang + 1
+                        statusModul: kursus.statusModul + 1,
+                        modulSekarang: kursus.modulSekarang + 1,
                     }
                 })
                 return h.response({
                     statusCode: 200,
                     message: 'Kursus berhasil diupdate',
-                    ambilKursus,
-                    modul: detailmodul[ambilKursus.modulSekarang]
+                    updateKursus
                 }).code(200)
             }
         }
         return h.response({
             statusCode: 200,
             message: 'Tidak ada kursus yang diupdate',
-            ambilKursus
+            kursus
         }).code(200)
     } catch (err) {
         console.log(err)
@@ -340,7 +355,7 @@ async function progressKursus(request: Hapi.Request, h: Hapi.ResponseToolkit) {
         const progress = await prisma.ambilkursus.findMany({
             where: {
                 idPengguna: userId
-            }
+            },
         })
         return h.response({
             statusCode: 200,
