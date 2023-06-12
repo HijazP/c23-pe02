@@ -13,14 +13,11 @@ class CourseViewModel: ViewModel(){
     private val _dataCourse = MutableLiveData<AmbilKursus>()
     val dataCourse: LiveData<AmbilKursus> = _dataCourse
 
-    private val _dataModul = MutableLiveData<Modul>()
-    val dataModul: LiveData<Modul> = _dataModul
-
     private val _dataDetailModul = MutableLiveData<Modul>()
     val dataDetailModul: LiveData<Modul> = _dataDetailModul
 
-    private val _dataProgressCourse = MutableLiveData<GetCourseByIdResponse>()
-    val dataProgressCourse: LiveData<GetCourseByIdResponse> = _dataProgressCourse
+    private val _dataProgressCourse = MutableLiveData<PutProgressResponse>()
+    val dataProgressCourse: LiveData<PutProgressResponse> = _dataProgressCourse
 
     private val _dataDetailCourse = MutableLiveData<Kursus>()
     val dataDetailCourse: LiveData<Kursus> = _dataDetailCourse
@@ -39,7 +36,6 @@ class CourseViewModel: ViewModel(){
                 if (response.isSuccessful) {
                     if (responseBody != null) {
                         _dataCourse.value = responseBody.ambilKursus!!
-                        _dataModul.value = responseBody.modul!!
                         _code.value = responseBody.statusCode
                     }
                 } else{
@@ -55,10 +51,10 @@ class CourseViewModel: ViewModel(){
 
     fun putProgressCourse(token: String, id: Int, status: String){
         val client = ApiConfig.getApiService().putProgress(token, id, status)
-        client.enqueue(object : Callback<GetCourseByIdResponse> {
+        client.enqueue(object : Callback<PutProgressResponse> {
             override fun onResponse(
-                call: Call<GetCourseByIdResponse>,
-                response: Response<GetCourseByIdResponse>
+                call: Call<PutProgressResponse>,
+                response: Response<PutProgressResponse>
             ) {
                 val responseBody = response.body()
                 if (response.isSuccessful) {
@@ -71,7 +67,7 @@ class CourseViewModel: ViewModel(){
                 }
             }
 
-            override fun onFailure(call: Call<GetCourseByIdResponse>, t: Throwable) {
+            override fun onFailure(call: Call<PutProgressResponse>, t: Throwable) {
                 _code.value = 500
             }
         })

@@ -28,6 +28,9 @@ data class CheckAmbilKursus(
 	@field:SerializedName("idPengguna")
 	val idPengguna: Int,
 
+	@field:SerializedName("statusModul")
+	val statusModul: Int,
+
 	@field:SerializedName("modulSekarang")
 	val modulSekarang: Int,
 
@@ -48,6 +51,9 @@ data class AmbilKursus(
 
 	@field:SerializedName("idPengguna")
 	val idPengguna: Int,
+
+	@field:SerializedName("statusModul")
+	val statusModul: Int,
 
 	@field:SerializedName("modulSekarang")
 	val modulSekarang: Int,

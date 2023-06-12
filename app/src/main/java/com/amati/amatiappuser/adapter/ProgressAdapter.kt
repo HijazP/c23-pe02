@@ -32,7 +32,6 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>, private val 
     class ViewHolder(private var binding: RvprogressItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data : ProgressItem, viewModel: HomeViewModel, token: String?) {
             viewModel.getDetailCourse("Bearer $token", data.idKursus)
-            viewModel.getCourse("Bearer $token", data.idKursus)
             with(binding) {
                 viewModel.dataDetailCourse.observe(itemView.context as LifecycleOwner) { kursus ->
                     if (data.idKursus == kursus?.id) {
@@ -45,6 +44,7 @@ class ProgressAdapter(private val listProgress: List<ProgressItem>, private val 
             binding.root.setOnClickListener {
                 val intentToDetail = Intent(itemView.context, ModulActivity::class.java)
                 intentToDetail.putExtra(ModulActivity.EXTRA_ITEM, data.idKursus)
+                intentToDetail.putExtra(ModulActivity.EXTRA_ID_MODUL, data.modulSekarang)
                 intentToDetail.putExtra(ModulActivity.EXTRA_NAMA, binding.tvName.text)
                 itemView.context.startActivity(intentToDetail)
             }

@@ -19,6 +19,7 @@
     <string name="register_invalid_email">Format email tidak sesuai</string>
     <string name="register_invalid_pass">Password harus mengandung minimal 6 karakter</string>
     <string name="register_invalid_repass">Masukkan kembali password dengan benar</string>
+    <string name="register_invalid_repasss">Repassword harus mengandung minimal 6 karakter</string>
     <string name="register_nama_hint">Nama lengkap</string>
 
 

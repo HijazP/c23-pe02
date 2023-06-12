@@ -74,6 +74,9 @@ class RegisterActivity : AppCompatActivity() {
                     repassword.isEmpty() -> {
                         edRegisterRepassword.error = getString(R.string.register_invalid_repass)
                     }
+                    repassword.length < MIN_PASS_LENGTH -> {
+                        edRegisterRepassword.error = getString(R.string.register_invalid_repasss)
+                    }
                     else -> {
                         if (password == repassword) {
                             val requestReg = RequestReg(nama, email, password)
@@ -85,7 +88,7 @@ class RegisterActivity : AppCompatActivity() {
                                     getString(R.string.register_success),
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                if (registerViewModel.code.value == 201) {
+                                if (it.statusCode == 201) {
                                     val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                                     startActivity(intent)
                                     finish()

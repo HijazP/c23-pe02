@@ -83,7 +83,7 @@ class HomeFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvCourse.layoutManager = layoutManager
 
-        val adapter = ModulAdapter(data)
+        val adapter = ModulAdapter(data, homeViewModel, token)
         binding.rvCourse.adapter = adapter
     }
     private fun progress(data: List<ProgressItem>){

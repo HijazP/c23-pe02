@@ -40,15 +40,15 @@ class ModulActivity : AppCompatActivity() {
             token = it
             if (!it.isNullOrEmpty()) {
                 courseViewModel.getCourseById("Bearer $token", idKursus)
-                idKursus.let {
-                    courseViewModel.getDetailCourse("Bearer $token", it)
+                idKursus.let { id ->
+                    courseViewModel.getDetailCourse("Bearer $token", id)
                     courseViewModel.dataDetailCourse.observe(this) { kursus ->
                         binding.judulCourse.text = kursus.namaKursus
                     }
                     setLanjutButton(idKursus)
                 }
-                idModul?.let {
-                    courseViewModel.getDetailModul("Bearer $token", it)
+                idModul?.let { idModul ->
+                    courseViewModel.getDetailModul("Bearer $token", idModul)
                     courseViewModel.dataDetailModul.observe(this) { modul ->
                         setModulData(modul)
                     }
@@ -62,7 +62,7 @@ class ModulActivity : AppCompatActivity() {
         setBackButtonClickListener()
         setModulList()
 
-        courseViewModel.dataModul.observe(this) {
+        courseViewModel.dataDetailModul.observe(this) {
             setModulData(it)
         }
 
@@ -90,13 +90,14 @@ class ModulActivity : AppCompatActivity() {
             courseViewModel.putProgressCourse("Bearer $token", idKursus, "next")
 //            courseViewModel.detailModul("Bearer $token", idModul+1)
             courseViewModel.dataProgressCourse.observe(this) {
-                Log.e(TAG, "Isi ambil kursus apa sih: ${it.ambilKursus}")
-                if (it.ambilKursus!!.statusSelesai) {
+                Log.e(TAG, "Isi ambil kursus apa sih: ${it.updateKursus}")
+                if (it.updateKursus.statusSelesai) {
                     val intent = Intent(this@ModulActivity, MainActivity::class.java)
                     startActivity(intent)
                 }else{
                     val intentToDetail = Intent(this@ModulActivity, ModulActivity::class.java)
                     intentToDetail.putExtra(EXTRA_ITEM, idKursus)
+                    intentToDetail.putExtra(EXTRA_ID_MODUL, it.updateKursus.modulSekarang)
                     intentToDetail.putExtra(EXTRA_NAMA, binding.judulCourse.text.toString())
                     startActivity(intentToDetail)
                     finish()
