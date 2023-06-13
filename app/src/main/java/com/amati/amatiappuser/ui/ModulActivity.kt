@@ -40,6 +40,20 @@ class ModulActivity : AppCompatActivity() {
             token = it
             if (!it.isNullOrEmpty()) {
                 courseViewModel.getCourseById("Bearer $token", idKursus)
+                if (idModul != null && idModul != 0) {
+                    courseViewModel.getDetailModul("Bearer $token", idModul!!)
+                    courseViewModel.dataDetailModul.observe(this) { modul ->
+                        setModulData(modul)
+                    }
+                } else {
+                    courseViewModel.dataCourse.observe(this) { kursus ->
+                        val id = kursus.modulSekarang
+                        courseViewModel.getDetailModul("Bearer $token", id)
+                        courseViewModel.dataDetailModul.observe(this) { modul ->
+                            setModulData(modul)
+                        }
+                    }
+                }
                 idKursus.let { id ->
                     courseViewModel.getDetailCourse("Bearer $token", id)
                     courseViewModel.dataDetailCourse.observe(this) { kursus ->
@@ -47,12 +61,7 @@ class ModulActivity : AppCompatActivity() {
                     }
                     setLanjutButton(idKursus)
                 }
-                idModul?.let { idModul ->
-                    courseViewModel.getDetailModul("Bearer $token", idModul)
-                    courseViewModel.dataDetailModul.observe(this) { modul ->
-                        setModulData(modul)
-                    }
-                }
+
             }
         }
 
