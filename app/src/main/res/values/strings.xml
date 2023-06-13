@@ -72,4 +72,6 @@
     <string name="rekomendasi">Rekomendasi Course</string>
     <string name="nama_home">Nama</string>
     <string name="judul_course">Judul Course</string>
+    <string name="nama_location">Nama desa</string>
+    <string name="phone_location">Nomer Telepon</string>
 </resources>
